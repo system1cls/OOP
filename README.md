@@ -1,1 +1,1 @@
-Faranosov Dmitrii
+Фараносов Дмитрий 
