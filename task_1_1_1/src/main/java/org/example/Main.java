@@ -1,6 +1,5 @@
 package org.example;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -67,7 +66,7 @@ class HeapSort{
         for (int i = 0; i < length - 1; i++) {
             swap(arr, 0, n - 1);
             n--;
-            heapify_up(arr, n, n);
+            heapify_all(arr, n);
         }
 
 
