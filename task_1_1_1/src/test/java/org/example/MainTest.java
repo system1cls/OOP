@@ -10,5 +10,10 @@ class MainTest {
     @Test
     void func() {
         assertEquals(6, 6);
+        assertEquals(6, 6);
+        assertEquals(6, 6);
+        assertEquals(6, 6);
+        assertEquals(6, 6);
+        assertEquals(6, 6);
     }
 }
