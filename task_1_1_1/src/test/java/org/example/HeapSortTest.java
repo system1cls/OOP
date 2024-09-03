@@ -18,6 +18,6 @@ class HeapSortTest {
         srt.heapsort(arr1);
         assertEquals(arr1.length, 0);
 
-        
+
     }
 }

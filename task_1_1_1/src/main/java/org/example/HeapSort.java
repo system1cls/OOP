@@ -2,15 +2,15 @@ package org.example;
 
 
 /**
- * Отдельный класс для сортировки
+ * Отдельный класс для сортировки.
  */
 public class HeapSort {
 
     /**
-     * Метод меняет местами элементы в массиве
+     * Метод меняет местами элементы в массиве.
      *
-     * @param arr - массив
-     * @param left - номер первого элемента в массиве
+     * @param arr   - массив
+     * @param left  - номер первого элемента в массиве
      * @param right - номер второго элемента в массиве
      */
     void swap(int[] arr, int left, int right) {
@@ -22,9 +22,9 @@ public class HeapSort {
 
 
     /**
-     * Метод выполняет просеивание на родителе и двух детях
+     * Метод выполняет просеивание на родителе и двух детях.
      *
-     * @param arr - массив
+     * @param arr    - массив
      * @param length - длина массива
      * @param source - номер элемента для просеивания
      */
@@ -32,19 +32,18 @@ public class HeapSort {
         int left = source * 2 + 1;
         int right = source * 2 + 2;
 
-        if (left >= length) return;
-        else if (right >= length) {
+        if (left >= length) {
+            return;
+        } else if (right >= length) {
             if (arr[source] < arr[left]) {
                 swap(arr, source, left);
             }
-        }
-        else {
+        } else {
             if (arr[left] >= arr[right]) {
-                if(arr[source] < arr[left]) {
+                if (arr[source] < arr[left]) {
                     swap(arr, source, left);
                 }
-            }
-            else {
+            } else {
                 if (arr[source] < arr[right]) {
                     swap(arr, source, right);
                 }
@@ -53,9 +52,9 @@ public class HeapSort {
     }
 
     /**
-     * Метод выполняет просеивание
+     * Метод выполняет просеивание.
      *
-     * @param arr - массив
+     * @param arr    - массив
      * @param length - его длина
      */
     void heapify_all(int[] arr, int length) {
@@ -66,11 +65,11 @@ public class HeapSort {
 
 
     /**
-     * Метод сортирует массив
+     * Метод сортирует массив.
      *
      * @param arr - массив
      */
-    public void heapsort(int[] arr){
+    public void heapsort(int[] arr) {
         int length = arr.length;
         int n = length;
         int source;
