@@ -14,8 +14,17 @@ public class Main {
     }
 }
 
+/**
+ * Отдельный класс для сортировки
+ */
 class HeapSort{
 
+    /**
+     * Метод меняет местами элементы в массиве
+     * @param arr - массив
+     * @param left - номер первого элемента в массиве
+     * @param right - номер второго элемента в массиве
+     */
     void swap(int[] arr, int left, int right) {
         int temp = arr[left];
         arr[left] = arr[right];
@@ -24,6 +33,12 @@ class HeapSort{
     }
 
 
+    /**
+     * Метод выполняет просеивание на родителе и двух детях
+     * @param arr - массив
+     * @param length - длина массива
+     * @param source - номер элемента для просеивания
+     */
     void heapify(int[] arr, int length, int source) {
         int left = source * 2 + 1, right = source * 2 + 2;
 
@@ -41,13 +56,11 @@ class HeapSort{
         }
     }
 
-    void heapify_up(int[] arr, int length, int i){
-        int source = (i - 1) /2;
-        heapify(arr, length, source);
-        if (source != 0) heapify_up(arr, length, source);
-
-    }
-
+    /**
+     * Метод выполняет просеивание
+     * @param arr - массив
+     * @param length - его длина
+     */
     void heapify_all(int[] arr, int length) {
         for (int i = length / 2 - 1; i >= 0; i--) {
             heapify(arr, length, i);
@@ -55,7 +68,10 @@ class HeapSort{
     }
 
 
-
+    /**
+     * Метод сортирует массив
+     * @param arr - массив
+     */
     public void heapsort(int[] arr){
         int length = arr.length;
         int n = length;
