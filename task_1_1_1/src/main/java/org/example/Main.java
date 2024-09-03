@@ -21,6 +21,9 @@ public class Main {
         srt.heapsort(arr);
         System.out.println(Arrays.toString(arr));
     }
+
+    int func(int a) {
+        return (a + 1);
+    }
+
 }
-
-
