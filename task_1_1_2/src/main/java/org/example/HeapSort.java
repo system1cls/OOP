@@ -66,7 +66,9 @@ public class HeapSort {
     public void heapify_down(int[] arr, int length, int source) {
         int id = 0;
         id = heapify(arr, length, source);
-        if (id != 0) heapify_down(arr, length, source * 2 + id);
+        if (id != 0) {
+            heapify_down(arr, length, source * 2 + id);
+        }
     }
 
 
@@ -81,7 +83,9 @@ public class HeapSort {
         for (int i = length / 2 - 1; i >= 0; i--) {
             id = heapify(arr, length, i);
 
-            if (id >= 0) heapify_down(arr, length, i * 2 + id);
+            if (id >= 0) {
+                heapify_down(arr, length, i * 2 + id);
+            }
         }
     }
 
