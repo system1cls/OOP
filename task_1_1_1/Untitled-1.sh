@@ -1,2 +1,2 @@
-javac org/example/Main.java
-java org/example/Main
+javac org/example/HeapSort.java
+javadoc org/example/HeapSort.java

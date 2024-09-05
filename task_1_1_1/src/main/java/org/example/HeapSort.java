@@ -28,28 +28,49 @@ public class HeapSort {
      * @param length - длина массива
      * @param source - номер элемента для просеивания
      */
-    void heapify(int[] arr, int length, int source) {
+    int heapify(int[] arr, int length, int source) {
         int left = source * 2 + 1;
         int right = source * 2 + 2;
 
         if (left >= length) {
-            return;
+            return 0;
         } else if (right >= length) {
             if (arr[source] < arr[left]) {
                 swap(arr, source, left);
+                return 1;
             }
         } else {
             if (arr[left] >= arr[right]) {
                 if (arr[source] < arr[left]) {
                     swap(arr, source, left);
+                    return 1;
                 }
             } else {
                 if (arr[source] < arr[right]) {
                     swap(arr, source, right);
+                    return 2;
                 }
             }
         }
+        return 0;
     }
+
+
+    /**
+     * Выполняет просеивание по одной ветке вниз.
+     *
+     * @param arr    - массив
+     * @param length - длина массива
+     * @param source - номер родителя для просеивания
+     */
+    public void heapify_down(int[] arr, int length, int source) {
+        int id = 0;
+        id = heapify(arr, length, source);
+        if (id != 0) {
+            heapify_down(arr, length, source * 2 + id);
+        }
+    }
+
 
     /**
      * Метод выполняет просеивание.
@@ -58,8 +79,13 @@ public class HeapSort {
      * @param length - его длина
      */
     void heapify_all(int[] arr, int length) {
+        int id = 0;
         for (int i = length / 2 - 1; i >= 0; i--) {
-            heapify(arr, length, i);
+            id = heapify(arr, length, i);
+
+            if (id >= 0) {
+                heapify_down(arr, length, i * 2 + id);
+            }
         }
     }
 
@@ -79,7 +105,7 @@ public class HeapSort {
         for (int i = 0; i < length - 1; i++) {
             swap(arr, 0, n - 1);
             n--;
-            heapify_all(arr, n);
+            heapify_down(arr, n, 0);
         }
 
 
