@@ -2,36 +2,46 @@ package org.example;
 
 import java.util.Scanner;
 
+/**
+ * Class for game.
+ */
 public class BlackJack {
 
+    /**
+     * Start game.
+     */
     public void game() {
         rounds = 1;
         deck = new Deck();
         player = new Hand();
         dealer = new Hand();
-        player_res = 0;
-        dealer_res = 0;
-        boolean ready_to_continue = true;
+        playerRes = 0;
+        dealerRes = 0;
+        boolean readyToContinue = true;
         int choice;
-        boolean is_new_round;
+        boolean isNewRound;
         Card card;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Blackjack!\n");
-        is_written_smth_after_cards = true;
+        isWrittenSmthAfterCards = true;
 
-        while (ready_to_continue) {
+        while (readyToContinue) {
 
             System.out.println("Round " + rounds + '\n');
             rounds++;
-            System.out.println("Enter \"1\" if you want to enter the number of decks in the game. " +
-                    " Enter \"0\", if you do not want, then there will be one deck in the game");
+            System.out.println("Enter \"1\" if you want to enter the number of decks in the game. "
+                    + " Enter \"0\", if you do not want, then there will be one deck in the game");
             choice = scanner.nextInt();
 
             if (choice == 1) {
                 System.out.println("Enter the number of decks from 1 to 10");
                 choice = scanner.nextInt();
-                if (choice > 10) choice = 10;
-                if (choice <= 0) choice = 1;
+                if (choice > 10) {
+                    choice = 10;
+                }
+                if (choice <= 0) {
+                    choice = 1;
+                }
                 deck.make_new_deck(choice);
             } else {
                 deck.make_new_deck(1);
@@ -44,27 +54,27 @@ public class BlackJack {
 
             System.out.println("The dealer has dealt the cards!");
 
-            is_new_round = check_result(player.get_score(), dealer.get_score(), false, true);
+            isNewRound = check_result(player.get_score(), dealer.get_score(), false, true);
 
-            if (!is_new_round) {
+            if (!isNewRound) {
                 choice = 1;
                 System.out.println("Your turn!");
                 System.out.println("__________");
 
-                while (choice == 1 && !is_new_round) {
+                while (choice == 1 && !isNewRound) {
                     System.out.print("Enter \"1\" to take the card, and \"0\" to stop.\n");
-                    is_written_smth_after_cards = true;
+                    isWrittenSmthAfterCards = true;
                     choice = scanner.nextInt();
 
                     if (choice == 1) {
                         player.add_card(deck.get_card());
                         card = player.get_last();
                         System.out.print("You opened: ");
-                        is_written_smth_after_cards = true;
+                        isWrittenSmthAfterCards = true;
                         player.print_card(card);
                         System.out.print("\n\n");
 
-                        is_new_round = check_result(player.get_score(), dealer.get_score(),
+                        isNewRound = check_result(player.get_score(), dealer.get_score(),
                                 false, true);
                     }
 
@@ -72,38 +82,38 @@ public class BlackJack {
             }
 
 
-            if (!is_new_round) {
+            if (!isNewRound) {
                 System.out.println("Dealer`s turn!");
                 System.out.println("______________");
 
                 System.out.print("The dealer opens a closed card\n");
-                is_written_smth_after_cards = true;
-                is_new_round = check_result(player.get_score(), dealer.get_score(),
+                isWrittenSmthAfterCards = true;
+                isNewRound = check_result(player.get_score(), dealer.get_score(),
                         false, false);
 
-                while (dealer.get_score() < 17 && !is_new_round) {
+                while (dealer.get_score() < 17 && !isNewRound) {
                     dealer.add_card(deck.get_card());
                     card = dealer.get_last();
                     System.out.print("Dealer opened: ");
-                    is_written_smth_after_cards = true;
+                    isWrittenSmthAfterCards = true;
                     dealer.print_card(card);
                     System.out.print("\n\n");
 
-                    is_new_round = check_result(player.get_score(), dealer.get_score(),
+                    isNewRound = check_result(player.get_score(), dealer.get_score(),
                             false, false);
                 }
             }
 
 
-            if (!is_new_round) {
+            if (!isNewRound) {
                 check_result(player.get_score(), dealer.get_score(), true, false);
             }
 
             System.out.println("Enter \"1\" if you want to start new round. " +
                     " Enter \"0\", if you do not want it");
-            is_written_smth_after_cards = true;
+            isWrittenSmthAfterCards = true;
             choice = scanner.nextInt();
-            if (choice == 0) ready_to_continue = false;
+            if (choice == 0) readyToContinue = false;
 
             deck.clear_deck();
             player.clear_hand();
@@ -111,60 +121,92 @@ public class BlackJack {
         }
     }
 
-    private boolean check_result(int player_score, int dealer_score, boolean is_end, boolean is_dealers_close) {
-        if (player_score >= 21 || dealer_score >= 21) is_end = true;
-        if (is_end) {
-            if (is_written_smth_after_cards) {
+    /**
+     * Check should round be ended and print results.
+     *
+     * @param playerScore    - total value of player`s deck
+     * @param dealerScore    - total value of dealer`s deck
+     * @param isEnd          - is round ended
+     * @param isDealersClose - is dealer`s cards closed
+     * @return is round ended
+     */
+    private boolean check_result(int playerScore, int dealerScore,
+                                 boolean isEnd, boolean isDealersClose) {
+        if (playerScore >= 21 || dealerScore >= 21) {
+            isEnd = true;
+        }
+        if (isEnd) {
+            if (isWrittenSmthAfterCards) {
                 print_players_card();
                 print_dealers_cards(false);
             }
-            if (player_score == dealer_score) {
-                System.out.println("Draw! " + player_res + ":" + dealer_res);
-            } else if ((player_score > dealer_score && player_score <= 21) || dealer_score > 21) {
-                player_res++;
-                if (player_score == 21) {
-                    System.out.print("You got 21! You win! " + player_res + ":" + dealer_res);
+            if (playerScore == dealerScore) {
+                System.out.println("Draw! " + playerRes + ":" + dealerRes);
+            } else if ((playerScore > dealerScore && playerScore <= 21) || dealerScore > 21) {
+                playerRes++;
+                if (playerScore == 21) {
+                    System.out.print("You got 21! You win! " + playerRes + ":" + dealerRes);
                 } else {
-                    System.out.print("You win! " + player_res + ":" + dealer_res);
+                    System.out.print("You win! " + playerRes + ":" + dealerRes);
                 }
             } else {
-                dealer_res++;
-                if (dealer_score == 21) {
-                    System.out.print("Dealer got 21! Dealer wins! " + player_res + ":" + dealer_res);
+                dealerRes++;
+                if (dealerScore == 21) {
+                    System.out.print("Dealer got 21! Dealer wins! "
+                            + playerRes + ":" + dealerRes);
                 } else {
-                    System.out.print("Dealer wins! " + player_res + ":" + dealer_res);
+                    System.out.print("Dealer wins! " + playerRes + ":" + dealerRes);
                 }
             }
 
-            if (player_res > dealer_res) System.out.println(" in your favor");
-            else if (player_res < dealer_res) System.out.println(" in dealer`s favor");
-            else System.out.print("\n");
+            if (playerRes > dealerRes) {
+                System.out.println(" in your favor");
+            } else if (playerRes < dealerRes) {
+                System.out.println(" in dealer`s favor");
+            } else {
+                System.out.print("\n");
+            }
             System.out.print("\n\n\n");
             return true;
         } else {
             print_players_card();
-            print_dealers_cards(is_dealers_close);
-            if (!is_dealers_close) is_written_smth_after_cards = false;
+            print_dealers_cards(isDealersClose);
+            if (!isDealersClose) {
+                isWrittenSmthAfterCards = false;
+            }
             return false;
         }
     }
 
-    private int player_res = 0, dealer_res = 0;
+    private int playerRes = 0;
+    private int dealerRes = 0;
 
+    /**
+     * Print player`s card.
+     */
     private void print_players_card() {
         System.out.print("\tYour cards: ");
         player.print_open_cards();
     }
 
-    private void print_dealers_cards(Boolean is_closed) {
+    /**
+     * Print dealer`s card
+     *
+     * @param isClosed - are dealer`s cards closed
+     */
+    private void print_dealers_cards(Boolean isClosed) {
         System.out.print("\tDealer`s cards: ");
-        if (is_closed) dealer.print_closed_cards();
-        else dealer.print_open_cards();
+        if (isClosed) {
+            dealer.print_closed_cards();
+        } else {
+            dealer.print_open_cards();
+        }
     }
 
 
-    private boolean is_written_smth_after_cards = false;
+    private boolean isWrittenSmthAfterCards = false;
     private int rounds;
     private Deck deck;
-    private Hand player, dealer;
+    private Hand player;
+    private Hand dealer;
 }

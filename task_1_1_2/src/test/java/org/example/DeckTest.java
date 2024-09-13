@@ -26,8 +26,8 @@ class DeckTest {
         deck.make_new_deck(1);
         for (int i = 0; i < 50; i++) {
             card = deck.get_card();
-            assertTrue(card.type >= 0 && card.type <= 12 &&
-                    card.suit >= 0 && card.suit <= 3);
+            assertTrue(card.type >= 0 && card.type <= 12
+                    && card.suit >= 0 && card.suit <= 3);
         }
         deck.clear_deck();
     }
