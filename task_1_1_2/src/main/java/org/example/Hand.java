@@ -18,19 +18,21 @@ public class Hand {
     public void print_open_cards(){
         if (!is_value_ready) get_cards_value();
         System.out.print("[");
-        for (Card card : cards) {
-            if (card == cards.getLast()){
-                System.out.print(types[card.type] + " " + suits[card.suit] + " (" + card.value + ")");
+        for (int i = 0; i < cards.size(); i++) {
+            if (i == cards.size() - 1){
+                System.out.print(types[(cards.get(i)).type] + " " +
+                        suits[(cards.get(i)).suit] + " (" + (cards.get(i)).value + ")");
             }
             else {
-                System.out.print(types[card.type] + " " + suits[card.suit] + " (" + card.value + ") ");
+                System.out.print(types[(cards.get(i)).type] + " " +
+                        suits[(cards.get(i)).suit] + " (" + (cards.get(i)).value + ") ");
             }
         }
         System.out.println("] => "+ score);
     }
 
     public void print_closed_cards(){
-        Card first = cards.getFirst();
+        Card first = cards.get(0);
         System.out.print("[" + types[first.type] + " " + suits[first.suit] + " (");
         if (first.value <= 8){
             System.out.print(first.type + 2);
@@ -56,7 +58,7 @@ public class Hand {
 
     public Card get_last(){
         if (!is_value_ready) get_cards_value();
-        return cards.getLast();
+        return cards.get(cards.size() - 1);
     }
 
     public void print_card(Card card){
