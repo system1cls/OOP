@@ -51,12 +51,12 @@ public class BlackJack {
                 System.out.println("Your turn!");
                 System.out.println("__________");
 
-                while (choice == 1 && !is_new_round){
+                while (choice == 1 && !is_new_round) {
                     System.out.print("Enter \"1\" to take the card, and \"0\" to stop.\n");
                     is_written_smth_after_cards = true;
                     choice = scanner.nextInt();
 
-                    if (choice == 1){
+                    if (choice == 1) {
                         player.add_card(deck.get_card());
                         card = player.get_last();
                         System.out.print("You opened: ");
@@ -72,7 +72,7 @@ public class BlackJack {
             }
 
 
-            if (!is_new_round){
+            if (!is_new_round) {
                 System.out.println("Dealer`s turn!");
                 System.out.println("______________");
 
@@ -81,7 +81,7 @@ public class BlackJack {
                 is_new_round = check_result(player.get_score(), dealer.get_score(),
                         false, false);
 
-                while(dealer.get_score() < 17 && !is_new_round) {
+                while (dealer.get_score() < 17 && !is_new_round) {
                     dealer.add_card(deck.get_card());
                     card = dealer.get_last();
                     System.out.print("Dealer opened: ");
@@ -95,7 +95,7 @@ public class BlackJack {
             }
 
 
-            if (!is_new_round){
+            if (!is_new_round) {
                 check_result(player.get_score(), dealer.get_score(), true, false);
             }
 
@@ -141,8 +141,7 @@ public class BlackJack {
             else System.out.print("\n");
             System.out.print("\n\n\n");
             return true;
-        }
-        else {
+        } else {
             print_players_card();
             print_dealers_cards(is_dealers_close);
             if (!is_dealers_close) is_written_smth_after_cards = false;

@@ -6,7 +6,7 @@ import java.util.Random;
 public class Deck {
 
     public Card get_card() {
-        Random random =  new Random();
+        Random random = new Random();
         int id = random.nextInt(cards.size() - 1);
         return cards.remove(id);
     }
@@ -14,7 +14,7 @@ public class Deck {
     public int make_new_deck(int cnt_decks) {
         for (int i = 0; i < cnt_decks; i++) {
             for (int j = 0; j <= 12; j++) {
-                for (int q = 0; q <= 3; q++){
+                for (int q = 0; q <= 3; q++) {
                     cards.add(new Card(j, q));
                 }
             }

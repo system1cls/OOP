@@ -5,7 +5,7 @@ public class Card {
     int suit;
     int value;
 
-    Card(int type, int suit){
+    Card(int type, int suit) {
         this.suit = suit;
         this.type = type;
     }

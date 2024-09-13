@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackTest {
     @Test
@@ -31,7 +30,7 @@ class BlackJackTest {
     }
 
     @Test
-    void game_with_one_added_card(){
+    void game_with_one_added_card() {
         System.out.print("game_with_one_added_card\n\n");
         InputStream sysInBackup = System.in; // backup System.in to restore it later
         ByteArrayInputStream in = new ByteArrayInputStream("0 1 0 0 0 0 0 0".getBytes());
@@ -42,7 +41,7 @@ class BlackJackTest {
     }
 
     @Test
-    void game_with_two_added_cards(){
+    void game_with_two_added_cards() {
         System.out.print("game_with_two_added_cards\n\n");
         InputStream sysInBackup = System.in; // backup System.in to restore it later
         ByteArrayInputStream in = new ByteArrayInputStream("0 1 1 0 0 0 0 0".getBytes());

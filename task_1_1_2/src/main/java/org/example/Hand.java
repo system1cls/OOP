@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Hand {
 
-    public int add_card(Card card){
+    public int add_card(Card card) {
         cards.add(card);
         is_value_ready = false;
         return cards.size();
@@ -15,32 +15,29 @@ public class Hand {
         is_value_ready = false;
     }
 
-    public void print_open_cards(){
+    public void print_open_cards() {
         if (!is_value_ready) get_cards_value();
         System.out.print("[");
         for (int i = 0; i < cards.size(); i++) {
-            if (i == cards.size() - 1){
+            if (i == cards.size() - 1) {
                 System.out.print(types[(cards.get(i)).type] + " " +
                         suits[(cards.get(i)).suit] + " (" + (cards.get(i)).value + ")");
-            }
-            else {
+            } else {
                 System.out.print(types[(cards.get(i)).type] + " " +
                         suits[(cards.get(i)).suit] + " (" + (cards.get(i)).value + ") ");
             }
         }
-        System.out.println("] => "+ score);
+        System.out.println("] => " + score);
     }
 
-    public void print_closed_cards(){
+    public void print_closed_cards() {
         Card first = cards.get(0);
         System.out.print("[" + types[first.type] + " " + suits[first.suit] + " (");
-        if (first.value <= 8){
+        if (first.value <= 8) {
             System.out.print(first.type + 2);
-        }
-        else if (first.value <= 11) {
+        } else if (first.value <= 11) {
             System.out.print(10);
-        }
-        else {
+        } else {
             System.out.print("1/11");
         }
         System.out.print(")");
@@ -51,43 +48,40 @@ public class Hand {
         System.out.println("]");
     }
 
-    public int get_score(){
+    public int get_score() {
         if (!is_value_ready) get_cards_value();
         return score;
     }
 
-    public Card get_last(){
+    public Card get_last() {
         if (!is_value_ready) get_cards_value();
         return cards.get(cards.size() - 1);
     }
 
-    public void print_card(Card card){
+    public void print_card(Card card) {
         System.out.print(types[card.type] + " " + suits[card.suit] + " (" + card.value + ")");
     }
 
-    private void get_cards_value(){
+    private void get_cards_value() {
         int ace_cnt = 0;
         score = 0;
         for (Card card : cards) {
             if (card.type <= 8) {
                 card.value = card.type + 2;
                 score += card.value;
-            }
-            else if (card.type <= 11) {
+            } else if (card.type <= 11) {
                 card.value = 10;
                 score += 10;
-            }
-            else ace_cnt++;
+            } else ace_cnt++;
         }
 
         if (ace_cnt != 0) {
             for (Card card : cards) {
                 if (card.type == 12) {
-                    if (10 + ace_cnt + score <= 21){
+                    if (10 + ace_cnt + score <= 21) {
                         card.value = 11;
                         score += 11;
-                    }
-                    else{
+                    } else {
                         card.value = 1;
                         score += 1;
                     }
