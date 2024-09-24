@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.BlackJackTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-09-13T06:25:50" hostname="SYSTEM_PC" time="0.104">
+  <properties/>
+  <testcase name="game_with_two_added_cards()" classname="org.example.BlackJackTest" time="0.078"/>
+  <testcase name="game_test_with_1_deck()" classname="org.example.BlackJackTest" time="0.008"/>
+  <testcase name="game_with_one_added_card()" classname="org.example.BlackJackTest" time="0.005"/>
+  <testcase name="game_test_with_10_deck()" classname="org.example.BlackJackTest" time="0.007"/>
+  <system-out><![CDATA[game_with_two_added_cards
+
+Welcome to Blackjack!
+
+Round 1
+
+Enter "1" if you want to enter the number of decks in the game.  Enter "0", if you do not want, then there will be one deck in the game
+The dealer has dealt the cards!
+	Your cards: [Five Spade (5) Lady Spade (10)] => 15
+	Dealer`s cards: [Four Club (4) <closed card>]
+Your turn!
+__________
+Enter "1" to take the card, and "0" to stop.
+You opened: Jack Spade (10)
+
+	Your cards: [Five Spade (5) Lady Spade (10) Jack Spade (10)] => 25
+	Dealer`s cards: [Four Club (4) Two Spade (2)] => 6
+Dealer wins! 0:1 in dealer`s favor
+
+
+
+Enter "1" if you want to start new round.  Enter "0", if you do not want it
+Round 2
+
+Enter "1" if you want to enter the number of decks in the game.  Enter "0", if you do not want, then there will be one deck in the game
+The dealer has dealt the cards!
+	Your cards: [Eight Diamond (8) Four Club (4)] => 12
+	Dealer`s cards: [Ace Spade (11) Ten Club (10)] => 21
+Dealer got 21! Dealer wins! 0:2 in dealer`s favor
+
+
+
+Enter "1" if you want to start new round.  Enter "0", if you do not want it
+game_test_with_1_deck
+
+Welcome to Blackjack!
+
+Round 1
+
+Enter "1" if you want to enter the number of decks in the game.  Enter "0", if you do not want, then there will be one deck in the game
+The dealer has dealt the cards!
+	Your cards: [King Club (10) Seven Diamond (7)] => 17
+	Dealer`s cards: [Ten Club (10) <closed card>]
+Your turn!
+__________
+Enter "1" to take the card, and "0" to stop.
+Dealer`s turn!
+______________
+The dealer opens a closed card
+	Your cards: [King Club (10) Seven Diamond (7)] => 17
+	Dealer`s cards: [Ten Club (10) Five Spade (5)] => 15
+Dealer opened: Nine Hearts (9)
+
+	Your cards: [King Club (10) Seven Diamond (7)] => 17
+	Dealer`s cards: [Ten Club (10) Five Spade (5) Nine Hearts (9)] => 24
+You win! 1:0 in your favor
+
+
+
+Enter "1" if you want to start new round.  Enter "0", if you do not want it
+game_with_one_added_card
+
+Welcome to Blackjack!
+
+Round 1
+
+Enter "1" if you want to enter the number of decks in the game.  Enter "0", if you do not want, then there will be one deck in the game
+The dealer has dealt the cards!
+	Your cards: [Ten Diamond (10) Five Club (5)] => 15
+	Dealer`s cards: [Ten Club (10) <closed card>]
+Your turn!
+__________
+Enter "1" to take the card, and "0" to stop.
+You opened: Jack Club (10)
+
+	Your cards: [Ten Diamond (10) Five Club (5) Jack Club (10)] => 25
+	Dealer`s cards: [Ten Club (10) Two Hearts (2)] => 12
+Dealer wins! 0:1 in dealer`s favor
+
+
+
+Enter "1" if you want to start new round.  Enter "0", if you do not want it
+game_test_with_10_deck
+
+Welcome to Blackjack!
+
+Round 1
+
+Enter "1" if you want to enter the number of decks in the game.  Enter "0", if you do not want, then there will be one deck in the game
+Enter the number of decks from 1 to 10
+The dealer has dealt the cards!
+	Your cards: [Two Spade (2) Nine Spade (9)] => 11
+	Dealer`s cards: [King Diamond (10) <closed card>]
+Your turn!
+__________
+Enter "1" to take the card, and "0" to stop.
+Dealer`s turn!
+______________
+The dealer opens a closed card
+	Your cards: [Two Spade (2) Nine Spade (9)] => 11
+	Dealer`s cards: [King Diamond (10) Ten Hearts (10)] => 20
+Dealer wins! 0:1 in dealer`s favor
+
+
+
+Enter "1" if you want to start new round.  Enter "0", if you do not want it
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
