@@ -47,26 +47,7 @@ public class Hand {
         System.out.println("] => " + score);
     }
 
-    /**
-     * Print cards, if you do not know their value.
-     */
-    public void print_closed_cards() {
-        Card first = cards.get(0);
-        System.out.print("[" + types[first.type] + " " + suits[first.suit] + " (");
-        if (first.value <= 8) {
-            System.out.print(first.type + 2);
-        } else if (first.value <= 11) {
-            System.out.print(10);
-        } else {
-            System.out.print("1/11");
-        }
-        System.out.print(")");
 
-        for (int i = 1; i < cards.size(); i++) {
-            System.out.print(" <closed card>");
-        }
-        System.out.println("]");
-    }
 
     /**
      * method to get total value of deck.
@@ -104,7 +85,7 @@ public class Hand {
     /**
      * Get values of all cards.
      */
-    private void get_cards_value() {
+    protected void get_cards_value() {
         int aceCnt = 0;
         score = 0;
         for (Card card : cards) {
@@ -136,15 +117,15 @@ public class Hand {
         isValueReady = true;
     }
 
-    private Boolean isValueReady = false;
+    protected Boolean isValueReady = false;
 
-    private int score;
+    protected int score;
 
-    private ArrayList<Card> cards = new ArrayList<>();
+    protected ArrayList<Card> cards = new ArrayList<>();
 
-    private String[] types = {"Two", "Three", "Four", "Five", "Six",
+    protected String[] types = {"Two", "Three", "Four", "Five", "Six",
             "Seven", "Eight", "Nine", "Ten", "Jack", "Lady",
             "King", "Ace"};
 
-    private String[] suits = {"Spade", "Club", "Hearts", "Diamond"};
+    protected String[] suits = {"Spade", "Club", "Hearts", "Diamond"};
 }

@@ -14,7 +14,7 @@ public class BlackJack {
         rounds = 1;
         deck = new Deck();
         player = new Hand();
-        dealer = new Hand();
+        dealer = new DealerHand();
         playerRes = 0;
         dealerRes = 0;
         boolean readyToContinue = true;
@@ -208,5 +208,5 @@ public class BlackJack {
     private int rounds;
     private Deck deck;
     private Hand player;
-    private Hand dealer;
+    private DealerHand dealer;
 }

@@ -1,17 +1,15 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-class HandTest {
+class DealerHandTest {
 
     @Test
     void handTest() {
         Deck deck = new Deck();
-        Hand hand = new Hand();
+        DealerHand hand = new DealerHand();
 
         deck.make_new_deck(1);
         assertEquals(hand.add_card(deck.get_card()), 1);
@@ -23,6 +21,7 @@ class HandTest {
         System.out.print("\n\n");
 
         hand.print_open_cards();
+        hand.print_closed_cards();
     }
 
 }
