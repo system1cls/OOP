@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Class for deck with all cards in start
+ * Class for deck with all cards in start.
  */
 public class Deck {
 

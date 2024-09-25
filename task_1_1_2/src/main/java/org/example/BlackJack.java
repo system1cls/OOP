@@ -109,11 +109,13 @@ public class BlackJack {
                 check_result(player.get_score(), dealer.get_score(), true, false);
             }
 
-            System.out.println("Enter \"1\" if you want to start new round. " +
-                    " Enter \"0\", if you do not want it");
+            System.out.println("Enter \"1\" if you want to start new round. "
+                    + " Enter \"0\", if you do not want it");
             isWrittenSmthAfterCards = true;
             choice = scanner.nextInt();
-            if (choice == 0) readyToContinue = false;
+            if (choice == 0) {
+                readyToContinue = false;
+            }
 
             deck.clear_deck();
             player.clear_hand();
