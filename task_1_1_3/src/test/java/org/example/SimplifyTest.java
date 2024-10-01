@@ -17,4 +17,16 @@ class SimplifyTest {
         Expression ex = Expression.make_expression("54/7*7");
         assertTrue(ex.simplify().equals(new Number(54)));
     }
+
+    @Test
+    void simplify3() {
+        Expression ex = Expression.make_expression("54+7+7");
+        assertTrue(ex.simplify().equals(new Number(68)));
+    }
+
+    @Test
+    void simplify4() {
+        Expression ex = Expression.make_expression("54-7-7");
+        assertTrue(ex.simplify().equals(new Number(40)));
+    }
 }
