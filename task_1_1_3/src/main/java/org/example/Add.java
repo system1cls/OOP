@@ -87,62 +87,6 @@ public class Add extends NonDigitExpr {
         Expression ex1 = this.ex1.simplify();
         Expression ex2 = this.ex2.simplify();
 
-        if (ex1.getClass() == Number.class) {
-            if (ex2.getClass() == Add.class) {
-                Add exA2 = (Add) ex2;
-                if (exA2.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex1;
-                    ((Number) ex1).num += ex_new.num;
-                    return new Add(ex1, exA2.ex2).simplify();
-                } else if (exA2.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex2;
-                    ((Number) ex1).num += ex_new.num;
-                    return new Add(ex1, exA2.ex1).simplify();
-                }
-            }
-            if (ex2.getClass() == Sub.class) {
-                Sub exA2 = (Sub) ex2;
-                if (exA2.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex1;
-                    ((Number) ex1).num += ex_new.num;
-                    return new Sub(ex1, exA2.ex2).simplify();
-                } else if (exA2.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex2;
-                    ((Number) ex1).num -= ex_new.num;
-                    return new Add(ex1, exA2.ex1).simplify();
-                }
-            }
-        } else if (ex2.getClass() == Number.class) {
-            if (ex1.getClass() == Add.class) {
-                Add exA1 = (Add) ex1;
-                if (exA1.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex1;
-                    ((Number) ex2).num += ex_new.num;
-                    return new Add(ex1, exA1.ex2).simplify();
-                } else if (exA1.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex2;
-                    ((Number) ex2).num += ex_new.num;
-                    return new Add(ex2, exA1.ex1).simplify();
-                }
-            }
-            if (ex1.getClass() == Sub.class) {
-                Sub exA1 = (Sub) ex1;
-                if (exA1.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex1;
-                    ((Number) ex2).num += ex_new.num;
-                    return new Sub(ex2, exA1.ex2).simplify();
-
-                } else if (exA1.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex2;
-                    ((Number) ex2).num -= ex_new.num;
-                    return new Add(ex2, exA1.ex1).simplify();
-                }
-            }
-            if (((Number) ex2).num < 0) {
-                ((Number) ex2).num *= -1;
-                return new Sub(ex1, ex2);
-            }
-        }
 
 
         if (ex1.equals(new Number(0))) {
