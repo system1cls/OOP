@@ -32,4 +32,11 @@ class DerivativeTest {
                 equals(new Sub(new Mul(new Number(2), new Var("x")), new Number(24))));
     }
 
+    @Test
+    void derivative5() {
+        Expression ex = Expression.make_expression("x/5");
+        assertTrue(ex.derivative("x").simplify().
+                equals(new Number(0)));
+    }
+
 }

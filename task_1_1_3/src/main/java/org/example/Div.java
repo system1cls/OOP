@@ -36,9 +36,9 @@ public class Div extends NonDigitExpr {
      */
     @Override
     public Expression derivative(String str) {
-        Expression nominator = new Add(new Mul(ex1.derivative(str), ex2),
-                new Mul(new Number(-1), new Mul(ex1, ex2.derivative(str))));
-        Expression denominator = new Mul(this.copy(), this);
+        Expression nominator = new Add(new Mul(ex1.derivative(str), ex2.copy()),
+                new Mul(new Number(-1), new Mul(ex1.copy(), ex2.derivative(str))));
+        Expression denominator = new Mul(this.ex2.copy(), this.ex2.copy());
         return new Div(nominator, denominator);
     }
 
