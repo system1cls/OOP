@@ -120,7 +120,7 @@ public class Expression {
      * Method to get dictionary (Var->value)
      *
      * @param str string with vars and their value
-     * @return dictionary(var - > value)
+     * @return dictionary(var - value)
      */
     private HashMap<String, Integer> get_dict(String str) {
         int it = 0;
@@ -164,7 +164,7 @@ public class Expression {
     /**
      * Method to check if Expression can be evaled.
      *
-     * @param dict Dictionary (vat->value)
+     * @param dict Dictionary (vat - value)
      * @return can Expression be evaled
      */
     protected boolean checkEvalAbility(HashMap<String, Integer> dict) {
@@ -174,7 +174,7 @@ public class Expression {
     /**
      * Method for recursive eval.
      *
-     * @param dict Dictionary (vat->value)
+     * @param dict Dictionary (vat - value)
      * @return can Expression be evaled
      */
     protected int rec_eval(HashMap<String, Integer> dict) {

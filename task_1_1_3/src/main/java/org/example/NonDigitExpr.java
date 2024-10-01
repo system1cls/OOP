@@ -38,7 +38,7 @@ public class NonDigitExpr extends Expression {
     /**
      * Method to check if Expression can be evaled.
      *
-     * @param dict - dictionary var -> value
+     * @param dict - dictionary var - value
      * @return can Expression be evaled.
      */
     @Override
