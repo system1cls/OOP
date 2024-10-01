@@ -85,59 +85,8 @@ public class Div extends NonDigitExpr {
             return new Number(exN1.num / exN2.num);
         }
 
-        if (ex1.getClass() == Number.class) {
-            if (ex2.getClass() == Mul.class) {
-                Mul exA2 = (Mul) ex2;
-                if (exA2.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex1;
-                    ((Number) ex1).num /= ex_new.num;
-                    return new Div(ex1, exA2.ex2).simplify();
-                } else if (exA2.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex2;
-                    ((Number) ex1).num /= ex_new.num;
-                    return new Div(ex1, exA2.ex1).simplify();
-                }
-            }
-            if (ex2.getClass() == Div.class) {
-                Div exA2 = (Div) ex2;
-                if (exA2.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex1;
-                    ((Number) ex1).num /= ex_new.num;
-                    return new Mul(ex1, exA2.ex2).simplify();
-                } else if (exA2.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA2.ex2;
-                    ((Number) ex1).num *= ex_new.num;
-                    return new Div(ex1, exA2.ex1).simplify();
-                }
-            }
-        } else if (ex2.getClass() == Number.class) {
-            if (ex1.getClass() == Mul.class) {
-                Mul exA1 = (Mul) ex1;
-                if (exA1.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex1;
-                    ex_new.num /= ((Number) ex2).num;
-                    return exA1.simplify();
-                } else if (exA1.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex2;
-                    ex_new.num /= ((Number) ex2).num;
-                    return exA1.simplify();
-                }
-            }
-            if (ex1.getClass() == Div.class) {
-                Div exA1 = (Div) ex1;
-                if (exA1.ex1.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex1;
-                    ex_new.num /= ((Number) ex2).num;
-                    return exA1.simplify();
-                } else if (exA1.ex2.getClass() == Number.class) {
-                    Number ex_new = (Number) exA1.ex2;
-                    ex_new.num *= ((Number) ex2).num;
-                    return new Div(exA1.ex1, ex_new).simplify();
-                }
-            }
-        }
 
 
-        return new Mul(ex1, ex2);
+        return new Div(ex1, ex2);
     }
 }

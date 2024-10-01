@@ -39,4 +39,18 @@ class DerivativeTest {
                 equals(new Number(0)));
     }
 
+    @Test
+    void derivative6() {
+        Expression ex = Expression.make_expression("x*x*x");
+        ex.derivative("x").simplify().print();
+    }
+
+    @Test
+    void derivative7() {
+        Expression ex = Expression.make_expression("1/x");
+        ex.derivative("x").simplify().print();
+        assertTrue(ex.derivative("x").simplify().
+                equals(new Div(new Number(-1), new Mul(new Var("x"), new Var("x")))));
+    }
+
 }
