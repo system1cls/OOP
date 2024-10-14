@@ -22,7 +22,7 @@ class HandTest {
 
         System.out.print("\n\n");
 
-        hand.print_open_cards();
+        hand.print_cards();
     }
 
 }

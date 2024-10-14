@@ -20,8 +20,8 @@ class DealerHandTest {
 
         System.out.print("\n\n");
 
-        hand.print_open_cards();
-        hand.print_closed_cards();
+        hand.print_cards(false);
+        hand.print_cards(true);
     }
 
 }
