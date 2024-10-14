@@ -11,7 +11,7 @@ public class Deck {
     private ArrayList<Card> cards = new ArrayList<>();
 
 
-    enum types {
+    enum Types {
         TWO,
         THREE,
         FOUR,
@@ -27,7 +27,7 @@ public class Deck {
         ACE
     }
 
-    enum suit{
+    enum Suit {
         SPADE,
         CLUB,
         HEART,
@@ -54,8 +54,8 @@ public class Deck {
      */
     public int make_new_deck(int cntDecks) {
         for (int i = 0; i < cntDecks; i++) {
-            for (types j : types.values()) {
-                for (suit q : suit.values()) {
+            for (Types j : Types.values()) {
+                for (Suit q : Suit.values()) {
                     cards.add(new Card(j, q));
                 }
             }
@@ -69,7 +69,6 @@ public class Deck {
     public void clear_deck() {
         cards.clear();
     }
-
 
 
 }

@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Dealer`s class
+ */
 public class DealerHand extends Hand {
 
     /**
@@ -23,6 +26,8 @@ public class DealerHand extends Hand {
             }
             System.out.println("]");
         }
-        else print_cards();
+        else {
+            print_cards();
+        }
     }
 }

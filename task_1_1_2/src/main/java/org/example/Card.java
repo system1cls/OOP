@@ -10,7 +10,7 @@ public class Card {
     int suit;
     int value;
 
-    Card(Deck.types type, Deck.suit suit) {
+    Card(Deck.Types type, Deck.Suit suit) {
         this.suit = suit.ordinal();
         this.type = type.ordinal();
     }

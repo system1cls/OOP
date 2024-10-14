@@ -110,7 +110,7 @@ public class BlackJack {
     }
 
     /**
-     * Print dealer`s card
+     * Print dealer`s card.
      *
      * @param isClosed - are dealer`s cards closed
      */
@@ -126,11 +126,11 @@ public class BlackJack {
      * @param scanner - scanner
      */
     private void makeStartDeck(Scanner scanner) {
-        int choice;
         System.out.println("Round " + rounds + '\n');
         rounds++;
         System.out.println("Enter \"1\" if you want to enter the number of decks in the game. "
                 + " Enter \"0\", if you do not want, then there will be one deck in the game");
+        int choice;
         choice = scanner.nextInt();
 
         if (choice == 1) {
@@ -151,7 +151,7 @@ public class BlackJack {
     /**
      * Give start cards.
      */
-    private void giveStartCards(){
+    private void giveStartCards() {
         player.add_card(deck.get_card());
         dealer.add_card(deck.get_card());
         player.add_card(deck.get_card());
@@ -162,7 +162,7 @@ public class BlackJack {
      * Player`s turn.
      *
      * @param isRoundEnded is round ended
-     * @param scanner - scanner
+     * @param scanner      - scanner
      * @return is round ended
      */
     private boolean playerTurn(boolean isRoundEnded, Scanner scanner) {
@@ -232,11 +232,10 @@ public class BlackJack {
      * Check end.
      *
      * @param isRoundEnded is round ended
-     * @param scanner - scanner
+     * @param scanner      - scanner
      * @return is round ended
      */
     private boolean endRound(boolean isRoundEnded, Scanner scanner) {
-        int choice;
         boolean readyToContinue = true;
 
         if (!isRoundEnded) {
@@ -245,6 +244,7 @@ public class BlackJack {
 
         System.out.println("Enter \"1\" if you want to start new round. "
                 + " Enter \"0\", if you do not want it");
+        int choice;
         isWrittenSmthAfterCards = true;
         choice = scanner.nextInt();
         if (choice == 0) {
