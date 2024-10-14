@@ -16,7 +16,7 @@ class TestGraph {
 
     public void readFromFile() {
         Graph graph = Graphs.createGraphSimple(clazz);
-        graph.readFromFile("src\\test\\resources\\graphSimple.txt");
+        graph.readFromFile("graphSimple.txt");
         assertEquals(graph, Graphs.createGraphSimple(clazz));
     }
 
