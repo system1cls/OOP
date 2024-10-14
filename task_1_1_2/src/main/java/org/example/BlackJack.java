@@ -21,10 +21,11 @@ public class BlackJack {
         boolean isRoundEnded;
         System.out.println("Welcome to Blackjack!\n");
         isWrittenSmthAfterCards = true;
+        Scanner sc = new Scanner(System.in);
 
         while (readyToContinue) {
 
-            makeStartDeck();
+            makeStartDeck(sc);
 
             giveStartCards();
 
@@ -32,11 +33,11 @@ public class BlackJack {
 
             isRoundEnded = check_result(player.get_score(), dealer.get_score(), false, true);
 
-            isRoundEnded = playerTurn(isRoundEnded);
+            isRoundEnded = playerTurn(isRoundEnded, sc);
 
             isRoundEnded = dealerTurn(isRoundEnded);
 
-            readyToContinue = endRound(isRoundEnded);
+            readyToContinue = endRound(isRoundEnded, sc);
         }
     }
 
@@ -121,10 +122,11 @@ public class BlackJack {
 
     /**
      * Make Start Decks.
+     *
+     * @param scanner - scanner
      */
-    private void makeStartDeck() {
+    private void makeStartDeck(Scanner scanner) {
         int choice;
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Round " + rounds + '\n');
         rounds++;
         System.out.println("Enter \"1\" if you want to enter the number of decks in the game. "
@@ -160,11 +162,11 @@ public class BlackJack {
      * Player`s turn.
      *
      * @param isRoundEnded is round ended
+     * @param scanner - scanner
      * @return is round ended
      */
-    private boolean playerTurn(boolean isRoundEnded) {
+    private boolean playerTurn(boolean isRoundEnded, Scanner scanner) {
         if (!isRoundEnded) {
-            Scanner scanner = new Scanner(System.in);
             int choice = 1;
             Card card;
 
@@ -230,10 +232,10 @@ public class BlackJack {
      * Check end.
      *
      * @param isRoundEnded is round ended
+     * @param scanner - scanner
      * @return is round ended
      */
-    private boolean endRound(boolean isRoundEnded) {
-        Scanner scanner = new Scanner(System.in);
+    private boolean endRound(boolean isRoundEnded, Scanner scanner) {
         int choice;
         boolean readyToContinue = true;
 
