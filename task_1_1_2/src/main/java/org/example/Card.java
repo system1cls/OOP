@@ -10,8 +10,8 @@ public class Card {
     int suit;
     int value;
 
-    Card(int type, int suit) {
-        this.suit = suit;
-        this.type = type;
+    Card(Deck.types type, Deck.suit suit) {
+        this.suit = suit.ordinal();
+        this.type = type.ordinal();
     }
 }

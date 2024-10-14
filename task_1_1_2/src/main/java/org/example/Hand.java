@@ -30,7 +30,7 @@ public class Hand {
     /**
      * Print cards, if you know their value.
      */
-    public void print_open_cards() {
+    public void print_cards() {
         if (!isValueReady) {
             get_cards_value();
         }

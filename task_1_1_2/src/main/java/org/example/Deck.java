@@ -8,6 +8,33 @@ import java.util.Random;
  */
 public class Deck {
 
+    private ArrayList<Card> cards = new ArrayList<>();
+
+
+    enum types {
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        JACK,
+        QUEEN,
+        KING,
+        ACE
+    }
+
+    enum suit{
+        SPADE,
+        CLUB,
+        HEART,
+        DIAMOND
+    }
+
+
     /**
      * Get random card from the deck.
      *
@@ -27,8 +54,8 @@ public class Deck {
      */
     public int make_new_deck(int cntDecks) {
         for (int i = 0; i < cntDecks; i++) {
-            for (int j = 0; j <= 12; j++) {
-                for (int q = 0; q <= 3; q++) {
+            for (types j : types.values()) {
+                for (suit q : suit.values()) {
                     cards.add(new Card(j, q));
                 }
             }
@@ -43,6 +70,6 @@ public class Deck {
         cards.clear();
     }
 
-    private ArrayList<Card> cards = new ArrayList<>();
+
 
 }
