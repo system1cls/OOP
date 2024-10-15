@@ -181,8 +181,8 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEdge(int,int)">addEdge</a></span>&#8203;(int&nbsp;VertNum1,
-       int&nbsp;VertNum2)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEdge(int,int)">addEdge</a></span>&#8203;(int&nbsp;vertNum1,
+       int&nbsp;vertNum2)</code></th>
 <td class="colLast">
 <div class="block">Add new oriented edge.</div>
 </td>
@@ -203,15 +203,15 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteEdge(int,int)">deleteEdge</a></span>&#8203;(int&nbsp;VertNum1,
-          int&nbsp;VertNum2)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteEdge(int,int)">deleteEdge</a></span>&#8203;(int&nbsp;vertNum1,
+          int&nbsp;vertNum2)</code></th>
 <td class="colLast">
 <div class="block">Delete edge from VertNum1 to VertNum2.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteVert(int)">deleteVert</a></span>&#8203;(int&nbsp;VertNum)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteVert(int)">deleteVert</a></span>&#8203;(int&nbsp;vertNum)</code></th>
 <td class="colLast">
 <div class="block">Delete vert.</div>
 </td>
@@ -225,7 +225,7 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNeighbors(int)">getNeighbors</a></span>&#8203;(int&nbsp;VertNum)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNeighbors(int)">getNeighbors</a></span>&#8203;(int&nbsp;vertNum)</code></th>
 <td class="colLast">
 <div class="block">Get adjective verts.</div>
 </td>
@@ -302,8 +302,9 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 <h4>addVert</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;addVert()</pre>
 <div class="block">Add new vert.
- <p>
- (Important: if there is a deleted vert, this method will NOT return the smallest available number)</div>
+
+ (Important: if there is a deleted vert,
+ this method will NOT return the smallest available number)</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#addVert()">addVert</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in org.example">Graph</a></code></dd>
@@ -318,15 +319,15 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>addEdge</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addEdge&#8203;(int&nbsp;VertNum1,
-                    int&nbsp;VertNum2)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addEdge&#8203;(int&nbsp;vertNum1,
+                    int&nbsp;vertNum2)</pre>
 <div class="block">Add new oriented edge.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#addEdge(int,int)">addEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in org.example">Graph</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>VertNum1</code> - Vert from</dd>
-<dd><code>VertNum2</code> - Vert to</dd>
+<dd><code>vertNum1</code> - Vert from</dd>
+<dd><code>vertNum2</code> - Vert to</dd>
 </dl>
 </li>
 </ul>
@@ -336,13 +337,13 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteVert</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;deleteVert&#8203;(int&nbsp;VertNum)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;deleteVert&#8203;(int&nbsp;vertNum)</pre>
 <div class="block">Delete vert.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#deleteVert(int)">deleteVert</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in org.example">Graph</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>VertNum</code> - number of vert to delete</dd>
+<dd><code>vertNum</code> - number of vert to delete</dd>
 </dl>
 </li>
 </ul>
@@ -352,15 +353,15 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteEdge</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;deleteEdge&#8203;(int&nbsp;VertNum1,
-                       int&nbsp;VertNum2)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;deleteEdge&#8203;(int&nbsp;vertNum1,
+                       int&nbsp;vertNum2)</pre>
 <div class="block">Delete edge from VertNum1 to VertNum2.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#deleteEdge(int,int)">deleteEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in org.example">Graph</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>VertNum1</code> - Vert from</dd>
-<dd><code>VertNum2</code> - Vert to</dd>
+<dd><code>vertNum1</code> - Vert from</dd>
+<dd><code>vertNum2</code> - Vert to</dd>
 </dl>
 </li>
 </ul>
@@ -370,15 +371,15 @@ implements <a href="Graph.html" title="interface in org.example">Graph</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNeighbors</h4>
-<pre class="methodSignature">public&nbsp;int[]&nbsp;getNeighbors&#8203;(int&nbsp;VertNum)</pre>
+<pre class="methodSignature">public&nbsp;int[]&nbsp;getNeighbors&#8203;(int&nbsp;vertNum)</pre>
 <div class="block">Get adjective verts.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Graph.html#getNeighbors(int)">getNeighbors</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in org.example">Graph</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>VertNum</code> - number of vert</dd>
+<dd><code>vertNum</code> - number of vert</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>array of numbers of verts, that are adjective to VertNum</dd>
+<dd>array of numbers of verts, that are adjective to vertNum</dd>
 </dl>
 </li>
 </ul>
