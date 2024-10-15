@@ -29,9 +29,9 @@ public class Add extends NonDigitExpr {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        NonDigitExpr new_obj = (NonDigitExpr) obj;
-        return (new_obj.ex1.equals(this.ex1) && new_obj.ex2.equals(this.ex2))
-                || ((new_obj.ex1.equals(this.ex2) && new_obj.ex2.equals(this.ex1)));
+        NonDigitExpr newObj = (NonDigitExpr) obj;
+        return (newObj.ex1.equals(this.ex1) && newObj.ex2.equals(this.ex2))
+                || ((newObj.ex1.equals(this.ex2) && newObj.ex2.equals(this.ex1)));
     }
 
 
@@ -78,7 +78,7 @@ public class Add extends NonDigitExpr {
     }
 
     /**
-     * Method to simplify Expression
+     * Method to simplify Expression.
      *
      * @return Simplified Expression
      */
@@ -93,7 +93,8 @@ public class Add extends NonDigitExpr {
             return ex2;
         } else if (ex2.equals(new Number(0))) {
             return ex1;
-        } else if (ex1.getClass() == Number.class && ex2.getClass() == Number.class) {
+        } else if (ex1.getClass() == Number.class
+                && ex2.getClass() == Number.class) {
             Number exN1 = (Number) ex1;
             Number exN2 = (Number) ex2;
             return new Number(exN1.num + exN2.num);

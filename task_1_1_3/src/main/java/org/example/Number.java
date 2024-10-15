@@ -1,8 +1,8 @@
 package org.example;
 
-import java.util.HashMap;
-
 import static java.lang.Character.isDigit;
+
+import java.util.HashMap;
 
 /**
  * Class to represent Numbers.
@@ -60,7 +60,7 @@ public class Number extends Expression {
      * @param it  number of start_symbol in str
      * @return Parsed Expression
      */
-    static public Expression my_get_expr(String str, myInt it) {
+    public static Expression my_get_expr(String str, MyInt it) {
 
         int bit = 1;
         if (str.charAt(it.val) == '-') {

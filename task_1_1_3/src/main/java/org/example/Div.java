@@ -66,7 +66,7 @@ public class Div extends NonDigitExpr {
     }
 
     /**
-     * Method to simplify Expression
+     * Method to simplify Expression.
      *
      * @return Simplified Expression
      */
@@ -79,12 +79,12 @@ public class Div extends NonDigitExpr {
             return new Number(0);
         } else if (Objects.equals(ex2, new Number(1))) {
             return ex1;
-        } else if (ex1.getClass() == Number.class && ex2.getClass() == Number.class) {
+        } else if (ex1.getClass() == Number.class
+                && ex2.getClass() == Number.class) {
             Number exN1 = (Number) ex1;
             Number exN2 = (Number) ex2;
             return new Number(exN1.num / exN2.num);
         }
-
 
 
         return new Div(ex1, ex2);

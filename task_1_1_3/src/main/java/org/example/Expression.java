@@ -1,9 +1,9 @@
 package org.example;
 
+import static java.lang.Character.isDigit;
+
 import java.util.HashMap;
 import java.util.Stack;
-
-import static java.lang.Character.isDigit;
 
 /**
  * Ancestor of all Expressions.
@@ -29,8 +29,8 @@ public class Expression {
      * @param str Expression in string
      * @return Parsed Expression
      */
-    static public Expression make_expression(String str) {
-        return Expression.get_expr_new(str, new myInt(0));
+    public static Expression make_expression(String str) {
+        return Expression.get_expr_new(str, new MyInt(0));
     }
 
     /**
@@ -49,7 +49,7 @@ public class Expression {
     }
 
     /**
-     * Method to simplify Expression
+     * Method to simplify Expression.
      *
      * @return Simplified Expression
      */
@@ -64,7 +64,7 @@ public class Expression {
      * @param it  number of start symbol
      * @return Expression
      */
-    static private Expression get_expr_new(String str, myInt it) {
+    static private Expression get_expr_new(String str, MyInt it) {
         str = Parser.pars(str);
         Stack<Expression> stack = new Stack<>();
         while (it.val < str.length()) {
@@ -117,7 +117,7 @@ public class Expression {
     }
 
     /**
-     * Method to get dictionary (Var->value)
+     * Method to get dictionary (Var->value).
      *
      * @param str string with vars and their value
      * @return dictionary(var - value)
@@ -131,7 +131,8 @@ public class Expression {
             name = "";
             val = 0;
 
-            while (str.charAt(it) == ' ' || str.charAt(it) == '=' || str.charAt(it) == ';') {
+            while (str.charAt(it) == ' ' || str.charAt(it) == '='
+                    || str.charAt(it) == ';') {
                 it++;
             }
 
@@ -154,7 +155,8 @@ public class Expression {
 
             dict.put(name, val);
 
-            while (it < str.length() && (str.charAt(it) == ' ' || str.charAt(it) == '=' || str.charAt(it) == ';')) {
+            while (it < str.length() && (str.charAt(it) == ' '
+                    || str.charAt(it) == '=' || str.charAt(it) == ';')) {
                 it++;
             }
         }

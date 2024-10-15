@@ -49,12 +49,14 @@ public class Var extends Expression {
      * @param it  number of start_symbol in str
      * @return parsed var
      */
-    static public Expression my_get_expr(String str, myInt it) {
+    public static Expression my_get_expr(String str, MyInt it) {
         Var ex = new Var("");
         while (str.length() > it.val && str.charAt(it.val) != '(' && str.charAt(it.val) != ')'
                 && str.charAt(it.val) != '+' && str.charAt(it.val) != '-'
-                && str.charAt(it.val) != '*' && str.charAt(it.val) != '/' && str.charAt(it.val) != ' ') {
-            ex.var = new StringBuffer(ex.var).insert(ex.var.length(), str.charAt(it.val)).toString();
+                && str.charAt(it.val) != '*' && str.charAt(it.val) != '/'
+                && str.charAt(it.val) != ' ') {
+            ex.var = new StringBuffer(ex.var)
+                    .insert(ex.var.length(), str.charAt(it.val)).toString();
             it.val++;
         }
         return ex;

@@ -9,7 +9,7 @@ public class NonDigitExpr extends Expression {
 
 
     /**
-     * Method to print NonDigitExpressions
+     * Method to print NonDigitExpressions.
      */
     @Override
     public void print() {
@@ -31,8 +31,8 @@ public class NonDigitExpr extends Expression {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        NonDigitExpr new_obj = (NonDigitExpr) obj;
-        return (new_obj.ex1.equals(this.ex1) && new_obj.ex2.equals(this.ex2));
+        NonDigitExpr newObj = (NonDigitExpr) obj;
+        return (newObj.ex1.equals(this.ex1) && newObj.ex2.equals(this.ex2));
     }
 
 

@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class evalTest {
+
+class EvalTest {
 
     @Test
     void evalTest1() {
@@ -31,7 +32,7 @@ class evalTest {
     }
 
     @Test
-    void evalTest5(){
+    void evalTest5() {
         Expression ex = Expression.make_expression("1-2-3-4-5-6-7-8-9");
         assertEquals(-43, ex.eval("x=2;y=0; z = 6"));
     }

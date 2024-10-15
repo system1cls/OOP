@@ -3,7 +3,7 @@ package org.example;
 /**
  * Class of iterators.
  */
-public class myInt {
+public class MyInt {
 
 
     /**
@@ -11,7 +11,7 @@ public class myInt {
      *
      * @param val value
      */
-    myInt(int val) {
+    MyInt(int val) {
         this.val = val;
     }
 

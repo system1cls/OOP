@@ -62,7 +62,7 @@ public class Sub extends NonDigitExpr {
     }
 
     /**
-     * Method to simplify Expression
+     * Method to simplify Expression.
      *
      * @return Simplified Expression
      */
@@ -72,7 +72,8 @@ public class Sub extends NonDigitExpr {
         Expression ex2 = this.ex2.simplify();
 
 
-        if (ex1.getClass() == Number.class && ex2.getClass() == Number.class) {
+        if (ex1.getClass() == Number.class
+                && ex2.getClass() == Number.class) {
             Number exN1 = (Number) ex1;
             Number exN2 = (Number) ex2;
             return new Number(exN1.num - exN2.num);

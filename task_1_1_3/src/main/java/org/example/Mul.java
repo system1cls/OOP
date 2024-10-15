@@ -74,13 +74,13 @@ public class Mul extends NonDigitExpr {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        NonDigitExpr new_obj = (NonDigitExpr) obj;
-        return (new_obj.ex1.equals(this.ex1) && new_obj.ex2.equals(this.ex2))
-                || ((new_obj.ex1.equals(this.ex2) && new_obj.ex2.equals(this.ex1)));
+        NonDigitExpr newObj = (NonDigitExpr) obj;
+        return (newObj.ex1.equals(this.ex1) && newObj.ex2.equals(this.ex2))
+                || ((newObj.ex1.equals(this.ex2) && newObj.ex2.equals(this.ex1)));
     }
 
     /**
-     * Method to simplify Expression
+     * Method to simplify Expression.
      *
      * @return Simplified Expression
      */
@@ -89,25 +89,9 @@ public class Mul extends NonDigitExpr {
         Expression ex1;
         Expression ex2;
 
-        if (this.ex1.getClass() != Div.class) {
-            ex1 = this.ex1.simplify();
-        } else {
-            ex1 = this.ex1.copy();
-        }
-        if (this.ex2.getClass() != Div.class) {
-            ex2 = this.ex2.simplify();
-        } else {
-            ex2 = this.ex2.copy();
-        }
+        ex1 = this.ex1.simplify();
+        ex2 = this.ex2.simplify();
 
-
-        if (ex1.getClass() == Div.class) {
-            ex1 = ex1.simplify();
-        }
-
-        if (ex2.getClass() == Div.class) {
-            ex2 = ex2.simplify();
-        }
 
         if (Objects.equals(ex1, new Number(0)) || Objects.equals(ex2, new Number(0))) {
             return new Number(0);

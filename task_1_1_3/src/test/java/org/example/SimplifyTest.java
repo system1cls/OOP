@@ -11,7 +11,7 @@ class SimplifyTest {
         Expression ex = Expression.make_expression("54*6/6");
         assertTrue(ex.simplify().equals(new Number(54)));
     }
-    
+
 
     @Test
     void simplify3() {
