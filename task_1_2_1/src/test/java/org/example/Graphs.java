@@ -2,11 +2,22 @@ package org.example;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Class for creating exact graphs.
+ */
 public class Graphs {
 
-    static public <T> Graph createGraphSimple(Class<T> clazz) {
+    /**
+     * Create simple graph.
+     *
+     * @param clazz class of implementation graph
+     * @param <T> class for creating
+     * @return graph
+     */
+    public static <T> Graph createGraphSimple(Class<T> clazz) {
         try {
-            Object plainGraph = Class.forName(clazz.getName()).getConstructor().newInstance();
+            Object plainGraph = Class.forName(clazz.getName())
+                    .getConstructor().newInstance();
             Graph graph = (Graph) plainGraph;
             for (int i = 0; i < 6; i++) {
                 graph.addVert();
@@ -24,7 +35,14 @@ public class Graphs {
         }
     }
 
-    static public <T> Graph createGraphMiddle1(Class<T> clazz) {
+    /**
+     * Create middle1 graph.
+     *
+     * @param clazz class of implementation graph
+     * @param <T> class for creating
+     * @return graph
+     */
+    public static <T> Graph createGraphMiddle1(Class<T> clazz) {
         try {
             Object plainGraph = Class.forName(clazz.getName()).getConstructor().newInstance();
             Graph graph = (Graph) plainGraph;
@@ -47,7 +65,14 @@ public class Graphs {
         }
     }
 
-    static public <T> Graph createGraphMiddle2(Class<T> clazz) {
+    /**
+     * Create middle2 graph.
+     *
+     * @param clazz class of implementation graph
+     * @param <T> class for creating
+     * @return graph
+     */
+    public static <T> Graph createGraphMiddle2(Class<T> clazz) {
         try {
             Object plainGraph = Class.forName(clazz.getName()).getConstructor().newInstance();
             Graph graph = (Graph) plainGraph;
@@ -74,8 +99,14 @@ public class Graphs {
         }
     }
 
-
-    static public <T> Graph createGraphHard(Class<T> clazz) {
+    /**
+     * Create hard graph.
+     *
+     * @param clazz class of implementation graph
+     * @param <T> class for creating
+     * @return graph
+     */
+    public static <T> Graph createGraphHard(Class<T> clazz) {
         try {
             Object plainGraph = Class.forName(clazz.getName()).getConstructor().newInstance();
             Graph graph = (Graph) plainGraph;

@@ -7,7 +7,6 @@ public interface Graph {
 
     /**
      * Add new vert.
-     * <p>
      * (Important: if there is a deleted vert, this method will NOT return the smallest available number)
      *
      * @return number of new vert
@@ -17,33 +16,33 @@ public interface Graph {
     /**
      * Add new oriented edge.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
-    void addEdge(int VertNum1, int VertNum2);
+    void addEdge(int vertNum1, int vertNum2);
 
     /**
      * Delete vert.
      *
-     * @param VertNum number of vert to delete
+     * @param vertNum number of vert to delete
      */
-    void deleteVert(int VertNum);
+    void deleteVert(int vertNum);
 
     /**
      * Delete edge from VertNum1 to VertNum2.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
-    void deleteEdge(int VertNum1, int VertNum2);
+    void deleteEdge(int vertNum1, int vertNum2);
 
     /**
      * Get adjective verts.
      *
-     * @param VertNum number of vert
+     * @param vertNum number of vert
      * @return array of numbers of verts, that are adjective to VertNum
      */
-    int[] getNeighbors(int VertNum);
+    int[] getNeighbors(int vertNum);
 
     /**
      * Create a NEW graph from description if file.

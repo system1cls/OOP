@@ -16,8 +16,9 @@ public class ListAdj implements Graph {
 
     /**
      * Add new vert.
-     * <p>
-     * (Important: if there is a deleted vert, this method will NOT return the smallest available number)
+     *
+     * (Important: if there is a deleted vert,
+     * this method will NOT return the smallest available number)
      *
      * @return number of new vert
      */
@@ -46,32 +47,32 @@ public class ListAdj implements Graph {
     /**
      * Add new oriented edge.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void addEdge(int VertNum1, int VertNum2) {
-        if (VertNum2 >= cntVerts) {
-            while (VertNum2 > maxVerts) {
+    public void addEdge(int vertNum1, int vertNum2) {
+        if (vertNum2 >= cntVerts) {
+            while (vertNum2 > maxVerts) {
                 maxVerts *= 2;
                 verts = Arrays.copyOf(verts, maxVerts);
                 isCreated = Arrays.copyOf(isCreated, maxVerts);
             }
 
-            verts[VertNum2] = new Vert(VertNum2);
+            verts[vertNum2] = new Vert(vertNum2);
         }
-        verts[VertNum1].addEdgeOut(VertNum2);
-        verts[VertNum2].addEdgeIn(VertNum1);
+        verts[vertNum1].addEdgeOut(vertNum2);
+        verts[vertNum2].addEdgeIn(vertNum1);
     }
 
     /**
      * Delete vert.
      *
-     * @param VertNum number of vert to delete
+     * @param vertNum number of vert to delete
      */
     @Override
-    public void deleteVert(int VertNum) {
-        Vert vertToDelete = verts[VertNum];
+    public void deleteVert(int vertNum) {
+        Vert vertToDelete = verts[vertNum];
         for (int vertIn : vertToDelete.listOut) {
             verts[vertIn].listIn.remove(verts[vertIn].listIn.indexOf(vertToDelete.number));
         }
@@ -85,35 +86,35 @@ public class ListAdj implements Graph {
 
 
     /**
-     * Delete edge from VertNum1 to VertNum2.
+     * Delete edge from vertNum1 to vertNum2.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void deleteEdge(int VertNum1, int VertNum2) {
-        verts[VertNum1].listOut.remove(verts[VertNum1].listOut.indexOf(VertNum2));
-        verts[VertNum2].listIn.remove(verts[VertNum2].listIn.indexOf(VertNum1));
+    public void deleteEdge(int vertNum1, int vertNum2) {
+        verts[vertNum1].listOut.remove(verts[vertNum1].listOut.indexOf(vertNum2));
+        verts[vertNum2].listIn.remove(verts[vertNum2].listIn.indexOf(vertNum1));
     }
 
     /**
      * Get adjective verts.
      *
-     * @param VertNum number of vert
-     * @return array of numbers of verts, that are adjective to VertNum
+     * @param vertNum number of vert
+     * @return array of numbers of verts, that are adjective to vertNum
      */
     @Override
-    public int[] getNeighbors(int VertNum) {
+    public int[] getNeighbors(int vertNum) {
         int[] neighs = new int[cntVerts];
         int it = 0;
         boolean[] isAdded = new boolean[cntVerts];
-        for (int vert : verts[VertNum].listIn) {
+        for (int vert : verts[vertNum].listIn) {
             if (!isAdded[vert]) {
                 neighs[it++] = vert;
                 isAdded[vert] = true;
             }
         }
-        for (int vert : verts[VertNum].listOut) {
+        for (int vert : verts[vertNum].listOut) {
             if (!isAdded[vert]) {
                 neighs[it++] = vert;
                 isAdded[vert] = true;

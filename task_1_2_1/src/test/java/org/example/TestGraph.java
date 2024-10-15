@@ -1,8 +1,7 @@
 package org.example;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 
 class TestGraph {
 
@@ -32,7 +31,7 @@ class TestGraph {
         graph.addVert();
     }
 
-    public void creatingAndDeletingMEdge() {
+    public void creatingAndDeletingMatEdge() {
         Graph graph = Graphs.createGraphMiddle2(clazz);
         graph.deleteEdge(1, 9);
         graph.deleteEdge(8, 9);
@@ -51,12 +50,17 @@ class TestGraph {
 
     public void neigs() {
         Graph graph = Graphs.createGraphHard(clazz);
+
         int[] rightAnswer1 = {4, 7, 9};
-        int[] rightAnswer2 = {0, 4, 5};
         int[] answer1 = graph.getNeighbors(8);
-        int[] answer2 = graph.getNeighbors(3);
+
         Arrays.sort(answer1);
+
+        int[] rightAnswer2 = {0, 4, 5};
+        int[] answer2 = graph.getNeighbors(3);
+
         Arrays.sort(answer2);
+
         assertArrayEquals(answer1, rightAnswer1);
         assertArrayEquals(answer2, rightAnswer2);
     }

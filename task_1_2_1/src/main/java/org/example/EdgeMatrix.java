@@ -18,8 +18,9 @@ public class EdgeMatrix implements Graph {
 
     /**
      * Add new vert.
-     * <p>
-     * (Important: if there is a deleted vert, this method will NOT return the smallest available number)
+     *
+     * (Important: if there is a deleted vert,
+     * this method will NOT return the smallest available number)
      *
      * @return number of new vert
      */
@@ -41,12 +42,12 @@ public class EdgeMatrix implements Graph {
     /**
      * Add new oriented edge.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void addEdge(int VertNum1, int VertNum2) {
-        while (VertNum1 > maxSizeVert || VertNum2 > maxSizeVert) {
+    public void addEdge(int vertNum1, int vertNum2) {
+        while (vertNum1 > maxSizeVert || vertNum2 > maxSizeVert) {
             maxSizeVert *= 2;
             matrix = Arrays.copyOf(matrix, maxSizeVert);
 
@@ -58,19 +59,19 @@ public class EdgeMatrix implements Graph {
             }
         }
 
-        matrix[VertNum1][curSizeEdge] = 1;
-        matrix[VertNum2][curSizeEdge++] = -1;
+        matrix[vertNum1][curSizeEdge] = 1;
+        matrix[vertNum2][curSizeEdge++] = -1;
     }
 
     /**
      * Delete vert.
      *
-     * @param VertNum number of vert to delete
+     * @param vertNum number of vert to delete
      */
     @Override
-    public void deleteVert(int VertNum) {
+    public void deleteVert(int vertNum) {
         for (int edge = 0; edge < curSizeEdge; edge++) {
-            if (matrix[VertNum][edge] != 0) {
+            if (matrix[vertNum][edge] != 0) {
                 for (int vert = 0; vert < curSizeVert; vert++) {
                     matrix[vert][edge] = 0;
                 }
@@ -81,15 +82,15 @@ public class EdgeMatrix implements Graph {
     /**
      * Delete edge from VertNum1 to VertNum2.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void deleteEdge(int VertNum1, int VertNum2) {
+    public void deleteEdge(int vertNum1, int vertNum2) {
         for (int edge = 0; edge < curSizeEdge; edge++) {
-            if (matrix[VertNum1][edge] != 0 && matrix[VertNum2][edge] != 0) {
-                matrix[VertNum1][edge] = 0;
-                matrix[VertNum2][edge] = 0;
+            if (matrix[vertNum1][edge] != 0 && matrix[vertNum2][edge] != 0) {
+                matrix[vertNum1][edge] = 0;
+                matrix[vertNum2][edge] = 0;
                 break;
             }
         }
@@ -98,17 +99,17 @@ public class EdgeMatrix implements Graph {
     /**
      * Get adjective verts.
      *
-     * @param VertNum number of vert
-     * @return array of numbers of verts, that are adjective to VertNum
+     * @param vertNum number of vert
+     * @return array of numbers of verts, that are adjective to vertNum
      */
     @Override
-    public int[] getNeighbors(int VertNum) {
+    public int[] getNeighbors(int vertNum) {
         int[] neighs = new int[curSizeVert];
         int it = 0;
         for (int edge = 0; edge < curSizeEdge; edge++) {
-            if (matrix[VertNum][edge] != 0) {
+            if (matrix[vertNum][edge] != 0) {
                 for (int vert = 0; vert < curSizeVert; vert++) {
-                    if (matrix[vert][edge] != 0 && vert != VertNum) {
+                    if (matrix[vert][edge] != 0 && vert != vertNum) {
                         neighs[it++] = vert;
                         break;
                     }

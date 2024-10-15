@@ -15,7 +15,8 @@ public class AdjMatrix implements Graph {
     /**
      * Add new vert.
      *
-     * (Important: if there is a deleted vert, this method will NOT return the smallest available number)
+     * (Important: if there is a deleted vert,
+     * this method will NOT return the smallest available number)
      *
      * @return number of new vert
      */
@@ -40,12 +41,12 @@ public class AdjMatrix implements Graph {
     /**
      * Add new oriented edge.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void addEdge(int VertNum1, int VertNum2) {
-        while (VertNum1 > maxSize || VertNum2 > maxSize) {
+    public void addEdge(int vertNum1, int vertNum2) {
+        while (vertNum1 > maxSize || vertNum2 > maxSize) {
             maxSize *= 2;
             matrix = Arrays.copyOf(matrix, maxSize);
             for (int i = 0; i < maxSize; i++) {
@@ -53,19 +54,19 @@ public class AdjMatrix implements Graph {
                 matrix[i] = Arrays.copyOf(matrix[i], maxSize);
             }
         }
-        matrix[VertNum1][VertNum2] = 1;
+        matrix[vertNum1][vertNum2] = 1;
     }
 
     /**
      * Delete vert.
      *
-     * @param VertNum number of vert to delete
+     * @param vertNum number of vert to delete
      */
     @Override
-    public void deleteVert(int VertNum) {
+    public void deleteVert(int vertNum) {
         for (int vertOut = 0; vertOut < curSize; vertOut++) {
             for (int vertTo = 0; vertTo < curSize; vertTo++) {
-                if (vertOut == VertNum || vertTo == VertNum) {
+                if (vertOut == vertNum || vertTo == vertNum) {
                     matrix[vertOut][vertTo] = 0;
                 }
             }
@@ -75,29 +76,29 @@ public class AdjMatrix implements Graph {
     /**
      * Delete edge from VertNum1 to VertNum2.
      *
-     * @param VertNum1 Vert from
-     * @param VertNum2 Vert to
+     * @param vertNum1 Vert from
+     * @param vertNum2 Vert to
      */
     @Override
-    public void deleteEdge(int VertNum1, int VertNum2) {
-        matrix[VertNum1][VertNum2] = 0;
+    public void deleteEdge(int vertNum1, int vertNum2) {
+        matrix[vertNum1][vertNum2] = 0;
     }
 
     /**
      * Get adjective verts.
      *
-     * @param VertNum number of vert
-     * @return array of numbers of verts, that are adjective to VertNum
+     * @param vertNum number of vert
+     * @return array of numbers of verts, that are adjective to vertNum
      */
     @Override
-    public int[] getNeighbors(int VertNum) {
+    public int[] getNeighbors(int vertNum) {
         int[] neighs = new int[curSize];
         int it = 0;
         for (int vertNeigh = 0; vertNeigh < curSize; vertNeigh++) {
-            if (matrix[VertNum][vertNeigh] == 1) {
+            if (matrix[vertNum][vertNeigh] == 1) {
                 neighs[it++] = vertNeigh;
             }
-            if (matrix[vertNeigh][VertNum] == 1) {
+            if (matrix[vertNeigh][vertNum] == 1) {
                 neighs[it++] = vertNeigh;
             }
         }

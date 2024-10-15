@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class Main {
     /**
-     * main method
+     * Main method.
      *
      * @param args args
      */
