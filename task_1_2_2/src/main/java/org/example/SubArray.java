@@ -113,8 +113,7 @@ public class SubArray<K, V> {
             if (subArray[i].key.equals(k)) {
                 if (i == length - 1) {
                     subArray[i] = null;
-                }
-                else {
+                } else {
                     subArray[i] = subArray[length - 1];
                 }
                 length--;
@@ -126,7 +125,7 @@ public class SubArray<K, V> {
     /**
      * Method to check if adding available.
      */
-    private void checkAbility(){
+    private void checkAbility() {
         if (length == maxLength) {
             maxLength = maxLength * 100;
             Pair<K, V>[] newArray = new Pair[maxLength];

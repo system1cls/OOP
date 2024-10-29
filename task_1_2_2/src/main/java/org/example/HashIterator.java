@@ -32,8 +32,7 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
 
         if (itArray > 0) {
             cur = table.array[itArray].subArray[0];
-        }
-        else {
+        } else {
             cur = null;
         }
     }
@@ -77,8 +76,7 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
                 }
             }
             return null;
-        }
-        else {
+        } else {
             cur = table.array[itArray].subArray[itElem];
             itElem++;
             return cur;
