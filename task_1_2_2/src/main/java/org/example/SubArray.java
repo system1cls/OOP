@@ -1,16 +1,32 @@
 package org.example;
 
+/**
+ * Class for implementing node of hashTable.
+ *
+ * @param <K> key
+ * @param <V> value
+ */
 public class SubArray<K, V> {
     int length;
     int maxLength;
     Pair<K, V>[] subArray;
 
+    /**
+     * Constructor.
+     */
     SubArray() {
         length = 0;
         maxLength = 100;
         this.subArray = new Pair[100];
     }
 
+    /**
+     * Add new pair in node.
+     *
+     * @param k key
+     * @param v value
+     * @return pointer to new Pair
+     */
     public Pair<K, V> addValue(K k, V v) {
         this.checkAbility();
         if (this.getVal(k) == null) {
@@ -21,6 +37,12 @@ public class SubArray<K, V> {
     }
 
 
+    /**
+     * Add or update pair in node.
+     *
+     * @param k key
+     * @param v value
+     */
     public void updateValue(K k, V v) {
         for (int i = 0; i < length; i++) {
             if (k.equals(subArray[i].key)) {
@@ -32,6 +54,12 @@ public class SubArray<K, V> {
         subArray[length++] = new Pair<>(k, v);
     }
 
+    /**
+     * Method for node`s comparing.
+     *
+     * @param obj object to compare
+     * @return is equality
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != this.getClass()) {
@@ -60,6 +88,12 @@ public class SubArray<K, V> {
         return true;
     }
 
+    /**
+     * Get Value by key.
+     *
+     * @param k key
+     * @return value
+     */
     public V getVal(K k) {
         for (int i = 0; i < length; i++) {
             if (k.equals(subArray[i].key)) {
@@ -69,6 +103,11 @@ public class SubArray<K, V> {
         return null;
     }
 
+    /**
+     * Method for deleting pair by key.
+     *
+     * @param k key
+     */
     public void deleteVal(K k) {
         for (int i = 0; i < length; i++) {
             if (subArray[i].key.equals(k)) {
@@ -84,11 +123,16 @@ public class SubArray<K, V> {
         }
     }
 
+    /**
+     * Method to check if adding available.
+     */
     private void checkAbility(){
         if (length == maxLength) {
             maxLength = maxLength * 100;
             Pair<K, V>[] newArray = new Pair[maxLength];
-            if (length >= 0) System.arraycopy(this.subArray, 0, newArray, 0, length);
+            if (length >= 0) {
+                System.arraycopy(this.subArray, 0, newArray, 0, length);
+            }
             this.subArray = newArray;
         }
     }

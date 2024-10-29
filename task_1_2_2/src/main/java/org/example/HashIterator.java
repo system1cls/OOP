@@ -2,12 +2,23 @@ package org.example;
 
 import java.util.Iterator;
 
+/**
+ * Class for iterator.
+ *
+ * @param <K> key
+ * @param <V> value
+ */
 public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
     int itArray;
     int itElem;
     Pair<K, V> cur;
     HashTable<K, V> table;
 
+    /**
+     * Constructor.
+     *
+     * @param table hash table
+     */
     HashIterator(HashTable<K, V> table) {
         itArray = -1;
         itElem = 1;
@@ -28,12 +39,21 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
     }
 
 
-
+    /**
+     * Check next pair.
+     *
+     * @return is next exist.
+     */
     @Override
     public boolean hasNext() {
         return (cur != null);
     }
 
+    /**
+     * Get next Pair.
+     *
+     * @return next Pair
+     */
     @Override
     public Pair<K, V> next() {
         Pair<K, V> temp = cur;
@@ -41,6 +61,11 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
         return temp;
     }
 
+    /**
+     * Get next pair for variable.
+     *
+     * @return next pair for variable
+     */
     private Pair<K, V> getNext() {
         if (itElem == table.array[itArray].length) {
             for (int i = itArray + 1; i < table.size; i++) {
