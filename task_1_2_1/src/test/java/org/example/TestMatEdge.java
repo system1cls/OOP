@@ -3,7 +3,7 @@ package org.example;
 import org.junit.jupiter.api.Test;
 
 /**
- * Class for natrix of edges tests.
+ * Class for matrix of edges tests.
  */
 public class TestMatEdge {
 

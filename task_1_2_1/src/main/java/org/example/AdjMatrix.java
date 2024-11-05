@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.DontExitstException.deleteVertExc;
+
 import java.io.*;
 import java.util.Arrays;
 
@@ -64,12 +66,18 @@ public class AdjMatrix implements Graph {
      */
     @Override
     public void deleteVert(int vertNum) {
-        for (int vertOut = 0; vertOut < curSize; vertOut++) {
-            for (int vertTo = 0; vertTo < curSize; vertTo++) {
-                if (vertOut == vertNum || vertTo == vertNum) {
-                    matrix[vertOut][vertTo] = 0;
+
+        try {
+            deleteVertExc(vertNum, curSize);
+            for (int vertOut = 0; vertOut < curSize; vertOut++) {
+                for (int vertTo = 0; vertTo < curSize; vertTo++) {
+                    if (vertOut == vertNum || vertTo == vertNum) {
+                        matrix[vertOut][vertTo] = 0;
+                    }
                 }
             }
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid number: " + ex.getMessage());
         }
     }
 
@@ -81,6 +89,18 @@ public class AdjMatrix implements Graph {
      */
     @Override
     public void deleteEdge(int vertNum1, int vertNum2) {
+        try {
+            deleteVertExc(vertNum1, curSize);
+        } catch (DontExitstException ex) {
+            System.out.print("No Vert " + vertNum1 + ": " + ex.getMessage());
+        }
+
+        try {
+            deleteVertExc(vertNum2, curSize);
+        } catch (DontExitstException ex) {
+            System.out.print("No Vert " + vertNum2 + ": " + ex.getMessage());
+        }
+
         matrix[vertNum1][vertNum2] = 0;
     }
 
@@ -92,6 +112,13 @@ public class AdjMatrix implements Graph {
      */
     @Override
     public int[] getNeighbors(int vertNum) {
+        try {
+            deleteVertExc(vertNum, curSize);
+        }
+        catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         int[] neighs = new int[curSize];
         int it = 0;
         for (int vertNeigh = 0; vertNeigh < curSize; vertNeigh++) {

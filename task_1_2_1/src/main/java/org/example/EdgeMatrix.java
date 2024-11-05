@@ -1,9 +1,12 @@
 package org.example;
 
+import static org.example.DontExitstException.deleteVertExc;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+
 
 /**
  * Class for implementing graph by a Matrix of Edges.
@@ -26,7 +29,7 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public int addVert() {
-        if (curSizeVert == 0) {
+        if (curSizeVert == 0 && curSizeEdge == 0) {
             matrix = new int[100][100];
         }
 
@@ -47,6 +50,10 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public void addEdge(int vertNum1, int vertNum2) {
+        if (curSizeVert == 0 && curSizeEdge == 0) {
+            matrix = new int[100][100];
+        }
+
         while (vertNum1 > maxSizeVert || vertNum2 > maxSizeVert) {
             maxSizeVert *= 2;
             matrix = Arrays.copyOf(matrix, maxSizeVert);
@@ -70,6 +77,12 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public void deleteVert(int vertNum) {
+        try {
+            deleteVertExc(vertNum, curSizeVert);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         for (int edge = 0; edge < curSizeEdge; edge++) {
             if (matrix[vertNum][edge] != 0) {
                 for (int vert = 0; vert < curSizeVert; vert++) {
@@ -87,6 +100,13 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public void deleteEdge(int vertNum1, int vertNum2) {
+        try {
+            deleteVertExc(vertNum1, curSizeVert);
+            deleteVertExc(vertNum1, curSizeVert);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         for (int edge = 0; edge < curSizeEdge; edge++) {
             if (matrix[vertNum1][edge] != 0 && matrix[vertNum2][edge] != 0) {
                 matrix[vertNum1][edge] = 0;
@@ -104,6 +124,12 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public int[] getNeighbors(int vertNum) {
+        try {
+            deleteVertExc(vertNum, curSizeVert);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         int[] neighs = new int[curSizeVert];
         int it = 0;
         for (int edge = 0; edge < curSizeEdge; edge++) {

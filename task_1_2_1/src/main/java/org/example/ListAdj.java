@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static org.example.DontExitstException.deleteVertExc;
+
 /**
  * Class for implementing graph by lists of Adjacency.
  */
@@ -72,6 +74,12 @@ public class ListAdj implements Graph {
      */
     @Override
     public void deleteVert(int vertNum) {
+        try {
+            deleteVertExc(vertNum, this.cntVerts);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         Vert vertToDelete = verts[vertNum];
         for (int vertIn : vertToDelete.listOut) {
             verts[vertIn].listIn.remove(verts[vertIn].listIn.indexOf(vertToDelete.number));
@@ -93,6 +101,14 @@ public class ListAdj implements Graph {
      */
     @Override
     public void deleteEdge(int vertNum1, int vertNum2) {
+        try {
+            deleteVertExc(vertNum1, this.cntVerts);
+            deleteVertExc(vertNum2, this.cntVerts);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
+
         verts[vertNum1].listOut.remove(verts[vertNum1].listOut.indexOf(vertNum2));
         verts[vertNum2].listIn.remove(verts[vertNum2].listIn.indexOf(vertNum1));
     }
@@ -105,6 +121,12 @@ public class ListAdj implements Graph {
      */
     @Override
     public int[] getNeighbors(int vertNum) {
+        try {
+            deleteVertExc(vertNum, this.cntVerts);
+        } catch (DontExitstException ex) {
+            System.out.print("Invalid input: " + ex.getMessage());
+        }
+
         int[] neighs = new int[cntVerts];
         int it = 0;
         boolean[] isAdded = new boolean[cntVerts];
