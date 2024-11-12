@@ -4,7 +4,7 @@ package org.example;
  * Class for pair.
  *
  * @param <K> key
- * @param <V>value
+ * @param <V> value
  */
 public class Pair <K, V> {
     K key;
