@@ -8,7 +8,7 @@ package org.example;
  */
 public class Pair <K, V> {
     K key;
-    V Value;
+    V value;
 
     /**
      * Constructor.
@@ -18,6 +18,6 @@ public class Pair <K, V> {
      */
     Pair(K key, V val) {
         this.key = key;
-        this.Value = val;
+        this.value = val;
     }
 }

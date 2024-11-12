@@ -59,9 +59,10 @@ public class Finding {
 
         int charToSkip = 0;
         int curIt = 0;
+
         while(buffer.getNext(charToSkip)) {
             pair = buffer.checkString(charArr);
-            if (pair.Value == -1) {
+            if (pair.value == -1) {
 
                 if (ansSize == maxSize) {
                     maxSize += 100;
@@ -72,14 +73,13 @@ public class Finding {
 
                 answer[ansSize++] = curIt;
                 charToSkip = 1;
-            }
-            else {
+            } else {
                 if (dictFirst.containsKey(pair.key)) {
-                    charToSkip = dictFirst.get(pair.key) + pair.Value - string.length();
+                    charToSkip = dictFirst.get(pair.key) + pair.value - string.length();
 
                     if (charToSkip <= 0) {
                         charToSkip = 0;
-                        for (int i = pair.Value + 1; i < string.length(); i++) {
+                        for (int i = pair.value + 1; i < string.length(); i++) {
                             if (dictSecond.get(i) != -1) {
                                 charToSkip = i - dictSecond.get(i);
                             }
@@ -90,7 +90,7 @@ public class Finding {
                         }
                     }
                 } else {
-                    charToSkip = pair.Value + 1;
+                    charToSkip = pair.value + 1;
                 }
             }
 

@@ -92,8 +92,7 @@ public class CirckedBuffer {
     private int getNextIt(int it) {
         if (it + 1 == size) {
             return 0;
-        }
-        else {
+        } else {
             return it + 1;
         }
     }
