@@ -7,6 +7,25 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Graphs {
 
+
+    public static <T> Graph createCircled(Class<T> clazz) {
+        try {
+            Object plainGraph = Class.forName(clazz.getName())
+                    .getConstructor().newInstance();
+            Graph graph = (Graph) plainGraph;
+            for (int i = 0; i < 3; i++) {
+                graph.addVert();
+            }
+            graph.addEdge(0, 1);
+            graph.addEdge(1, 2);
+            graph.addEdge(2, 0);
+            return graph;
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
+                 | InvocationTargetException | IllegalAccessException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
     /**
      * Create simple graph.
      *
@@ -92,6 +111,24 @@ public class Graphs {
             graph.addEdge(6, 8);
             graph.addEdge(8, 3);
             graph.addEdge(8, 9);
+            return graph;
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
+                 | InvocationTargetException | IllegalAccessException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public static <T> Graph createSort(Class<T> clazz) {
+        try {
+            Object plainGraph = Class.forName(clazz.getName()).getConstructor().newInstance();
+            Graph graph = (Graph) plainGraph;
+            for (int i = 0; i < 5; i++) {
+                graph.addVert();
+            }
+            graph.addEdge(0, 1);
+            graph.addEdge(1, 2);
+            graph.addEdge(1, 3);
+            graph.addEdge(3, 4);
             return graph;
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
                  | InvocationTargetException | IllegalAccessException exception) {

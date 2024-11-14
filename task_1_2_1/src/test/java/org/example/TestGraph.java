@@ -43,9 +43,14 @@ class TestGraph {
 
 
     public void sort() {
-        Graph graph = Graphs.createGraphMiddle2(clazz);
-        int[] rightAnswer = {6, 8, 0, 2, 4, 1, 9, 3, 7, 5};
+        Graph graph = Graphs.createSort(clazz);
+        int[] rightAnswer = {0, 1, 3, 4, 2};
         assertArrayEquals(graph.sort(), rightAnswer);
+    }
+
+    public void sortCircle() {
+        Graph graph = Graphs.createCircled(clazz);
+        graph.sort();
     }
 
     public void neigs() {

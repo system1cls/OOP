@@ -8,6 +8,12 @@ import org.junit.jupiter.api.Test;
 public class TestMatAdj {
 
     @Test
+    public void testCircle() {
+        TestGraph test = new TestGraph(AdjMatrix.class);
+        test.sortCircle();
+    }
+
+    @Test
     public void testSort() {
         TestGraph test = new TestGraph(AdjMatrix.class);
         test.sort();

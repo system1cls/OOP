@@ -8,6 +8,12 @@ import org.junit.jupiter.api.Test;
 public class TestList {
 
     @Test
+    public void testCircle() {
+        TestGraph test = new TestGraph(ListAdj.class);
+        test.sortCircle();
+    }
+
+    @Test
     public void testListSort() {
         TestGraph test = new TestGraph(ListAdj.class);
         test.sort();

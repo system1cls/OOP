@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static org.example.DontExitstException.deleteVertExc;
+import static org.example.DontExistException.deleteVertExc;
 
 /**
  * Class for implementing graph by lists of Adjacency.
@@ -76,7 +76,7 @@ public class ListAdj implements Graph {
     public void deleteVert(int vertNum) {
         try {
             deleteVertExc(vertNum, this.cntVerts);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -104,7 +104,7 @@ public class ListAdj implements Graph {
         try {
             deleteVertExc(vertNum1, this.cntVerts);
             deleteVertExc(vertNum2, this.cntVerts);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -123,7 +123,7 @@ public class ListAdj implements Graph {
     public int[] getNeighbors(int vertNum) {
         try {
             deleteVertExc(vertNum, this.cntVerts);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -200,7 +200,11 @@ public class ListAdj implements Graph {
         int stackIt = 0;
         for (int vert = 0; vert < cntVerts; vert++) {
             if (!isVisited[vert]) {
-                stackIt = dfs(isVisited, stack, stackIt, vert);
+                try {
+                    stackIt = dfs(isVisited, stack, stackIt, vert, -1);
+                } catch (CircleGraphException ex) {
+                    System.out.print("Circle found");
+                }
             }
         }
 
@@ -222,11 +226,14 @@ public class ListAdj implements Graph {
      * @param it        number of vert to check.
      * @return new stack size
      */
-    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it) {
+    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it, int last) throws CircleGraphException {
         isVisited[it] = true;
         for (int vert : verts[it].listOut) {
             if (!isVisited[vert]) {
-                stackIt = dfs(isVisited, stack, stackIt, vert);
+                stackIt = dfs(isVisited, stack, stackIt, vert, it);
+            }
+            else if (last != it) {
+                throw new CircleGraphException("");
             }
         }
         stack[stackIt++] = it;
@@ -238,16 +245,19 @@ public class ListAdj implements Graph {
      */
     @Override
     public void print() {
+        StringBuilder stringBuilder = new StringBuilder();
         for (int vert = 0; vert < cntVerts; vert++) {
-            System.out.print(vert);
-            System.out.print(": ");
+            stringBuilder.append(vert);
+            stringBuilder.append(": ");
             for (int vertTo : verts[vert].listOut) {
-                System.out.print(vertTo);
-                System.out.print(" ");
+                stringBuilder.append(vertTo);
+                stringBuilder.append(" ");
             }
 
-            System.out.print("\n");
+            stringBuilder.append("\n");
         }
+
+        System.out.print(stringBuilder);
     }
 
     /**

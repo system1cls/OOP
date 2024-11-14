@@ -1,6 +1,6 @@
 package org.example;
 
-import static org.example.DontExitstException.deleteVertExc;
+import static org.example.DontExistException.deleteVertExc;
 
 import java.io.*;
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class AdjMatrix implements Graph {
                     }
                 }
             }
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid number: " + ex.getMessage());
         }
     }
@@ -91,13 +91,13 @@ public class AdjMatrix implements Graph {
     public void deleteEdge(int vertNum1, int vertNum2) {
         try {
             deleteVertExc(vertNum1, curSize);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("No Vert " + vertNum1 + ": " + ex.getMessage());
         }
 
         try {
             deleteVertExc(vertNum2, curSize);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("No Vert " + vertNum2 + ": " + ex.getMessage());
         }
 
@@ -115,7 +115,7 @@ public class AdjMatrix implements Graph {
         try {
             deleteVertExc(vertNum, curSize);
         }
-        catch (DontExitstException ex) {
+        catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -185,7 +185,12 @@ public class AdjMatrix implements Graph {
         int stackIt = 0;
         for (int vertToVisit = 0; vertToVisit < curSize; vertToVisit++) {
             if (!isVisited[vertToVisit]) {
-                stackIt = dfs(isVisited, stack, stackIt, vertToVisit);
+                try {
+                    stackIt = dfs(isVisited, stack, stackIt, vertToVisit, -1);
+                }
+                catch (CircleGraphException ex) {
+                    System.out.print("Circle found");
+                }
             }
         }
 
@@ -207,13 +212,19 @@ public class AdjMatrix implements Graph {
      * @param it number of vert to check.
      * @return new stack size
      */
-    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it) {
+    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it, int last) throws CircleGraphException {
+
         isVisited[it] = true;
         for (int vertNeigh = 0; vertNeigh < curSize; vertNeigh++) {
             if (matrix[it][vertNeigh] == 1 && !isVisited[vertNeigh]) {
-                stackIt = dfs(isVisited, stack, stackIt, vertNeigh);
+                stackIt = dfs(isVisited, stack, stackIt, vertNeigh, it);
+            } else {
+                if (isVisited[vertNeigh] && vertNeigh != last && vertNeigh != it && matrix[it][vertNeigh] == 1) {
+                    throw new CircleGraphException("");
+                }
             }
         }
+
         stack[stackIt++] = it;
         return stackIt;
     }
@@ -224,24 +235,28 @@ public class AdjMatrix implements Graph {
     @Override
     public void print() {
 
-        System.out.print("   ");
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("   ");
         for (int vert = 0; vert < curSize; vert++) {
-            System.out.print("\"");
-            System.out.print(vert);
-            System.out.print("\" ");
+            stringBuilder.append("\"");
+            stringBuilder.append(vert);
+            stringBuilder.append("\" ");
         }
-        System.out.print("\n");
+        stringBuilder.append("\n");
         for (int vert1 = 0; vert1 < curSize; vert1++) {
-            System.out.print("\"");
-            System.out.print(vert1);
-            System.out.print("\" ");
+            stringBuilder.append("\"");
+            stringBuilder.append(vert1);
+            stringBuilder.append("\" ");
             for (int vert2 = 0; vert2 < curSize; vert2++) {
-                System.out.print(" ");
-                System.out.print(matrix[vert1][vert2]);
-                System.out.print("  ");
+                stringBuilder.append(" ");
+                stringBuilder.append(matrix[vert1][vert2]);
+                stringBuilder.append("  ");
             }
-            System.out.print("\n");
+            stringBuilder.append("\n");
         }
+
+        System.out.print(stringBuilder);
     }
 
     /**

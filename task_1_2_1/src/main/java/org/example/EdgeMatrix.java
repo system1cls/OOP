@@ -1,6 +1,6 @@
 package org.example;
 
-import static org.example.DontExitstException.deleteVertExc;
+import static org.example.DontExistException.deleteVertExc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -79,7 +79,7 @@ public class EdgeMatrix implements Graph {
     public void deleteVert(int vertNum) {
         try {
             deleteVertExc(vertNum, curSizeVert);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -103,7 +103,7 @@ public class EdgeMatrix implements Graph {
         try {
             deleteVertExc(vertNum1, curSizeVert);
             deleteVertExc(vertNum1, curSizeVert);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -126,7 +126,7 @@ public class EdgeMatrix implements Graph {
     public int[] getNeighbors(int vertNum) {
         try {
             deleteVertExc(vertNum, curSizeVert);
-        } catch (DontExitstException ex) {
+        } catch (DontExistException ex) {
             System.out.print("Invalid input: " + ex.getMessage());
         }
 
@@ -200,7 +200,12 @@ public class EdgeMatrix implements Graph {
         int stackIt = 0;
         for (int i = 0; i < curSizeVert; i++) {
             if (!isVisited[i]) {
-                stackIt = dfs(isVisited, stack, stackIt, i);
+                try {
+                    stackIt = dfs(isVisited, stack, stackIt, i, -1);
+                }
+                catch (CircleGraphException ex) {
+                    System.out.print("Circle found");
+                }
             }
         }
 
@@ -222,16 +227,16 @@ public class EdgeMatrix implements Graph {
      * @param it        number of vert to check.
      * @return new stack size
      */
-    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it) {
+    private int dfs(boolean[] isVisited, int[] stack, int stackIt, int it, int last) throws CircleGraphException {
         isVisited[it] = true;
         for (int edge = 0; edge < curSizeEdge; edge++) {
             if (matrix[it][edge] == 1) {
                 for (int vert = 0; vert < curSizeVert; vert++) {
                     if (matrix[vert][edge] == -1) {
-                        if (isVisited[vert]) {
-                            break;
+                        if (isVisited[vert] && vert != last) {
+                            throw new CircleGraphException("");
                         }
-                        stackIt = dfs(isVisited, stack, stackIt, vert);
+                        stackIt = dfs(isVisited, stack, stackIt, vert, it);
                         break;
                     }
                 }
@@ -247,25 +252,27 @@ public class EdgeMatrix implements Graph {
      */
     @Override
     public void print() {
-
-        System.out.print("   ");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("   ");
         for (int i = 0; i < curSizeEdge; i++) {
-            System.out.print("\"");
-            System.out.print(i);
-            System.out.print("\" ");
+            stringBuilder.append("\"");
+            stringBuilder.append(i);
+            stringBuilder.append("\" ");
         }
-        System.out.print("\n");
+        stringBuilder.append("\n");
         for (int i = 0; i < curSizeVert; i++) {
-            System.out.print("\"");
-            System.out.print(i);
-            System.out.print("\" ");
+            stringBuilder.append("\"");
+            stringBuilder.append(i);
+            stringBuilder.append("\" ");
             for (int j = 0; j < curSizeEdge; j++) {
-                System.out.print(" ");
-                System.out.print(matrix[i][j]);
-                System.out.print("  ");
+                stringBuilder.append(" ");
+                stringBuilder.append(matrix[i][j]);
+                stringBuilder.append("  ");
             }
-            System.out.print("\n");
+            stringBuilder.append("\n");
         }
+
+        System.out.print(stringBuilder);
     }
 
     /**
