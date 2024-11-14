@@ -50,7 +50,7 @@ class TestGraph {
 
     public void sortCircle() {
         Graph graph = Graphs.createCircled(clazz);
-        graph.sort();
+        assertThrows(CircleGraphException.class, () -> {graph.sort();});
     }
 
     public void neigs() {

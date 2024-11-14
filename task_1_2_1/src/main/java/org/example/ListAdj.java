@@ -204,6 +204,7 @@ public class ListAdj implements Graph {
                     stackIt = dfs(isVisited, stack, stackIt, vert, -1);
                 } catch (CircleGraphException ex) {
                     System.out.print("Circle found");
+                    throw new CircleGraphException("circle");
                 }
             }
         }

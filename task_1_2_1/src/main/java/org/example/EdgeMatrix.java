@@ -205,6 +205,7 @@ public class EdgeMatrix implements Graph {
                 }
                 catch (CircleGraphException ex) {
                     System.out.print("Circle found");
+                    throw new CircleGraphException("circle");
                 }
             }
         }
