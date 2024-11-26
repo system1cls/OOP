@@ -49,9 +49,15 @@ public class Table extends Element {
                 str += "|";
                 for (int j = 0; j < cntCols; j++) {
                     switch (aligns[j]) {
-                        case LEFT_ALIGN -> str += " :---------- |";
-                        case RIGHT_ALIGN -> str += " ----------: |";
-                        case CENTER_ALIGN -> str += " :---------: |";
+                        case LEFT_ALIGN:
+                            str += " :---------- |";
+                            break;
+                        case RIGHT_ALIGN:
+                            str += " ----------: |";
+                            break;
+                        case CENTER_ALIGN:
+                            str += " :---------: |";
+                            break;
                     }
                 }
 
