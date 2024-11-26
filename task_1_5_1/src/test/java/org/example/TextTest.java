@@ -1,8 +1,7 @@
 package org.example;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TextTest {
     @Test
@@ -17,7 +16,7 @@ class TextTest {
     }
 
     @Test
-    void checkEq () {
+    void checkEq() {
         Text.TextBuilder builder = new Text.TextBuilder();
         builder.setText("Just").setLineBreak()
                 .setBold("simple").setLineBreak()

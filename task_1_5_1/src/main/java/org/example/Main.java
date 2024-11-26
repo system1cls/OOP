@@ -21,11 +21,10 @@ public class Main {
                 .setText("abc")
                 .build();
 
-        try(FileOutputStream outStream = new FileOutputStream("testSer")) {
+        try (FileOutputStream outStream = new FileOutputStream("testSer")) {
             ObjectOutputStream obj = new ObjectOutputStream(outStream);
             obj.writeObject(el);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

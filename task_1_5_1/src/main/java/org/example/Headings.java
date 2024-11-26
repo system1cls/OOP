@@ -71,7 +71,7 @@ public class Headings extends Element {
                 str = str + "#";
             }
 
-            str+= " ";
+            str += " ";
 
             str += elInHead.str;
 

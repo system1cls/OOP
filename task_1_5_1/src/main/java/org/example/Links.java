@@ -1,7 +1,7 @@
 package org.example;
 
 /**
- * Link class
+ * Link class.
  */
 public class Links extends Element {
 

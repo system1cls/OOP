@@ -48,7 +48,7 @@ public class CheckBoxes extends Element {
          */
         CheckBoxesBuilder() {
             list = new List.ListBuilder('-');
-        };
+        }
 
         /**
          * addNode to the checkbox by Element.
@@ -62,8 +62,7 @@ public class CheckBoxes extends Element {
 
             if (set) {
                 text = text.setText("[x] " + el.str);
-            }
-            else {
+            } else {
                 text = text.setText("[ ] " + el.str);
             }
 
@@ -83,8 +82,7 @@ public class CheckBoxes extends Element {
 
             if (set) {
                 text = text.setText("[x] " + el);
-            }
-            else {
+            } else {
                 text = text.setText("[ ] " + el);
             }
 

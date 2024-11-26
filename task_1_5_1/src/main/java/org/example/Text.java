@@ -79,6 +79,17 @@ public class Text extends Element {
         }
 
         /**
+         * Add string by Element.
+         *
+         * @param elToAdd str to add
+         * @return builder
+         */
+        public TextBuilder setText(Element elToAdd) {
+            this.str = this.str + elToAdd;
+            return this;
+        }
+
+        /**
          * Set Line break.
          *
          * @return builder
@@ -100,50 +111,6 @@ public class Text extends Element {
         }
 
         /**
-         * Set text in bold.
-         *
-         * @param strBold string in bold form
-         * @return builder
-         */
-        public TextBuilder setBold(String strBold) {
-            this.str = this.str + "**" + strBold + "**";
-            return this;
-        }
-
-        /**
-         * Set text in strike.
-         *
-         * @param strStrike string in strike form
-         * @return builder
-         */
-        public TextBuilder setStrike(String strStrike) {
-            this.str = this.str + "~~" + strStrike + "~~";
-            return this;
-        }
-
-        /**
-         * Set text in code.
-         *
-         * @param toCode string in code form
-         * @return builder
-         */
-        public TextBuilder setCode(String toCode) {
-            this.str = this.str + '`' + toCode + '`';
-            return this;
-        }
-
-        /**
-         * Add string by Element.
-         *
-         * @param elToAdd str to add
-         * @return builder
-         */
-        public TextBuilder setText(Element elToAdd) {
-            this.str = this.str + elToAdd;
-            return this;
-        }
-
-        /**
          * Set text in cursive by Element.
          *
          * @param strCur string in cursive form
@@ -151,6 +118,17 @@ public class Text extends Element {
          */
         public TextBuilder setCursive(Element strCur) {
             this.str = this.str + "*" + strCur + "*";
+            return this;
+        }
+
+        /**
+         * Set text in bold.
+         *
+         * @param strBold string in bold form
+         * @return builder
+         */
+        public TextBuilder setBold(String strBold) {
+            this.str = this.str + "**" + strBold + "**";
             return this;
         }
 
@@ -165,6 +143,18 @@ public class Text extends Element {
             return this;
         }
 
+
+        /**
+         * Set text in strike.
+         *
+         * @param strStrike string in strike form
+         * @return builder
+         */
+        public TextBuilder setStrike(String strStrike) {
+            this.str = this.str + "~~" + strStrike + "~~";
+            return this;
+        }
+
         /**
          * Set text in strike by Element.
          *
@@ -173,6 +163,17 @@ public class Text extends Element {
          */
         public TextBuilder setStrike(Element strStrike) {
             this.str = this.str + "~~" + strStrike + "~~";
+            return this;
+        }
+
+        /**
+         * Set text in code.
+         *
+         * @param toCode string in code form
+         * @return builder
+         */
+        public TextBuilder setCode(String toCode) {
+            this.str = this.str + '`' + toCode + '`';
             return this;
         }
 

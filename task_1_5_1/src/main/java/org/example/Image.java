@@ -78,7 +78,7 @@ public class Image extends Element {
         ImageBuilder() {
             text = "";
             link = "";
-        };
+        }
 
         /**
          * Set link.

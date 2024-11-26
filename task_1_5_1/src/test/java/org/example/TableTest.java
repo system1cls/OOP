@@ -1,10 +1,9 @@
 package org.example;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.table.JTableHeader;
-
-import static org.junit.jupiter.api.Assertions.*;
 class TableTest {
 
     @Test
@@ -35,14 +34,15 @@ class TableTest {
     @Test
     void checkEq() {
         Table.TableBuilder builder = new Table.TableBuilder();
-        builder.setAlignments(Table.Align.RIGHT_ALIGN, Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
+        builder.setAlignments(Table.Align.RIGHT_ALIGN,
+                        Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
                 .setMaxRows(5)
                 .addRow("Index", "Index x2", "Index * Index");
         for (int i = 0; i < 3; i++) {
             builder.addRow(
                     Integer.toString(i),
                     Integer.toString(i * 2),
-                    Integer.toString(i*i)
+                    Integer.toString(i * i)
             );
         }
 
@@ -54,7 +54,7 @@ class TableTest {
             builder1.addRow(
                     new Text.TextBuilder().setText(Integer.toString(i)).build(),
                     new Text.TextBuilder().setText(Integer.toString(i * 2)).build(),
-                    new Text.TextBuilder().setText(Integer.toString(i*i)).build()
+                    new Text.TextBuilder().setText(Integer.toString(i * i)).build()
             );
         }
 
@@ -62,7 +62,7 @@ class TableTest {
     }
 
     @Test
-    void catchOver(){
+    void catchOver() {
         Table.TableBuilder builder = new Table.TableBuilder();
         builder.setAlignments(Table.Align.RIGHT_ALIGN, Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
                 .setMaxRows(5)
@@ -81,13 +81,14 @@ class TableTest {
                     builder.addRow(
                         Integer.toString(5),
                         Integer.toString(5 * 2),
-                        Integer.toString(5*5)
+                        Integer.toString(5 * 5)
                 );
             });
 
 
         Table.TableBuilder builder1 = new Table.TableBuilder();
-        builder1.setAlignments(Table.Align.RIGHT_ALIGN, Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
+        builder1.setAlignments(Table.Align.RIGHT_ALIGN,
+                        Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
                 .setMaxRows(5);
         assertThrows(RuntimeException.class, () -> {
             builder1.addRow("Index", "Index x2");

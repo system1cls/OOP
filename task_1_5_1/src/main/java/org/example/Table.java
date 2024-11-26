@@ -58,10 +58,12 @@ public class Table extends Element {
                         case CENTER_ALIGN:
                             str += " :---------: |";
                             break;
+                        default:
+                            break;
                     }
                 }
 
-                str+= "\n";
+                str += "\n";
             }
         }
         return this.str;
