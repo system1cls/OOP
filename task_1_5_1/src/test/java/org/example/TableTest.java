@@ -1,7 +1,8 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 class TableTest {
@@ -47,7 +48,8 @@ class TableTest {
         }
 
         Table.TableBuilder builder1 = new Table.TableBuilder();
-        builder1.setAlignments(Table.Align.RIGHT_ALIGN, Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
+        builder1.setAlignments(Table.Align.RIGHT_ALIGN,
+                        Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
                 .setMaxRows(5)
                 .addRow("Index", "Index x2", "Index * Index");
         for (int i = 0; i < 3; i++) {
@@ -64,7 +66,8 @@ class TableTest {
     @Test
     void catchOver() {
         Table.TableBuilder builder = new Table.TableBuilder();
-        builder.setAlignments(Table.Align.RIGHT_ALIGN, Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
+        builder.setAlignments(Table.Align.RIGHT_ALIGN,
+                        Table.Align.CENTER_ALIGN, Table.Align.LEFT_ALIGN)
                 .setMaxRows(5)
                 .addRow("Index", "Index x2", "Index * Index");
         for (int i = 0; i < 4; i++) {
@@ -76,8 +79,7 @@ class TableTest {
         }
         assertThrows(
                 RuntimeException.class,
-                () ->
-                {
+                () -> {
                     builder.addRow(
                         Integer.toString(5),
                         Integer.toString(5 * 2),
