@@ -8,15 +8,14 @@ package org.example;
  */
 public class SubArray<K, V> {
     int length;
-    int maxLength;
     Pair<K, V>[] subArray;
+
 
     /**
      * Constructor.
      */
     SubArray() {
         length = 0;
-        maxLength = 100;
         this.subArray = new Pair[100];
     }
 
@@ -28,7 +27,6 @@ public class SubArray<K, V> {
      * @return pointer to new Pair
      */
     public Pair<K, V> addValue(K k, V v) {
-        this.checkAbility();
         if (this.getVal(k) == null) {
             subArray[length++] = new Pair<>(k, v);
             return subArray[length - 1];
@@ -43,15 +41,18 @@ public class SubArray<K, V> {
      * @param k key
      * @param v value
      */
-    public void updateValue(K k, V v) {
+    public boolean updateValue(K k, V v) {
         for (int i = 0; i < length; i++) {
             if (k.equals(subArray[i].key)) {
+                if (v.equals(subArray[i].value)) {
+                    return false;
+                }
                 subArray[i].value = v;
-                return;
+                return true;
             }
         }
-        checkAbility();
         subArray[length++] = new Pair<>(k, v);
+        return true;
     }
 
     /**
@@ -108,7 +109,7 @@ public class SubArray<K, V> {
      *
      * @param k key
      */
-    public void deleteVal(K k) {
+    public boolean deleteVal(K k) {
         for (int i = 0; i < length; i++) {
             if (subArray[i].key.equals(k)) {
                 if (i == length - 1) {
@@ -117,22 +118,9 @@ public class SubArray<K, V> {
                     subArray[i] = subArray[length - 1];
                 }
                 length--;
-                return;
+                return true;
             }
         }
-    }
-
-    /**
-     * Method to check if adding available.
-     */
-    private void checkAbility() {
-        if (length == maxLength) {
-            maxLength = maxLength * 100;
-            Pair<K, V>[] newArray = new Pair[maxLength];
-            if (length >= 0) {
-                System.arraycopy(this.subArray, 0, newArray, 0, length);
-            }
-            this.subArray = newArray;
-        }
+        return false;
     }
 }

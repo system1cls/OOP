@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -11,8 +12,13 @@ import java.util.Iterator;
 public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
     int itArray;
     int itElem;
+    long cntOfChanges = 0;
     Pair<K, V> cur;
     HashTable<K, V> table;
+
+
+
+
 
     /**
      * Constructor.
@@ -22,6 +28,7 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
     HashIterator(HashTable<K, V> table) {
         itArray = -1;
         itElem = 1;
+        this.cntOfChanges = table.cntOfChanges;
         this.table = table;
         for (int i = 0; i < table.size; i++) {
             if (table.array[i] != null && table.array[i].length != 0) {
@@ -45,6 +52,10 @@ public class HashIterator<K, V> implements Iterator<Pair<K, V>> {
      */
     @Override
     public boolean hasNext() {
+        if (table.cntOfChanges != this.cntOfChanges) {
+            throw new ConcurrentModificationException();
+        }
+
         return (cur != null);
     }
 

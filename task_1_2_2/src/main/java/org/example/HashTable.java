@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class HashTable<K, V> implements Iterable<Pair<K, V>> {
     int size;
     SubArray<K, V>[] array;
-
+    long cntOfChanges;
 
     /**
      * Common Constructor.
@@ -48,7 +48,10 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
         if (this.array[hash] == null) {
             this.array[hash] = new SubArray<>();
         }
-        this.array[hash].addValue(k, v);
+        checkCnt(hash);
+        if (this.array[hash].addValue(k, v) != null) {
+            cntOfChanges++;
+        }
     }
 
     /**
@@ -61,7 +64,9 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
         if (array[hash] == null) {
             return;
         }
-        this.array[hash].deleteVal(k);
+        if (this.array[hash].deleteVal(k)){
+            cntOfChanges++;
+        }
     }
 
     /**
@@ -93,7 +98,12 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
         if (array[hash] == null) {
             array[hash] = new SubArray<>();
         }
-        this.array[hash].updateValue(k, v);
+        if (getVal(k) == null) {
+            checkCnt(hash);
+        }
+        if (this.array[hash].updateValue(k, v)) {
+            cntOfChanges++;
+        }
     }
 
     /**
@@ -106,6 +116,10 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
     public boolean equals(Object obj) {
         if (this.getClass() != obj.getClass()) {
             return false;
+        }
+
+        if (this == obj) {
+            return true;
         }
 
         HashTable<K, V> newTable = (HashTable<K, V>) obj;
@@ -133,9 +147,11 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
      * Print pairs.
      */
     public void print() {
+        StringBuilder stringBuilder = new StringBuilder();
         for (Pair<K, V> p : this) {
-            System.out.println(p.key + ": " + p.value);
+            stringBuilder.append(p.key + ": " + p.value + "\n");
         }
+        System.out.print(stringBuilder);
     }
 
 
@@ -169,5 +185,32 @@ public class HashTable<K, V> implements Iterable<Pair<K, V>> {
     @Override
     public Iterator<Pair<K, V>> iterator() {
         return new HashIterator<>(this);
+    }
+
+    private void addCapacity() {
+        this.size *= 2;
+        SubArray<K, V>[] newArray = new SubArray[this.size];
+
+        for (SubArray<K, V> arr : this.array) {
+            if (arr != null) {
+                for (Pair<K, V> p:arr.subArray) {
+                    int hash = getHash(p.key);
+                    if (newArray[hash].length == 100) {
+                        addCapacity();
+                        return;
+                    }
+                    newArray[hash].addValue(p.key, p.value);
+                }
+            }
+        }
+
+        this.array = newArray;
+    }
+
+
+    private void checkCnt(int itOfSubArray) {
+        if (array[itOfSubArray].length == 100) {
+            addCapacity();
+        }
     }
 }

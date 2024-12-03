@@ -10,9 +10,8 @@ public class Main {
      * @param args args
      */
     public static void main(String[] args) {
-        HashTable<String, Number> hashTable = new HashTable<>();
-        hashTable.add("one", 1);
-        hashTable.update("one", 2.0);
-        System.out.println(hashTable.getVal("one"));
+        HashTable<String, Number> table = new HashTable<>();
+        table.add("one", 1);
+        System.out.print(table.getVal("one"));
     }
 }

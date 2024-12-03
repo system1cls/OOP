@@ -1,11 +1,12 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import java.nio.charset.CoderMalfunctionError;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
 
@@ -82,5 +83,52 @@ class HashTableTest {
             table.add(random.nextInt(), random.nextInt());
         }
         table.print();
+    }
+
+    @Test
+    void iterTestRight() {
+        HashTable<String, Number> table = new HashTable<>(50);
+        table.add("one", 1);
+        table.add("two", 2);
+        table.add("three", 3);
+        table.add("four", 4);
+        table.add("five", 5);
+        table.add("six", 6);
+        table.add("seven", 7);
+        table.add("eight", 8);
+        table.add("nine", 9);
+        table.add("ten", 10);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Pair<String, Number> p : table) {
+            stringBuilder.append(p.key + ": " + p.value + "\n");
+        }
+
+        System.out.print(stringBuilder);
+    }
+
+    @Test
+    void iterTestException() {
+        HashTable<String, Number> table = new HashTable<>(50);
+        table.add("one", 1);
+        table.add("two", 2);
+        table.add("three", 3);
+        table.add("four", 4);
+        table.add("five", 5);
+        table.add("six", 6);
+        table.add("seven", 7);
+        table.add("eight", 8);
+        table.add("nine", 9);
+        table.add("ten", 10);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        assertThrows(ConcurrentModificationException.class, () -> {
+                    for (Pair<String, Number> p : table) {
+                        stringBuilder.append(p.key + ": " + p.value + "\n");
+                        table.delete("one");
+                    }
+                });
+
+        System.out.print(stringBuilder);
     }
 }
