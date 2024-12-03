@@ -14,7 +14,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../jquery/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../jquery/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
@@ -167,7 +167,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteVal(K)">deleteVal</a></span>&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k)</code></th>
 <td class="colLast">
 <div class="block">Method for deleting pair by key.</div>
@@ -188,7 +188,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateValue(K,V)">updateValue</a></span>&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k,
            <a href="SubArray.html" title="type parameter in SubArray">V</a>&nbsp;v)</code></th>
 <td class="colLast">
@@ -247,8 +247,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateValue</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateValue&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k,
-                        <a href="SubArray.html" title="type parameter in SubArray">V</a>&nbsp;v)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;updateValue&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k,
+                           <a href="SubArray.html" title="type parameter in SubArray">V</a>&nbsp;v)</pre>
 <div class="block">Add or update pair in node.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -301,7 +301,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>deleteVal</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;deleteVal&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k)</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;deleteVal&#8203;(<a href="SubArray.html" title="type parameter in SubArray">K</a>&nbsp;k)</pre>
 <div class="block">Method for deleting pair by key.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
