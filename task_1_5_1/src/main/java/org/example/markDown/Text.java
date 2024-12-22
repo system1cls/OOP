@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 /**
  * Text class.
@@ -48,12 +48,14 @@ public class Text extends Element {
      */
     public static class TextBuilder {
         String str;
+        private StringBuilder builder;
 
         /**
          * Builder constructor.
          */
-        TextBuilder() {
+        public TextBuilder() {
             str = "";
+            builder = new StringBuilder();
         }
 
 
@@ -63,7 +65,7 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setParagraph() {
-            this.str = this.str + "\n\n";
+            builder.append("\n\n");
             return this;
         }
 
@@ -74,7 +76,7 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setText(String toAdd) {
-            this.str = this.str + toAdd;
+            builder.append(toAdd);
             return this;
         }
 
@@ -85,7 +87,7 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setText(Element elToAdd) {
-            this.str = this.str + elToAdd;
+            builder.append(elToAdd.toString());
             return this;
         }
 
@@ -95,7 +97,7 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setLineBreak() {
-            this.str = this.str + "<br>";
+            builder.append("<br>");
             return this;
         }
 
@@ -106,7 +108,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setCursive(String strCur) {
-            this.str = this.str + "*" + strCur + "*";
+            builder.append("*")
+                    .append(strCur)
+                    .append("*");
             return this;
         }
 
@@ -117,7 +121,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setCursive(Element strCur) {
-            this.str = this.str + "*" + strCur + "*";
+            builder.append("*")
+                    .append(strCur.toString())
+                    .append("*");
             return this;
         }
 
@@ -128,7 +134,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setBold(String strBold) {
-            this.str = this.str + "**" + strBold + "**";
+            builder.append("**")
+                    .append(strBold)
+                    .append("**");
             return this;
         }
 
@@ -139,7 +147,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setBold(Element strBold) {
-            this.str = this.str + "**" + strBold + "**";
+            builder.append("**")
+                    .append(strBold.toString())
+                    .append("**");
             return this;
         }
 
@@ -151,7 +161,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setStrike(String strStrike) {
-            this.str = this.str + "~~" + strStrike + "~~";
+            builder.append("~~")
+                    .append(strStrike)
+                    .append("~~");
             return this;
         }
 
@@ -162,7 +174,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setStrike(Element strStrike) {
-            this.str = this.str + "~~" + strStrike + "~~";
+            builder.append("~~")
+                    .append(strStrike.toString())
+                    .append("~~");
             return this;
         }
 
@@ -173,7 +187,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setCode(String toCode) {
-            this.str = this.str + '`' + toCode + '`';
+            builder.append('`')
+                    .append(toCode)
+                    .append('`');
             return this;
         }
 
@@ -184,7 +200,9 @@ public class Text extends Element {
          * @return builder
          */
         public TextBuilder setCode(Element toCode) {
-            this.str = this.str + '`' + toCode + '`';
+            builder.append('`')
+                    .append(toCode.toString())
+                    .append('`');
             return this;
         }
 
@@ -194,6 +212,7 @@ public class Text extends Element {
          * @return built Text
          */
         public Text build() {
+            this.str = builder.toString();
             return new Text(this);
         }
     }

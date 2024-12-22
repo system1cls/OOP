@@ -1,7 +1,10 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.example.markDown.CheckBoxes;
+import org.example.markDown.Text;
 import org.junit.jupiter.api.Test;
 
 class CheckBoxesTest {
@@ -13,6 +16,16 @@ class CheckBoxesTest {
         builder.addNode(true, "Visit U");
         builder = builder.addNode(false, "do cleaning");
         System.out.print(builder.build());
+    }
+
+    @Test
+    void toStringTest() {
+        CheckBoxes.CheckBoxesBuilder builder = new CheckBoxes.CheckBoxesBuilder();
+        builder = builder.addNode(true, "Wake up");
+        builder.addNode(true, "Visit U");
+        builder = builder.addNode(false, "do cleaning");
+        String answer = "- [x] Wake up\n- [x] Visit U\n- [ ] do cleaning\n";
+        assertEquals(builder.build().toString(), answer);
     }
 
     @Test

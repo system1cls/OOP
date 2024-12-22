@@ -1,7 +1,10 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.example.markDown.Code;
+import org.example.markDown.Text;
 import org.junit.jupiter.api.Test;
 
 class CodeTest {
@@ -80,6 +83,15 @@ class CodeTest {
                 .setText("print(\"Hello World\");").build());
         Code.CodeBuilder builder1 = new Code.CodeBuilder().addString("print(\"Hello World\");");
         assertTrue(builder1.build().equals(builder.build()));
+    }
+
+    @Test
+    void toStringTest() {
+        Code.CodeBuilder builder = new Code.CodeBuilder();
+        builder = builder.addString(new Text.TextBuilder()
+                .setText("print(\"Hello World\");").build());
+        String answer = "```\nprint(\"Hello World\");\n```\n";
+        assertEquals(builder.build().toString(), answer);
     }
 
 }

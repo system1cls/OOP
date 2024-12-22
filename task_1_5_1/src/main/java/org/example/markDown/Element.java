@@ -1,11 +1,11 @@
-package org.example;
+package org.example.markDown;
 
 import java.io.Serializable;
 
 /**
  * Parent class.
  */
-public class Element implements Serializable {
+public abstract class  Element implements Serializable {
     protected String str;
 
     /**

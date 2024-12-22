@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 /**
  * Checkboxes class.
@@ -46,7 +46,7 @@ public class CheckBoxes extends Element {
         /**
          * Builder constructor.
          */
-        CheckBoxesBuilder() {
+        public CheckBoxesBuilder() {
             list = new List.ListBuilder('-');
         }
 

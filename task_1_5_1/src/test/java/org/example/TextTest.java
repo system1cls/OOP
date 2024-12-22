@@ -1,7 +1,10 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.example.markDown.Text;
 import org.junit.jupiter.api.Test;
 
 class TextTest {
@@ -14,6 +17,20 @@ class TextTest {
                 .setCursive("of").setLineBreak()
                 .setStrike("text");
         System.out.print(builder.build());
+    }
+
+    @Test
+    void toStringTest() {
+        Text.TextBuilder builder = new Text.TextBuilder();
+        builder.setText("Just").setLineBreak()
+                .setBold("simple").setLineBreak()
+                .setCode("example").setParagraph()
+                .setCursive("of").setLineBreak()
+                .setStrike("text");
+        String answer = "Just<br>**simple**<br>`example`\n" +
+                "\n" +
+                "*of*<br>~~text~~";
+        assertEquals(builder.build().toString(), answer) ;
     }
 
     @Test

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 import java.util.Arrays;
 
@@ -35,37 +35,42 @@ public class Table extends Element {
      */
     @Override
     public String toString() {
+        StringBuilder builder = new StringBuilder();
         str = "";
-        for (int i = 0; i < cntRows; i++) {
-            str += "| ";
-            for (int j = 0; j < cntCols; j++) {
-                str += table[i][j] + " | ";
-            }
 
-            str += "\n";
+        for (int i = 0; i < cntRows; i++) {
+            builder.append("| ");
+            for (int j = 0; j < cntCols; j++) {
+                builder.append(table[i][j])
+                        .append(" | ");
+            }
+            builder.deleteCharAt(builder.length()-1);
+
+            builder.append("\n");
 
             if (i == 0) {
 
-                str += "|";
+                builder.append("|");
                 for (int j = 0; j < cntCols; j++) {
                     switch (aligns[j]) {
                         case LEFT_ALIGN:
-                            str += " :---------- |";
+                            builder.append(" :---------- |");
                             break;
                         case RIGHT_ALIGN:
-                            str += " ----------: |";
+                            builder.append(" ----------: |");
                             break;
                         case CENTER_ALIGN:
-                            str += " :---------: |";
+                            builder.append(" :---------: |");
                             break;
                         default:
                             break;
                     }
                 }
 
-                str += "\n";
+                builder.append("\n");
             }
         }
+        this.str = builder.toString();
         return this.str;
     }
 
@@ -123,7 +128,7 @@ public class Table extends Element {
         /**
          * Builder constructor.
          */
-        TableBuilder() {
+        public TableBuilder() {
             table = null;
         }
 

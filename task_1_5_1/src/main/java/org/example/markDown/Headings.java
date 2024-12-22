@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 /**
  * Headings class.
@@ -52,7 +52,7 @@ public class Headings extends Element {
         /**
          * Builder constructor.
          */
-        HeadingsBuilder() {
+        public HeadingsBuilder() {
             str = "";
         }
 
@@ -65,15 +65,19 @@ public class Headings extends Element {
          * @return builder
          */
         public  HeadingsBuilder setHeader(Element elInHead, int typeOfHead) {
-            this.str = "";
-
-            for (int i = 0; i < typeOfHead; i++) {
-                str = str + "#";
+            if (typeOfHead <= 0 || typeOfHead > 6) {
+                throw new RuntimeException("type if Heading is out of bounds");
             }
+            StringBuilder builder = new StringBuilder();
 
-            str += " ";
 
-            str += elInHead.str;
+            builder.append("#".repeat(typeOfHead));
+
+            builder.append(" ");
+
+            builder.append(elInHead.str);
+            builder.append("\n");
+            this.str = builder.toString();
 
             return this;
         }
@@ -86,15 +90,19 @@ public class Headings extends Element {
          * @return builder
          */
         public  HeadingsBuilder setHeader(String str, int typeOfHead) {
-            this.str = "";
-
-            for (int i = 0; i < typeOfHead; i++) {
-                this.str = this.str + "#";
+            if (typeOfHead <= 0 || typeOfHead > 6) {
+                throw new RuntimeException("type if Heading is out of bounds");
             }
+            StringBuilder builder = new StringBuilder();
 
-            this.str += " ";
 
-            this.str += str;
+            builder.append("#".repeat(typeOfHead));
+
+            builder.append(" ");
+
+            builder.append(str);
+            builder.append("\n");
+            this.str = builder.toString();
 
             return this;
         }

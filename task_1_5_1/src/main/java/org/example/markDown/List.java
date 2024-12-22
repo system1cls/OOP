@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 import java.util.Arrays;
 
@@ -35,9 +35,12 @@ public class List extends Element {
     @Override
     public String toString() {
         str = "";
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            this.str += strings[i] + "\n";
+            builder.append(strings[i]);
+            builder.append("\n");
         }
+        this.str = builder.toString();
         return this.str;
     }
 

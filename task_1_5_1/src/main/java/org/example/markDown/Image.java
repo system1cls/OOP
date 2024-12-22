@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 /**
  * Image class.
@@ -75,7 +75,7 @@ public class Image extends Element {
         /**
          * Builder constructor.
          */
-        ImageBuilder() {
+        public ImageBuilder() {
             text = "";
             link = "";
         }

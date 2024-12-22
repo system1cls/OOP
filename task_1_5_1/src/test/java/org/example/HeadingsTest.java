@@ -1,7 +1,10 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.example.markDown.Headings;
+import org.example.markDown.Text;
 import org.junit.jupiter.api.Test;
 
 class HeadingsTest {
@@ -11,6 +14,13 @@ class HeadingsTest {
         Headings.HeadingsBuilder builder = new Headings.HeadingsBuilder();
         builder.setHeader("header", 2);
         System.out.print(builder.build());
+    }
+
+    @Test
+    void toStringTest() {
+        Headings.HeadingsBuilder builder = new Headings.HeadingsBuilder();
+        builder.setHeader("header", 2);
+        assertEquals(builder.build().toString(), "## header\n");
     }
 
     @Test

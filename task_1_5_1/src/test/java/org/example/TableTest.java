@@ -2,7 +2,11 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.example.markDown.Element;
+import org.example.markDown.Table;
+import org.example.markDown.Text;
 import org.junit.jupiter.api.Test;
 
 class TableTest {
@@ -17,6 +21,7 @@ class TableTest {
         for (int i = 1; i <= 5; i++) {
             final var value = (int) (Math.random() * 10);
             if (value > 5) {
+
                 builder.addRow(
                         new Text.TextBuilder().setText(Integer.toString(i)).build(),
                         new Text.TextBuilder().setBold(String.valueOf(value)).build()
@@ -30,6 +35,25 @@ class TableTest {
         }
 
         System.out.print(builder.build());
+    }
+
+    @Test
+    void toStringTest() {
+        Table.TableBuilder builder = new Table.TableBuilder()
+                .setAlignments(Table.Align.LEFT_ALIGN, Table.Align.RIGHT_ALIGN)
+                .setMaxRows(8)
+                .addRow("Index", "Value");
+
+        StringBuilder strb = new StringBuilder();
+        strb.append("| Index | Value |\n");
+        strb.append("| :---------- | ----------: |\n");
+
+        for (int i = 0; i < 4; i++) {
+            builder.addRow(Integer.toString(i), Integer.toString(i*i));
+            strb.append("| ").append(i).append(" | ").append(i*i).append(" |").append("\n");
+        }
+
+        assertEquals(strb.toString(), builder.build().toString());
     }
 
     @Test
@@ -95,7 +119,6 @@ class TableTest {
         assertThrows(RuntimeException.class, () -> {
             builder1.addRow("Index", "Index x2");
         });
-
     }
 
 }

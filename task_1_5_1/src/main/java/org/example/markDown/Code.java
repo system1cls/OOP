@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 import java.util.Arrays;
 
@@ -64,7 +64,7 @@ public class Code extends Element {
         /**
          * Builder constructor.
          */
-        CodeBuilder() {
+        public CodeBuilder() {
             maxSize = 10;
             code = new String[maxSize];
         }

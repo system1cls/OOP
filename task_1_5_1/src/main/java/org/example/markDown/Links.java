@@ -1,4 +1,4 @@
-package org.example;
+package org.example.markDown;
 
 /**
  * Link class.
@@ -44,7 +44,7 @@ public class Links extends Element {
         /**
          * Builder constructor.
          */
-        LinksBuilder() {
+        public LinksBuilder() {
             str = "";
         }
 
@@ -56,7 +56,7 @@ public class Links extends Element {
          * @return builder
          */
         public LinksBuilder setLink(String link) {
-            str = "";
+            this.str = "";
             str = "<" + link + ">";
             return this;
         }

@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.markDown.Text;
+
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Element el = new Text.TextBuilder()
+        Text el = new Text.TextBuilder()
                 .setText("abc")
                 .build();
 
@@ -27,5 +29,12 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        Text.TextBuilder builder = new Text.TextBuilder();
+        builder.setStrike("asb")
+                .setCode("asd")
+                .setParagraph();
     }
 }
+
+
