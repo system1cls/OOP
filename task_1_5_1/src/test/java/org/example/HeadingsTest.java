@@ -2,6 +2,7 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.example.markDown.Headings;
 import org.example.markDown.Text;
@@ -33,5 +34,15 @@ class HeadingsTest {
                 .setText("header").build(), 2);
 
         assertTrue(builder.build().equals(builder1.build()));
+    }
+
+    @Test
+    void wrongType() {
+        Headings.HeadingsBuilder builder = new Headings.HeadingsBuilder();
+        assertThrows(
+                RuntimeException.class,
+                () -> {
+                    builder.setHeader("abs", 7);
+                });
     }
 }
