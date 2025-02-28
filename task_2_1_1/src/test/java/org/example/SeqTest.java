@@ -27,7 +27,7 @@ class SeqTest {
         Seq seq = new Seq();
         int arr[] = getArr();
         long t1 = System.currentTimeMillis();
-        assertFalse(seq.findOut(arr);
+        assertFalse(seq.findOut(arr));
         long t2 = System.currentTimeMillis();
         System.out.println((t2-t1));
     }
