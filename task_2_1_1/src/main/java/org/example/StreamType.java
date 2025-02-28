@@ -2,11 +2,12 @@ package org.example;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Class for task by Streams.
  */
-public class StreamType {
+public class StreamType implements Check {
 
     /**
      * Method to check.
@@ -19,7 +20,7 @@ public class StreamType {
             if (num%i == 0) return true;
         }
         if (num < 2) return true;
-        else return false;
+        return false;
     }
 
     /**
@@ -28,8 +29,9 @@ public class StreamType {
      * @param arr arr to check
      * @return isThereAComposite
      */
-    public static boolean findOut(Integer []arr) {
-        List<Integer> list = Arrays.asList(arr);
+    public boolean findOut(int []arr) {
+        Integer[] newArr = IntStream.of(arr).boxed().toArray(Integer[]::new);
+        List<Integer> list = Arrays.asList(newArr);
         return list.parallelStream().anyMatch(StreamType::check);
     }
 }

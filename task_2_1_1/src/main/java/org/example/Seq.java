@@ -3,15 +3,14 @@ package org.example;
 /**
  * Class for simple solvation.
  */
-public class Seq {
-
+public class Seq implements Check {
     /**
      * Method to find out.
      *
      * @param arr arr to check
      * @return isThereAComposite
      */
-    public static boolean findOut(int[] arr) {
+    public boolean findOut(int[] arr) {
         boolean res = false;
         for (int num : arr) {
             res = check(num);

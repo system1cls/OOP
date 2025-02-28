@@ -3,7 +3,7 @@ package org.example;
 /**
  * Class for task by using threads.
  */
-public class WithThreads {
+public class WithThreads implements Check{
     int cntThr;
     Thread threads[];
     Func funcs[];
