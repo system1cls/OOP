@@ -23,11 +23,12 @@ class StreamTypeTest {
     }
 
 
-    //@Test
+    @Test
     void testBig() {
         StreamType streamType = new StreamType();
+        int arr[] = getArr();
         long t1 = System.currentTimeMillis();
-        assertFalse(streamType.findOut(getArr()));
+        assertFalse(streamType.findOut(arr);
         long t2 = System.currentTimeMillis();
         System.out.println(t2-t1);
     }
