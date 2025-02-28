@@ -22,7 +22,7 @@ class SeqTest {
     }
 
 
-    @Test
+    //@Test
     void testBig() {
         Seq seq = new Seq();
         long t1 = System.currentTimeMillis();

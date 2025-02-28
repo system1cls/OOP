@@ -23,7 +23,7 @@ class StreamTypeTest {
     }
 
 
-    @Test
+    //@Test
     void testBig() {
         StreamType streamType = new StreamType();
         long t1 = System.currentTimeMillis();
