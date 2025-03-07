@@ -93,7 +93,7 @@ public class Cooker implements Runnable{
 
             if (!exit) {
                 synchronized (ordersToCompl) {
-                    curOrder = ordersToCompl.removeFirst();
+                    curOrder = ordersToCompl.remove(0);
                 }
             }
         }

@@ -82,19 +82,19 @@ public class Deliver implements Runnable{
 
             if (!exit) {
                 synchronized (ordersToDel) {
-                    if (ordersToDel.getFirst().cntPizza > 4) {
+                    if (ordersToDel.get(0).cntPizza > 4) {
                         isNotFull = true;
                     } else {
                         isNotFull = false;
                     }
 
                     if (isNotFull) {
-                        ordersToDel.getFirst().cntPizza -= 4;
-                        curOrder = ordersToDel.getFirst();
+                        ordersToDel.get(0).cntPizza -= 4;
+                        curOrder = ordersToDel.get(0);
                         curOrder = new Order(curOrder.cntPizza, curOrder.timeOfOrder, curOrder.timeToDel,
                                 curOrder.number);
                     } else {
-                        curOrder = ordersToDel.removeFirst();
+                        curOrder = ordersToDel.remove(0);
                     }
                 }
             }
