@@ -2,6 +2,8 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CafeTest {
@@ -27,18 +29,21 @@ class CafeTest {
     @Test
     void CafeStartFileWithLateOrder() {
         Cafe cafe = new Cafe();
-        cafe.cafeStart("src\\test\\resources\\TestWithLateOrder.txt");
+        cafe.cafeStart("src"+ File.separator+"test"
+                + File.separator + "resources" + File.separator + "TestWithLateOrder.txt");
     }
 
     @Test
     void CafeStartFile2() {
         Cafe cafe = new Cafe();
-        cafe.cafeStart("src\\test\\resources\\Test2.txt");
+        cafe.cafeStart("src"+ File.separator+"test"
+                + File.separator + "resources" + File.separator + "Test2.txt");
     }
 
     @Test
     void cafeStartFileWithManyPizza() {
         Cafe cafe = new Cafe();
-        cafe.cafeStart("src\\test\\resources\\Test3.txt");
+        cafe.cafeStart("src"+ File.separator+"test"
+                + File.separator + "resources" + File.separator + "Test3.txt");
     }
 }
