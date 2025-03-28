@@ -8,28 +8,104 @@ import java.util.Arrays;
 /**
  * Class of Cafe.
  */
-public class Cafe {
-    int cntCookers;
-    int cntDel;
-    int maxCap;
-    Object passToWrite;
-    Object passToAddStorage;
-    Object passToGetFromStorage;
-    Object passToGetOrder;
-    ArrayList<WaitThread> waiters = new ArrayList<>();
-    ArrayList<Order> futureOrders = new ArrayList<>();
-    ArrayList<Order> ordersToCompl = new ArrayList<>();
-    ArrayList<Order> ordersToDel = new ArrayList<>();
-    Cooker cookersFunc[];
-    Deliver deliversFunc[];
-    Thread cookers[];
-    Thread delivers[];
-    boolean cookersWait[];
-    boolean deliversWait[];
-    Timer timer;
-    int time;
-    CntWorking cntWorking;
-    Counter counter;
+public class Cafe implements Runnable {
+    private int cntCookers;
+    private int cntDel;
+    private ArrayList<WaitThread> waiters = new ArrayList<>();
+    private ArrayList<Order> futureOrders = new ArrayList<>();
+    private ArrayList<Order> completedOrders;
+    private MyBlockQueue ordersToCompl;
+    private MyBlockQueue ordersToDel;
+    private Object []cookersFunc;
+    private Object []deliversFunc;
+    private Thread []cookers;
+    private Thread []delivers;
+    private boolean []cookersWait;
+    private boolean []deliversWait;
+    private Timer timer;
+    private int time;
+    private Counter counter;
+    private Logger logger;
+    private boolean isSet = false;
+    private int timeOfMin;
+    private int cntOrders;
+    /**
+     * Method for getting random orders.
+     *
+     * @param cntCookers count of cookers
+     * @param cntDel count of delivers
+     * @param maxCap max capacity of storage
+     * @param cntOrders count of orders
+     */
+    public void cafeStart(int cntCookers, int cntDel, int maxCap, int cntOrders,
+                          Logger logger, int timeOfMin, ArrayList<Order> completedOrders) {
+        this.logger = logger;
+        this.completedOrders = completedOrders;
+        this.cntOrders = cntOrders;
+        this.timeOfMin = timeOfMin;
+        init(cntCookers, cntDel, maxCap);
+        setRandomOrders(cntOrders);
+
+        isSet = true;
+    }
+
+
+    /**
+     * Method to start with exact configuration.
+     *
+     * @param fileName name of the file with configuration
+     */
+    public void cafeStart(String fileName, Logger logger, int timeOfMin, ArrayList<Order> completedOrders) {
+        this.logger = logger;
+        this.completedOrders = completedOrders;
+        this.timeOfMin = timeOfMin;
+        Parser.JsonClass jsonClass = Parser.getConf(fileName);
+        init(jsonClass.cntCookers, jsonClass.cntDel, jsonClass.maxCap);
+        if (jsonClass.cntOrders != jsonClass.orders.length) {
+            throw new RuntimeException("Wrong cnt of orders");
+        }
+        for (int i = 0; i < jsonClass.cntOrders; i++) {
+            jsonClass.orders[i].update(i);
+        }
+        this.cntOrders = jsonClass.cntOrders;
+        this.futureOrders = new ArrayList<>(Arrays.asList(jsonClass.orders));
+
+        isSet = true;
+    }
+
+    @Override
+    public void run() {
+        if (isSet) _cafeStart();
+        else {
+            throw new RuntimeException("Cafe is not set");
+        }
+    }
+
+    private void _cafeStart() {
+        for (Order futureOrder : futureOrders) {
+            System.out.println(futureOrder.toString());
+        }
+
+        start();
+
+        loop();
+
+        killThemAll();
+    }
+
+    public int addOrder(Order order, boolean setCurTime) {
+        if (setCurTime) {
+            order.timeOfOrder = this.time;
+        }
+
+
+        synchronized (futureOrders){
+            order.update(cntOrders++);
+            futureOrders.add(order);
+        }
+
+        return cntOrders - 1;
+    }
 
 
     /**
@@ -42,18 +118,12 @@ public class Cafe {
     private void init(int cntCookers, int cntDel, int maxCap) {
         this.cntCookers = cntCookers;
         this.cntDel = cntDel;
-        this.maxCap = maxCap;
-        this.passToWrite = new Object();
-        this.passToAddStorage = new Object();
-        this.passToGetFromStorage = new Object();
-        this.passToGetOrder = new Object();
+        this.counter = new Counter();
         this.waiters = new ArrayList<>();
         this.futureOrders = new ArrayList<>();
-        this.ordersToCompl = new ArrayList<>();
-        this.ordersToDel = new ArrayList<>();
-        this.cntWorking = new CntWorking();
+        this.ordersToCompl = new MyBlockQueue(new Object(), new Object(), counter, -1);
+        this.ordersToDel = new MyBlockQueue(new Object(), new Object(), counter, maxCap);
         this.time = 8*60;
-        this.counter = new Counter();
 
         this.timer = new Timer();
 
@@ -62,10 +132,8 @@ public class Cafe {
         this.cookersWait = new boolean[cntCookers];
         for (int i = 0; i < cntCookers; i++) {
             cookersWait[i] = true;
-            cookersFunc[i] = new Cooker(passToAddStorage, ordersToDel, maxCap,
-                    passToGetFromStorage, waiters, ordersToCompl, i, timer,
-                    passToGetOrder, cntWorking, counter);
-            this.cookers[i] = new Thread(cookersFunc[i]);
+            cookersFunc[i] = new Cooker(ordersToDel, waiters, logger, ordersToCompl, i, timer, counter);
+            this.cookers[i] = new Thread((Cooker)cookersFunc[i]);
         }
 
         this.delivers = new Thread[cntDel];
@@ -73,11 +141,11 @@ public class Cafe {
         this.deliversFunc = new Deliver[cntDel];
         for (int i = 0; i < cntDel; i++) {
             this.deliversWait[i] = true;
-            this.deliversFunc[i] = new Deliver(passToGetFromStorage, waiters, ordersToDel,
-                    i, timer, passToAddStorage, cntWorking, counter);
-            this.delivers[i] = new Thread(deliversFunc[i]);
+            this.deliversFunc[i] = new Deliver(waiters, ordersToDel, i, timer, counter, logger, completedOrders);
+            this.delivers[i] = new Thread((Deliver)deliversFunc[i]);
         }
     }
+
 
     /**
      * Set random orders.
@@ -93,7 +161,7 @@ public class Cafe {
     /**
      * Start threads.
      */
-     private void start() {
+    private void start() {
         for (int i = 0; i < cntCookers; i++) {
             this.cookers[i].start();
         }
@@ -103,23 +171,73 @@ public class Cafe {
         }
     }
 
+
+    private void timePar(int difTime) {
+        if (timeOfMin - difTime > 0) {
+            try {
+                Thread.sleep(timeOfMin - difTime);
+            } catch (InterruptedException ex) {
+                System.out.println("Cafe interrupted");
+            }
+        }
+    }
+
+    /**
+     * Main loop.
+     */
+    private void loop() {
+        while(time < 18 * 60) {
+
+            long time1 = System.nanoTime();
+
+            addNewOrders();
+
+            wakeWaiters();
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                System.out.println("Cafe interrupted");
+            }
+
+            counter.lock.lock();
+            try {
+                while(counter.get() > 0) {
+                    counter.cond.await();
+                }
+            }   catch (InterruptedException ex) {
+                System.out.println("Main interrupted");
+                System.exit(1);
+            } finally {
+                counter.lock.unlock();
+            }
+
+            long time2 = System.nanoTime();
+
+            timePar((int)(time2 - time1));
+
+            synchronized (timer) {
+                timer.incTime();
+            }
+
+            time++;
+        }
+    }
+
     /**
      * Add orders to list of gotten orders.
      */
     private void addNewOrders() {
-        int len = futureOrders.size();
-        for (int i = 0; i < len; i++) {
-            Order order = futureOrders.get(i);
-            if (order.timeOfOrder <= time) {
-                futureOrders.remove(i);
-                i--;
-                len--;
+        synchronized (futureOrders) {
+            int len = futureOrders.size();
+            for (int i = 0; i < len; i++) {
+                Order order = futureOrders.get(i);
+                if (order.timeOfOrder <= time) {
+                    futureOrders.remove(i);
+                    i--;
+                    len--;
 
-                synchronized (ordersToCompl) {
                     ordersToCompl.add(order);
-                }
-                synchronized (passToGetOrder) {
-                    passToGetOrder.notify();
                 }
             }
         }
@@ -159,7 +277,7 @@ public class Cafe {
                     synchronized (cookersFunc[i]) {
                         cookersFunc[i].notify();
                     }
-                    
+
                 }
             }
             for (int i = 0; i < cntDel; i++) {
@@ -172,58 +290,22 @@ public class Cafe {
         }
     }
 
-    /**
-     * Main loop.
-     */
-    private void loop() {
-        while(time < 18 * 60) {
-
-            addNewOrders();
-
-            wakeWaiters();
-
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                System.out.println("Main interrupted");
-                System.exit(1);
-            }
-
-            counter.lock.lock();
-            try {
-                while(counter.get() > 0) {
-                    counter.cond.await();
-                }
-            }   catch (InterruptedException ex) {
-                System.out.println("Main interrupted");
-                System.exit(1);
-            } finally {
-                counter.lock.unlock();
-            }
 
 
-            synchronized (timer) {
-                timer.incTime();
-            }
-
-            time++;
-        }
-    }
 
     /**
      * End the day with interrupting threads.
      */
     private void killThemAll() {
-        while (!ordersToCompl.isEmpty() || !ordersToDel.isEmpty() || !waiters.isEmpty()
-                || counter.get() > 0) {
+
+        while (!waiters.isEmpty() || counter.get() > 0) {
 
             wakeWaiters();
 
             try {
                 Thread.sleep(10);
-            } catch (InterruptedException e) {
-                System.out.println("Main interrupted");
-                System.exit(1);
+            } catch (InterruptedException ex) {
+                System.out.println("Cafe interrupted");
             }
 
             counter.lock.lock();
@@ -253,57 +335,6 @@ public class Cafe {
         }
     }
 
-    /**
-     * Method for getting random orders.
-     *
-     * @param cntCookers count of cookers
-     * @param cntDel count of delivers
-     * @param maxCap max capacity of storage
-     * @param cntOrders count of orders
-     */
-    public void cafeStart(int cntCookers, int cntDel, int maxCap, int cntOrders) {
-        init(cntCookers, cntDel, maxCap);
-        setRandomOrders(cntOrders);
-
-        for (Order futureOrder : futureOrders) {
-            System.out.println(futureOrder.toString());
-        }
-
-        start();
-
-        loop();
-
-        killThemAll();
-    }
 
 
-    /**
-     * Method to start with exact configuration.
-     *
-     * @param fileName name of the file with configuration
-     */
-    public void cafeStart(String fileName) {
-        Parser.JsonClass jsonClass = Parser.getConf(fileName);
-        init(jsonClass.cntCookers, jsonClass.cntDel, jsonClass.maxCap);
-        if (jsonClass.cntOrders != jsonClass.orders.length) {
-            throw new RuntimeException("Wrong cnt of orders");
-        }
-        for (int i = 0; i < jsonClass.cntOrders; i++) {
-            jsonClass.orders[i].update(i);
-        }
-        this.futureOrders = new ArrayList<>(Arrays.asList(jsonClass.orders));
-
-
-
-
-        for (Order futureOrder : futureOrders) {
-            System.out.println(futureOrder.toString());
-        }
-
-        start();
-
-        loop();
-
-        killThemAll();
-    }
 }

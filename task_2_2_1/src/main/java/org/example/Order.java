@@ -20,7 +20,6 @@ public class Order {
 
     /**
      * Simple constructor.
-     *
      * Needed for Jackson.
      */
     Order() {}
@@ -59,7 +58,7 @@ public class Order {
      *
      * @param number number
      */
-    void update(int number) {
+    public void update(int number) {
         this.timeCook = this.cntPizza * 15;
         this.number = number;
     }

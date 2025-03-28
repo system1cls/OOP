@@ -28,7 +28,7 @@ public class Parser {
         public int cntOrders;
         @JsonProperty("orders")
         @JsonDeserialize(as=Order[].class)
-        public Order orders[];
+        public Order []orders;
     }
 
     /**

@@ -21,6 +21,16 @@ public class Counter {
         cond = lock.newCondition();
     }
 
+    public void wakeMain() {
+        this.lock.lock();
+        try {
+            this.dec();
+            this.cond.signal();
+        } finally {
+            this.lock.unlock();
+        }
+    }
+
     /**
      * Increment cnt with synchronized method.
      *
