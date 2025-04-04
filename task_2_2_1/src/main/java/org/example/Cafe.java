@@ -73,6 +73,8 @@ public class Cafe implements Runnable {
         isSet = true;
     }
 
+
+
     @Override
     public void run() {
         if (isSet) _cafeStart();
