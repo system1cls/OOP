@@ -1,0 +1,13 @@
+{
+  "cntCookers": 1,
+  "cntDel": 1,
+  "maxCap": 1,
+  "cntOrders": 1,
+  "orders": [
+    {
+      "cntPizza": 2,
+      "timeToDel": 50,
+      "timeStart": 1070
+    }
+  ]
+}
