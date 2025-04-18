@@ -1,0 +1,8 @@
+rootProject.name = 'task2_4_1'
+include 'src:main:Parser'
+findProject(':src:main:Parser')?.name = 'Parser'
+include 'groovy'
+include 'src:main:groovy'
+findProject(':src:main:groovy')?.name = 'groovy'
+include 'groovy'
+
