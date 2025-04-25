@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-public class CustomLevel implements Level {
+public class Level1 implements Level {
     private int field[][];
     private int width, height;
     private int cntFr;
@@ -20,29 +20,45 @@ public class CustomLevel implements Level {
 
     Snake playerSnake;
 
-    private void startShow() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(startX, startY, 10 * width, 10 * height);
-    }
-
-    public void show() {
-        for (int i = 0; i < curMax; i++) {
-            switch(field[nodesToChange[i].x][nodesToChange[i].y]) {
-                case 1:
-                    gc.setFill(Color.BLACK);
-                    break;
-                case 2:
-                    gc.setFill(Color.RED);
-                    break;
-                case 3:
-                    gc.setFill(Color.WHITE);
-                    break;
-            }
-
-            gc.fillRect(startX + nodesToChange[i].x*10, startY + nodesToChange[i].y*10, 10, 10);
-        }
+    Level1(int startX, int startY, Snake playerSnake) {
+        cntFr = 3;
+        playerSnake.setDir(Dirs.Right);
 
         curMax = 0;
+        nodesToChange = new Pair[256];
+
+        this.dest = 20;
+        this.startX = startX;
+        this.startY = startY;
+        this.width = 30;
+        this.height = 30;
+        this.field = new int[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                field[i][j] = 1;
+            }
+        }
+
+        for (int i = 10; i < 20; i++) {
+            for (int j = 10; j < 20; j++) field[i][j] = 0;
+        }
+
+        for (int i = 2; i < 4; i++) {
+            for (int j = 10; j < 20; j++) {
+                field[i][j] = 0;
+                field[29 - i][j] = 0;
+            }
+        }
+
+        this.gc = gc;
+        this.playerSnake = playerSnake;
+        playerSnake.setId(3);
+        Pair<Integer> p = playerSnake.getCurHead();
+        field[p.x][p.y] = 3;
+        nodesToChange[curMax++] = new Pair<>(p.x, p.y);
+        for (int i = 0; i < this.cntFr; i++) {
+            generateFruit();
+        }
     }
 
     @Override
@@ -54,34 +70,15 @@ public class CustomLevel implements Level {
         this.show();
     }
 
-    CustomLevel(int width, int height, int cntFr, int startX, int startY,
-                Snake playerSnake, int dest) {
-        if (cntFr > 3 || cntFr < 0) this.cntFr = 3;
-        else this.cntFr = cntFr;
-
-
-        curMax = 0;
-        nodesToChange = new Pair[256];
-
-        this.dest = dest;
-        this.startX = startX;
-        this.startY = startY;
-        this.width = width;
-        this.height = height;
-        this.field = new int[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) field[i][j] = 1;
-        }
-        this.gc = gc;
-        this.playerSnake = playerSnake;
-        playerSnake.setId(3);
-        Pair<Integer> p = playerSnake.getCurHead();
-        field[p.x][p.y] = 3;
-        nodesToChange[curMax++] = new Pair<>(p.x, p.y);
-        for (int i = 0; i < this.cntFr; i++) {
-            generateFruit();
-        }
+    private void startShow() {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(startX, startY, 10 * width, 10 * height);
+        gc.setFill(Color.CORAL);
+        gc.fillRect(startX + 100, startY + 100, 100, 100);
+        gc.fillRect(startX + 20, startY + 100, 20, 100);
+        gc.fillRect(startX + 260, startY + 100, 20, 100);
     }
+
 
     @Override
     public int checkColAndMove() {
@@ -110,6 +107,7 @@ public class CustomLevel implements Level {
 
                 generateFruit();
 
+
                 return 1;
             case 3:
             case 0:
@@ -118,7 +116,28 @@ public class CustomLevel implements Level {
         return 0;
     }
 
-    protected void generateFruit() {
+    @Override
+    public void show() {
+        for (int i = 0; i < curMax; i++) {
+            switch(field[nodesToChange[i].x][nodesToChange[i].y]) {
+                case 1:
+                    gc.setFill(Color.BLACK);
+                    break;
+                case 2:
+                    gc.setFill(Color.RED);
+                    break;
+                case 3:
+                    gc.setFill(Color.WHITE);
+                    break;
+            }
+
+            gc.fillRect(startX + nodesToChange[i].x*10, startY + nodesToChange[i].y*10, 10, 10);
+        }
+
+        curMax = 0;
+    }
+
+    private void generateFruit() {
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
             int x = random.nextInt(width - 1);

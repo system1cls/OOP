@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     Stage stage;
-
+    GraphicsContext gc;
 
     @FXML TextField Width;
     @FXML TextField Height;
@@ -44,26 +45,49 @@ public class Main extends Application {
             return;
         }
 
-        if (width > 50 || width < 0) {
+        if (width > 50 || width <= 0) {
             ErrorText.setVisible(true);
             ErrorText.setText("Wrong Width");
         }
-        else if (height > 50 || height < 0) {
+        else if (height > 35 || height <= 0) {
             ErrorText.setVisible(true);
             ErrorText.setText("Wrong Height");
         }
-        else if (dest > 30 || dest < 0) {
+        else if (dest > width * height / 2 || dest <= 0) {
             ErrorText.setVisible(true);
             ErrorText.setText("Wrong Destination");
         }
         else {
             System.out.println("Starting");
-            Game game = new Game(stage, width, height, dest);
+            MyPlayerSnake snake = new MyPlayerSnake(width / 2, height / 2, stage.getScene());
+            CustomLevel level = new CustomLevel(width, height, 3, 0, 0, snake, dest);
+            Game game = new Game(stage, width, height, dest, level);
             Thread thread = new Thread(game);
             thread.start();
         }
 
     }
+
+    @FXML protected void startLevel1() {
+        MyPlayerSnake snake = new MyPlayerSnake(3, 3, stage.getScene());
+        Level level = new Level1(0, 0, snake);
+        Game game = new Game(stage, 30, 30, 20, level);
+        Thread thread = new Thread(game);
+        thread.start();
+    }
+
+    @FXML protected void startLevel2() {
+
+    }
+
+    @FXML protected void startLevel3() {
+        MyPlayerSnake snake = new MyPlayerSnake(15, 15, stage.getScene());
+        Level level = new LevelPUBG(0, 0, snake);
+        Game game = new Game(stage, 30, 30, 10, level);
+        Thread thread = new Thread(game);
+        thread.start();
+    }
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -82,76 +106,6 @@ public class Main extends Application {
         stage.show();
     }
 
-    class Game extends Task {
-            Stage stage;
-            int width;
-            int height;
-            int dest;
-            int delay = 500;
-            int curPoints = 0;
-            Text points;
-            Text destText;
-
-            Game(Stage stage, int width, int height, int dest) {
-                this.dest = dest;
-                this.height = height;
-                this.width = width;
-                this.stage = stage;
-            }
-
-            void startGame () {
-            StackPane pane = new StackPane();
-            Canvas canvas = new Canvas(width * 10, height * 10);
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            pane.getChildren().add(canvas);
-
-            MyPlayerSnake snake = new MyPlayerSnake(width / 2, height / 2, stage.getScene());
-            CustomLevel level = new CustomLevel(width, height, 3, 0, 0, gc, snake, dest);
-
-            stage.setWidth(width * 10);
-            stage.setHeight(height * 10);
-            stage.getScene().setRoot(pane);
-
-
-            gameLoop(level, gc);
-        }
-
-            void gameLoop (Level level, GraphicsContext gc){
-            Timer timer = new Timer(delay, e -> {
-                System.out.println("New Move");
-                int res = level.checkColAndMove();
-                switch (res) {
-                    case -1:
-                        System.out.println("Game Over");
-                        ((Timer) e.getSource()).stop();
-                        break;
-                    case -2:
-                        System.out.println("You win");
-                        level.show();
-                        ((Timer) e.getSource()).stop();
-                        break;
-                    case 1:
-                        addPints();
-                    default:
-                        level.show();
-                        break;
-                }
-            });
-
-            timer.start();
-        }
-
-        void addPints() {
-            curPoints += 100;
-
-        }
-
-        @Override
-        protected Object call() throws Exception {
-            startGame();
-            return null;
-        }
-    }
     public static void main(String[] args) {
         launch();
     }

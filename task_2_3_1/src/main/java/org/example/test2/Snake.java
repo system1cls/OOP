@@ -15,4 +15,12 @@ public interface Snake {
     void add(Pair<Pair<Integer>> p);
 
     Pair<Integer> getCurHead();
+
+    void updateMyHead();
+
+    Dirs getDir();
+
+    void setSnakesSynch(SnakesSynch synch);
+
+    boolean checkCircle(int field[][]);
 }

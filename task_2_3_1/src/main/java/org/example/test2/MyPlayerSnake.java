@@ -2,12 +2,11 @@ package org.example.test2;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
+
+
 import java.util.Arrays;
 
 public class MyPlayerSnake implements Snake {
@@ -16,10 +15,9 @@ public class MyPlayerSnake implements Snake {
     Dirs dir;
     int head, tail;
     int id;
+    SnakesSynch synch;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     MyPlayerSnake(int startX, int startY, Scene scene) {
         snake = new SnakeNode[256];
@@ -32,24 +30,37 @@ public class MyPlayerSnake implements Snake {
             @Override
             public void handle(KeyEvent keyEvent) {
                 KeyCode event = keyEvent.getCode();
-                if (event.equals(KeyCode.UP) && dir != Dirs.Down) {
+                Pair<Integer> p = null;
+                Pair<Integer> headP = snake[head].getPair();
+                if (cntNodes != 1) {
+                    p = snake[snake[head].getPrev()].getPair();
+                }
+                if (event.equals(KeyCode.UP) && (cntNodes == 1 || !(p.x == headP.x && p.y == headP.y - 1))) {
                     dir = Dirs.Up;
                     System.out.println("Up");
                 }
-                if (event.equals(KeyCode.DOWN) && dir != Dirs.Up) {
+                if (event.equals(KeyCode.DOWN) && (cntNodes == 1 || !(p.x == headP.x && p.y == headP.y + 1))) {
                     dir = Dirs.Down;
                     System.out.println("Down");
                 }
-                if (event.equals(KeyCode.LEFT) && dir != Dirs.Right) {
+                if (event.equals(KeyCode.LEFT) && (cntNodes == 1 || !(p.x == headP.x - 1 && p.y == headP.y))) {
                     dir = Dirs.Left;
                     System.out.println("Left");
                 }
-                if (event.equals(KeyCode.RIGHT) && dir != Dirs.Left) {
+                if (event.equals(KeyCode.RIGHT) && (cntNodes == 1 || !(p.x == headP.x + 1 && p.y == headP.y))) {
                     dir = Dirs.Right;
                     System.out.println("Right");
                 }
             }
         });
+    }
+
+    public void setSnakesSynch(SnakesSynch synch) {
+        this.synch = synch;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -115,5 +126,37 @@ public class MyPlayerSnake implements Snake {
     @Override
     public Pair<Integer> getCurHead() {
         return snake[head].getPair();
+    }
+
+
+    public void updateMyHead() {
+        synchronized (synch.infos[0]) {
+            synch.infos[0].head = snake[head].getPair();
+            if (synch.infos[0].turn == 10) {
+                synch.infos[0].turn = 0;
+                synch.infos[0].notify();
+            }
+            else {
+                synch.infos[0].turn++;
+            }
+        }
+    }
+
+    public Dirs getDir() {
+        return this.dir;
+    }
+
+    public boolean checkCircle(int field[][]) {
+        boolean res = false;
+        synchronized (field) {
+            for (int i = 0; i < cntNodes; i++) {
+                Pair<Integer> p = snake[i].getPair();
+                if (field[p.x][p.y] == -1) {
+                    res = true;
+                    break;
+                }
+            }
+        }
+        return res;
     }
 }
