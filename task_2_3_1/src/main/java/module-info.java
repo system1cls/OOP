@@ -1,4 +1,4 @@
-module org.example.test2 {
+module org.example.task_2_3_1 {
     requires javafx.controls;
     requires javafx.fxml;
     requires kotlin.stdlib;
@@ -7,6 +7,6 @@ module org.example.test2 {
     requires com.almasb.fxgl.all;
     requires java.desktop;
 
-    opens org.example.test2 to javafx.fxml;
-    exports org.example.test2;
+    opens org.example.task_2_3_1 to javafx.fxml;
+    exports org.example.task_2_3_1;
 }
