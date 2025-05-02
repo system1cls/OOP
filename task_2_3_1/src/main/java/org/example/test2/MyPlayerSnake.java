@@ -37,19 +37,15 @@ public class MyPlayerSnake implements Snake {
                 }
                 if (event.equals(KeyCode.UP) && (cntNodes == 1 || !(p.x == headP.x && p.y == headP.y - 1))) {
                     dir = Dirs.Up;
-                    System.out.println("Up");
                 }
                 if (event.equals(KeyCode.DOWN) && (cntNodes == 1 || !(p.x == headP.x && p.y == headP.y + 1))) {
                     dir = Dirs.Down;
-                    System.out.println("Down");
                 }
                 if (event.equals(KeyCode.LEFT) && (cntNodes == 1 || !(p.x == headP.x - 1 && p.y == headP.y))) {
                     dir = Dirs.Left;
-                    System.out.println("Left");
                 }
                 if (event.equals(KeyCode.RIGHT) && (cntNodes == 1 || !(p.x == headP.x + 1 && p.y == headP.y))) {
                     dir = Dirs.Right;
-                    System.out.println("Right");
                 }
             }
         });
@@ -115,12 +111,6 @@ public class MyPlayerSnake implements Snake {
         snake[cntNodes].setPrev(head);
         head = cntNodes++;
 
-        System.out.println(head);
-        System.out.println(tail);
-
-        for (int i = 0; i < cntNodes; i++) {
-            System.out.println(snake[i]);
-        }
     }
 
     @Override
@@ -131,14 +121,19 @@ public class MyPlayerSnake implements Snake {
 
     public void updateMyHead() {
         synchronized (synch.infos[0]) {
+
             synch.infos[0].head = snake[head].getPair();
-            if (synch.infos[0].turn == 10) {
-                synch.infos[0].turn = 0;
-                synch.infos[0].notify();
+
+            if (synch.infos[0].turn != 0) {
+                try {
+                    synch.infos[0].wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException("Game interrupted");
+                }
             }
-            else {
-                synch.infos[0].turn++;
-            }
+
+            synch.infos[0].turn = 1;
+            synch.infos[0].notify();
         }
     }
 
@@ -148,6 +143,7 @@ public class MyPlayerSnake implements Snake {
 
     public boolean checkCircle(int field[][]) {
         boolean res = false;
+
         synchronized (field) {
             for (int i = 0; i < cntNodes; i++) {
                 Pair<Integer> p = snake[i].getPair();

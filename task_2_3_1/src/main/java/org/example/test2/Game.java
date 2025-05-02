@@ -94,6 +94,8 @@ public class Game extends Task {
                             break;
                         case 1:
                             addPints();
+                            level.show();
+                            break;
                         default:
                             level.show();
                             break;

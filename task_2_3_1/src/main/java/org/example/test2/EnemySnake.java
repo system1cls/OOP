@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 
 public class EnemySnake extends Task implements Snake {
-    int field[][];
+    final int field[][];
     SnakeNode []snake;
     int cntNodes = 0;
     Dirs dir;
@@ -37,15 +37,11 @@ public class EnemySnake extends Task implements Snake {
     protected Object call() throws Exception {
         while (true) {
 
-            System.out.println(id + " start round");
-
             synchronized (synch.infos[id]) {
-
-                System.out.println(id + " turn = " + synch.infos[id].turn + " before 0");
 
                 if (synch.infos[id].turn != 0) {
                     try {
-                        System.out.println(id + " wait turn != 0");
+                        System.out.println(id + " wait turn != 0 (turn = " + synch.infos[id].turn + ")");
                         synch.infos[id].wait();
                     } catch (InterruptedException e) {
                         return null;
@@ -53,35 +49,35 @@ public class EnemySnake extends Task implements Snake {
                 }
             }
 
-            simpleDefineDir();
-
+            defineDir();
 
             synchronized (field) {
                 Pair<Integer> predicted = predictEnemyMoving(snake[head].getPair(), dir, 1);
-                if (checkStolk(predicted)) {
+                if (checkStolk(predicted) & field[predicted.x][predicted.y] != -4) {
                     clearSnake();
                     return null;
                 }
 
+                if (checkCircle(field)) {
+                    clearSnake();
+                    return null;
+                }
             }
 
-            if (checkCircle(field)) {
-                clearSnake();
-                return null;
-            }
+
 
             synchronized (synch.infos[id]) {
                 synch.infos[id].turn = 1;
                 synch.infos[id].notify();
             }
 
-            synchronized (synch.infos[id]) {
+            print();
 
-                System.out.println(id + " turn = " + synch.infos[id].turn + " before 2");
+            synchronized (synch.infos[id]) {
 
                 if (synch.infos[id].turn != 2) {
                     try {
-                        System.out.println(id + " wait turn != 2");
+                        System.out.println(id + " wait turn != 2 (turn = " + synch.infos[id].turn + ")");
                         synch.infos[id].wait();
                     } catch (InterruptedException e) {
                         return null;
@@ -94,17 +90,19 @@ public class EnemySnake extends Task implements Snake {
             Pair <Integer> tailP = headAndTail.y;
             move(headAndTail);
 
+
             synchronized (field) {
                 field[headP.x][headP.y] = id;
                 field[tailP.x][tailP.y] = -2;
-            }
 
-            synchronized (gc) {
                 gc.setFill(Color.BLACK);
                 gc.fillRect(tailP.x * 10, tailP.y * 10, 10, 10);
                 gc.setFill(Color.BLUEVIOLET);
                 gc.fillRect(headP.x * 10, headP.y * 10, 10, 10);
             }
+
+
+
 
             synchronized (synch.infos[id]) {
                 synch.infos[id].turn = 3;
@@ -172,6 +170,7 @@ public class EnemySnake extends Task implements Snake {
     }
 
     public void updateMyHead() {
+
         synchronized (synch.infos[id]) {
             synch.infos[id].head = snake[head].getPair();
         }
@@ -190,6 +189,8 @@ public class EnemySnake extends Task implements Snake {
     @Override
     public boolean checkCircle(int[][] field) {
         boolean res = false;
+
+
         synchronized (field) {
             for (int i = 0; i < cntNodes; i++) {
                 Pair<Integer> p = snake[i].getPair();
@@ -203,6 +204,28 @@ public class EnemySnake extends Task implements Snake {
     }
 
 
+    private void simpleDefineDir() {
+        Random random = new Random();
+        int num = random.nextInt() % 4;
+        num = num >= 0 ? num : num + 4;
+        switch (num) {
+            case 0:
+                dir = Dirs.Up;
+                break;
+            case 1:
+                dir = Dirs.Right;
+                break;
+            case 2:
+                dir = Dirs.Down;
+                break;
+            case 3:
+                dir = Dirs.Left;
+                break;
+        }
+
+        setPredictedOrClear();
+    }
+
     private void defineDir() {
         int minId = -1;
         double minDistance = 1000000.;
@@ -210,11 +233,12 @@ public class EnemySnake extends Task implements Snake {
 
         for (int i = 0; i < synch.infos.length; i++) {
             if (i == id) continue;
+
             synchronized (synch.infos[i]) {
                 Pair<Integer> anotherHead = synch.infos[i].head;
                 double dist = Math.sqrt((headP.x - anotherHead.x) * (headP.x - anotherHead.x) +
                         (headP.y - anotherHead.y) * (headP.y - anotherHead.y));
-                if (dist < minDistance) {
+                if (synch.infos[i].isAlive && dist < minDistance) {
                     minDistance = dist;
                     minId = i;
                 }
@@ -222,12 +246,19 @@ public class EnemySnake extends Task implements Snake {
         }
         Pair<Integer> anotherHead;
         Dirs anotherDir;
+
+        System.out.println(id + " dist = " + minDistance + " id = " + minId);
+
+
         synchronized (synch.infos[minId]) {
             anotherHead = synch.infos[minId].head;
             anotherDir = synch.infos[minId].dir;
         }
 
+        System.out.println("EnemyHead = " + anotherHead);
         Pair<Integer> predicted = predictEnemyMoving(anotherHead, anotherDir, 2);
+
+        System.out.println(snake[head] + "\n" + predicted);
 
         if (predicted.y > headP.y) {
             if (predicted.x > headP.x) {
@@ -250,62 +281,34 @@ public class EnemySnake extends Task implements Snake {
             }
         }
 
-        boolean shouldCheck = true;
+        System.out.println("dir = " + dir);
 
-        synchronized (field) {
-            for (int i = 0; i < 4 & shouldCheck; i++) {
-                predicted = this.predictEnemyMoving(headP, dir, 1);
-                if (this.checkStolk(predicted)) {
-                    setNextDir();
-                } else shouldCheck = false;
-            }
-        }
-
-
-        synchronized (synch.infos[id]) {
-            synch.infos[id].dir = dir;
-            synch.infos[id].turn = 1;
-            synch.infos[id].notify();
-        }
+        setPredictedOrClear();
     }
 
 
-    private void simpleDefineDir() {
-        Random random = new Random();
-        int num = random.nextInt() % 4;
-
-        switch (num) {
-            case 0:
-                dir = Dirs.Up;
-                break;
-            case 1:
-                dir = Dirs.Right;
-                break;
-            case 2:
-                dir = Dirs.Down;
-                break;
-            case 3:
-                dir = Dirs.Left;
-                break;
-        }
+    private void setPredictedOrClear() {
+        boolean shouldCheck = true;
 
         Pair<Integer> predicted;
-        boolean shouldCheck = true;
         Pair<Integer> headP = snake[head].getPair();
+
         synchronized (field) {
             for (int i = 0; i < 4 & shouldCheck; i++) {
                 predicted = this.predictEnemyMoving(headP, dir, 1);
+
                 if (this.checkStolk(predicted)) {
                     setNextDir();
-                } else shouldCheck = false;
+                } else {
+                    shouldCheck = false;
+                    field[predicted.x][predicted.y] = -4;
+                }
             }
-        }
 
+        }
 
         synchronized (synch.infos[id]) {
             synch.infos[id].dir = dir;
-            synch.infos[id].turn = 1;
-            synch.infos[id].notify();
         }
     }
 
@@ -347,11 +350,12 @@ public class EnemySnake extends Task implements Snake {
     }
 
     private void clearSnake() {
-        synchronized (synch.infos[id]) {
-            synch.infos[id].isAlive = false;
-        }
 
-        synchronized (gc) {
+        System.out.println("\n\n\n" + id + " clear\n\n");
+
+
+
+        synchronized (field) {
             gc.setFill(Color.BLACK);
             for (int i = 0; i < cntNodes; i++) {
                 Pair<Integer> pair = snake[i].getPair();
@@ -359,10 +363,25 @@ public class EnemySnake extends Task implements Snake {
                 gc.fillRect(pair.x * 10, pair.y * 10, 10, 10);
             }
         }
+
+        synchronized (synch.infos[id]) {
+            synch.infos[id].isAlive = false;
+            synch.infos[id].notify();
+        }
     }
 
     private boolean checkStolk(Pair<Integer> pair) {
         return pair.x < 0 || pair.y < 0 || pair.x >= field.length || pair.y >= field[0].length ||
                 field[pair.x][pair.y] != -2;
+    }
+
+    private void print() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = head; i >= 0; i = snake[i].getPrev()) {
+            Pair<Integer> p = snake[i].getPair();
+            builder.append("(").append(p.x).append(", ").append(p.y).append(")-");
+        }
+
+        System.out.println(builder);
     }
 }

@@ -1,42 +1,44 @@
 package org.example.test2;
 
 import javafx.concurrent.Task;
-import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class KillingCircle extends Task {
     SnakesSynch synch;
-    Pane pane;
     GraphicsContext gc;
     int field[][];
     Circle circle;
-    double curRad = 221;
+    double curRad = 220;
     long delay = 500;
+    double X = 150;
+    double Y = 150;
 
     KillingCircle(GraphicsContext gc, int field[][], Pane pane, SnakesSynch synch) {
         this.synch = synch;
         this.gc = gc;
         this.field = field;
         circle = new Circle();
-        circle.setCenterX(150);
-        circle.setCenterY(150);
+        circle.setTranslateX(X - 150);
+        circle.setTranslateY(Y - 150);
         circle.setRadius(curRad);
         circle.setViewOrder(-1);
-        circle.setFill(new Color(0, 0, 0, 0));
+        circle.setStroke(Paint.valueOf("blue"));
+        circle.setFill(Color.TRANSPARENT);
+        circle.setStrokeWidth(3);
         pane.getChildren().add(circle);
 
     }
 
     @Override
-    protected Object call() throws Exception {
+    protected Object call() {
 
         while(true) {
-
             synchronized (synch.infos[0]) {
-                if (synch.infos[0].turn != 10) {
+                if (synch.infos[0].turn != 1) {
                     try {
                         synch.infos[0].wait();
                     } catch (InterruptedException e) {
@@ -47,7 +49,6 @@ public class KillingCircle extends Task {
 
             if (curRad == 30) return null;
 
-            long t1 = System.currentTimeMillis();
 
             curRad -= 1;
             circle.setRadius(curRad);
@@ -58,24 +59,22 @@ public class KillingCircle extends Task {
                         double xC = i * 10 + 5;
                         double yC = j * 10 + 5;
 
-                        if (curRad <= Math.sqrt((150 - xC) * (150 - xC) + (150 - yC) * (150 - yC))) {
+                        if (field[i][j] != -1 && curRad <= Math.sqrt((X - xC) * (X - xC) + (Y - yC) * (Y - yC))) {
                             field[i][j] = -1;
-                            synchronized (gc) {
-                                gc.setFill(Color.ORANGE);
-                                gc.fillRect(i*10, j*10, 10, 10);
-                            }
+                            gc.setFill(Color.ORANGE);
+                            gc.fillRect(i*10, j*10, 10, 10);
+
                         }
                     }
                 }
             }
 
 
-            long t2 = System.currentTimeMillis();
 
-            try {
-                Thread.sleep(delay - (t2 - t1));
-            } catch (InterruptedException e) {
-                return null;
+
+            synchronized (synch.infos[0]) {
+                synch.infos[0].turn = 0;
+                synch.infos[0].notify();
             }
         }
     }

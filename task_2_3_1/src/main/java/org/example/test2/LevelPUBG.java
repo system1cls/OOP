@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 
 public class LevelPUBG implements Level {
-    private int field[][];
+    private final int[][] field;
     private int width, height;
     private int cntFr;
     private GraphicsContext gc;
@@ -121,9 +121,13 @@ public class LevelPUBG implements Level {
 
     @Override
     public int checkColAndMove() {
+        if (!synch.infos[1].isAlive && !synch.infos[2].isAlive) return -2;
         boolean checkLoose = playerSnake.checkCircle(field);
 
         if (checkLoose) {
+            snake1T.interrupt();
+            snake2T.interrupt();
+            circleT.interrupt();
             return -1;
         }
 
@@ -131,6 +135,9 @@ public class LevelPUBG implements Level {
         Pair<Integer> playerNextP = playerPairs.x;
         Pair<Integer> tail = playerPairs.y;
         if (playerNextP.x < 0 || playerNextP.y < 0 || playerNextP.x >= width || playerNextP.y >= height) {
+            snake1T.interrupt();
+            snake2T.interrupt();
+            circleT.interrupt();
             return -1;
         }
 
@@ -141,48 +148,56 @@ public class LevelPUBG implements Level {
         synchronized (field) {
             pointId = field[playerNextP.x][playerNextP.y];
         }
-            switch (pointId) {
-                case -2:
 
-                    try {
-                        waitForOtherDirs();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+        switch (pointId) {
+            case -2:
 
-                    playerSnake.move(playerPairs);
-                    synchronized (field) {
-                        field[playerNextP.x][playerNextP.y] = 0;
-                        field[tail.x][tail.y] = -2;
-                    }
-                    nodesToChange[curMax++] = new Pair<>(playerNextP.x, playerNextP.y);
-                    nodesToChange[curMax++] = new Pair<>(tail.x, tail.y);
+                try {
+                    waitForOtherDirs();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
-
-
-                    break;
-                case -3:
-                    playerSnake.add(playerPairs);
-                    synchronized (field) {
-                        field[playerNextP.x][playerNextP.y] = 0;
-                    }
-                    nodesToChange[curMax++] = new Pair<>(playerNextP.x, playerNextP.y);
-
-                    curpoints++;
-                    if (curpoints >= dest) {
-                        res = -2;
-                        break;
-                    }
-
-                    generateFruit();
+                playerSnake.move(playerPairs);
+                synchronized (field) {
+                    field[playerNextP.x][playerNextP.y] = 0;
+                    field[tail.x][tail.y] = -2;
+                }
+                nodesToChange[curMax++] = new Pair<>(playerNextP.x, playerNextP.y);
+                nodesToChange[curMax++] = new Pair<>(tail.x, tail.y);
 
 
-                    res = 1;
-                    break;
-                default:
-                    res = -1;
-                    break;
-            }
+                break;
+            case -3:
+                 try {
+                     waitForOtherDirs();
+                 } catch (InterruptedException e) {
+                     throw new RuntimeException(e);
+                 }
+
+                 playerSnake.add(playerPairs);
+                 synchronized (field) {
+                     field[playerNextP.x][playerNextP.y] = 0;
+                 }
+                 nodesToChange[curMax++] = new Pair<>(playerNextP.x, playerNextP.y);
+
+                 curpoints++;
+                 if (curpoints >= dest) {
+                     res = -2;
+                     break;
+                 }
+
+                 synchronized (field) {
+                     generateFruit();
+                 }
+
+
+                 res = 1;
+                 break;
+            default:
+                res = -1;
+                break;
+        }
 
 
         if (res < 0) {
@@ -200,13 +215,20 @@ public class LevelPUBG implements Level {
         showWithoutWait();
         curMax = 0;
 
+
+
         for (int i = 1; i < synch.infos.length; i++) {
+
+
             synchronized (synch.infos[i]) {
                 try {
                     if (synch.infos[i].isAlive && synch.infos[i].turn != 3) {
-                        System.out.println(i + " Level wait turn != 3");
+                        System.out.println("main " + i + " wait turn != 3 (turn = " + synch.infos[i].turn + ")");
                         synch.infos[i].wait();
+
+
                     }
+
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -217,33 +239,36 @@ public class LevelPUBG implements Level {
             }
         }
 
+
+        playerSnake.updateMyHead();
     }
 
 
     private void showWithoutWait() {
+        for (int i = 0; i < curMax; i++) {
+            synchronized (field) {
+                switch (field[nodesToChange[i].x][nodesToChange[i].y]) {
+                    case -2:
+                        gc.setFill(Color.BLACK);
+                        gc.fillRect(startX + nodesToChange[i].x * 10, startY + nodesToChange[i].y * 10, 10, 10);
+                        break;
+                    case -3:
+                        gc.setFill(Color.RED);
+                        gc.fillRect(startX + nodesToChange[i].x * 10, startY + nodesToChange[i].y * 10, 10, 10);
+                        break;
+                    case 0:
+                        gc.setFill(Color.WHITE);
+                        gc.fillRect(startX + nodesToChange[i].x * 10, startY + nodesToChange[i].y * 10, 10, 10);
+                        break;
 
-        synchronized (gc) {
-            for (int i = 0; i < curMax; i++) {
-                synchronized (field) {
-                    switch (field[nodesToChange[i].x][nodesToChange[i].y]) {
-                        case -2:
-                            gc.setFill(Color.BLACK);
-                            break;
-                        case -3:
-                            gc.setFill(Color.RED);
-                            break;
-                        case 0:
-                            gc.setFill(Color.WHITE);
-                            break;
-                        default:
-                            gc.setFill(Color.BLUEVIOLET);
-                            break;
+                    default:
+                        gc.setFill(Color.BLUEVIOLET);
+                        gc.fillRect(startX + nodesToChange[i].x * 10, startY + nodesToChange[i].y * 10, 10, 10);
+                        break;
                     }
                 }
-
-                gc.fillRect(startX + nodesToChange[i].x * 10, startY + nodesToChange[i].y * 10, 10, 10);
             }
-        }
+            return;
     }
 
     private void startShow() {
@@ -284,18 +309,20 @@ public class LevelPUBG implements Level {
 
     private void waitForOtherDirs() throws InterruptedException {
         for (int i = 1; i < synch.infos.length; i++) {
+
+
             synchronized (synch.infos[i]) {
                 if (synch.infos[i].isAlive && synch.infos[i].turn != 1) {
-                    System.out.println(i + " Level wait turn != 1");
+                    System.out.println("main " + i + " wait turn != 1 (turn = " + synch.infos[i].turn + ")");
                     synch.infos[i].wait();
                 }
-                synch.infos[i].turn = 2;
             }
         }
 
 
         for (int i = 1; i < synch.infos.length; i++) {
             synchronized (synch.infos[i]) {
+                synch.infos[i].turn = 2;
                 synch.infos[i].notify();
             }
         }

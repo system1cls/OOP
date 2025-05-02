@@ -18,7 +18,7 @@ public class SnakesSynch {
 
     }
 
-    SnakeInfo []infos;
+    volatile SnakeInfo []infos;
 
     SnakesSynch(int cnt) {
         infos = new SnakeInfo[cnt];
