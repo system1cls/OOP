@@ -1,4 +1,4 @@
-rootProject.name = "test2"
+rootProject.name = "task_2_3_1"
 include 'src:JavaFx'
 findProject(':src:JavaFx')?.name = 'JavaFx'
 include 'JavaFx'
