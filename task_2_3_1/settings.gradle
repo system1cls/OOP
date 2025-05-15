@@ -1,0 +1,5 @@
+rootProject.name = "test2"
+include 'src:JavaFx'
+findProject(':src:JavaFx')?.name = 'JavaFx'
+include 'JavaFx'
+
