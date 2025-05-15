@@ -29,7 +29,7 @@ public class EatStrategy implements IDirDefiner {
 
 
         synchronized (circle) {
-            if (circle.curRad - Math.sqrt(Math.pow(head.x - circle.X, 2) + Math.pow(head.y - circle.Y, 2)) < 3.0) {
+            if (circle.curRad / 10 - Math.sqrt(Math.pow(head.x - circle.X / 10, 2) + Math.pow(head.y - circle.Y / 10, 2)) < 3.0) {
                 answer = new Pair<>(Math.toIntExact(Math.round(circle.X / 10)), Math.toIntExact(Math.round(circle.Y / 10)));
             }
         }
@@ -38,17 +38,20 @@ public class EatStrategy implements IDirDefiner {
         if (answer == null) {
             synchronized (field) {
 
-                int minDist = 10000;
+                double minDist = 10000;
 
                 for (int x = 0; x < field.length; x++) {
                     for (int y = 0; y < field[x].length; y++) {
                         if (field[x][y] == PUBGEnum.Fruit.id && (calcDist(head, new Pair<>(x, y)) < minDist)) {
                             answer = new Pair<>(x, y);
+                            minDist = calcDist(head, new Pair<>(x, y));
                         }
                     }
                 }
             }
         }
+
+
 
 
         if (answer == null) {
