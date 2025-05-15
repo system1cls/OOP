@@ -14,7 +14,7 @@ public class Main {
         Thread serverT = new Thread(server);
         serverT.start();
 
-        Worker worker = new Worker("localhost", 5005, new Logger());
+        Worker worker = new Worker("localhost", 5005, new Logger(), 1);
         Thread workerT = new Thread(worker);
         workerT.start();
 

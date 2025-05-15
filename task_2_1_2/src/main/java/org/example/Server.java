@@ -35,11 +35,13 @@ public class Server implements Runnable{
 
     @Override
     public void run() {
+        int idCounter = 0;
+
         try (ServerSocket socketServer = new ServerSocket(port)) {
 
             while(true) {
                 Socket socket = socketServer.accept();
-                Listener listener = new Listener(this, socket, socketServer, maxToTranslate);
+                Listener listener = new Listener(this, socket, socketServer, maxToTranslate, idCounter++);
                 Thread thread = new Thread(listener);
                 thread.start();
 
@@ -60,12 +62,14 @@ public class Server implements Runnable{
         private final InputStream in;
         private final OutputStream out;
         private final int maxToTranslate;
+        private final int id;
 
         public boolean ans = false;
 
 
-        Listener(Server server, Socket socket, ServerSocket serverSocket, int maxToTranslate) {
+        Listener(Server server, Socket socket, ServerSocket serverSocket, int maxToTranslate, int id) {
             this.socket = socket;
+            this.id = id;
             this.maxToTranslate = maxToTranslate;
             this.serverSocket = serverSocket;
             this.server = server;
@@ -73,7 +77,7 @@ public class Server implements Runnable{
                 in = socket.getInputStream();
                 out = socket.getOutputStream();
             } catch (IOException e) {
-                logger.print(Thread.currentThread().threadId() + " streams getting error");
+                logger.print("Listener[" + id + "] streams getting error");
                 deleteMySelfFromList();
                 throw new RuntimeException(e);
             }
@@ -117,7 +121,7 @@ public class Server implements Runnable{
                             }
                         }
                         deleteMySelfFromList();
-                        logger.print(Thread.currentThread().threadId() + " connection error");
+                        logger.print("Listener[" + id + "] connection error");
                         throw new RuntimeException(e);
                     }
                 }
@@ -157,7 +161,7 @@ public class Server implements Runnable{
 
             synchronized (server) {
                 for (int i = 0; i < server.threads.size(); i++) {
-                    if (server.threads.get(i).value1.threadId() == Thread.currentThread().threadId()) {
+                    if (server.threads.get(i).value2.id == this.id) {
                         server.threads.remove(i);
                         break;
                     }

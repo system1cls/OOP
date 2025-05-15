@@ -12,11 +12,14 @@ public class Worker implements Runnable{
     private String host;
     private int port;
     private final ILogger logger;
+    private final int id;
 
-    Worker(String host, int port, ILogger logger) {
+    Worker(String host, int port, ILogger logger, int id) {
         this.host = host;
         this.port = port;
         this.logger = logger;
+        this.id = id;
+
     }
 
     @Override
@@ -33,7 +36,7 @@ public class Worker implements Runnable{
                 if (socket.isClosed()) return;
                 int cnt = in.read();
                 int []nums = new int[cnt];
-                logger.print(Thread.currentThread().threadId() + " cnt == " + cnt);
+                logger.print(id + " cnt == " + cnt);
                 byte[] buffer = new byte[4];
                 int numsIt = 0;
                 int cntGetted = 0;
@@ -42,7 +45,7 @@ public class Worker implements Runnable{
                     cntGetted += getted;
                     if (cntGetted / 4 > 0) {
                         nums[numsIt] = ByteBuffer.wrap(buffer).getInt();
-                        logger.print(Thread.currentThread().threadId() + " nums[" + numsIt + "] = " + nums[numsIt++]);
+                        logger.print(id + " nums[" + numsIt + "] = " + nums[numsIt++]);
                         cntGetted %= 4;
                     }
                 }
@@ -62,7 +65,7 @@ public class Worker implements Runnable{
             }
 
         } catch (RuntimeException | IOException e) {
-            logger.print(Thread.currentThread().threadId() + " socket closed");
+            logger.print(id + " socket closed");
             return;
         }
 
