@@ -98,7 +98,7 @@ public class Server implements Runnable{
                 synchronized (server) {
                     arr = new int[Math.min(server.list.size(), maxToTranslate)];
                     for (int i = 0; i < arr.length; i++) {
-                        arr[i] = server.list.removeFirst();
+                        arr[i] = server.list.remove(0);
 
                     }
                 }
