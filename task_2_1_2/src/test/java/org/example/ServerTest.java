@@ -35,7 +35,7 @@ class ServerTest {
     @Test
     public void test2Worker() {
         for(Tests.Test test : tests.tests) {
-            Server server = new Server(port, test.arr, 256, logger);
+            Server server = new Server(port, test.arr, 2, logger);
             Thread serverT = new Thread(server);
             serverT.start();
 
@@ -63,7 +63,7 @@ class ServerTest {
     @Test
     public void test3Worker() {
         for(Tests.Test test : tests.tests) {
-            Server server = new Server(port, test.arr, 256, logger);
+            Server server = new Server(port, test.arr, 2, logger);
             Thread serverT = new Thread(server);
             serverT.start();
 
@@ -94,7 +94,7 @@ class ServerTest {
     @Test
     public void test4Worker() {
         for(Tests.Test test : tests.tests) {
-            Server server = new Server(port, test.arr, 256, logger);
+            Server server = new Server(port, test.arr, 2, logger);
             Thread serverT = new Thread(server);
             serverT.start();
 
