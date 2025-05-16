@@ -101,7 +101,6 @@ class ServerTest {
             Worker worker1 = new Worker("localhost", port, logger, 1);
             Thread workerT1 = new Thread(worker1);
 
-
             Worker worker2 = new Worker("localhost", port, logger, 2);
             Thread workerT2 = new Thread(worker2);
 
@@ -160,4 +159,5 @@ class ServerTest {
 
             assertEquals(server.answer, tests.tests.get(i).ans);
         }
+    }
 }
