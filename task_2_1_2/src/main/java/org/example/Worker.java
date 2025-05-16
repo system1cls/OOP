@@ -12,14 +12,13 @@ public class Worker implements Runnable{
     protected String host;
     protected int port;
     protected final ILogger logger;
-    protected final int id;
+    int id;
 
     Worker(String host, int port, ILogger logger, int id) {
         this.host = host;
         this.port = port;
         this.logger = logger;
         this.id = id;
-
     }
 
     @Override
@@ -72,14 +71,12 @@ public class Worker implements Runnable{
 
     }
 
-
     /*private byte[] reverseByteArray(byte []arr) {
         for (int i = 0; i < arr.length/2; i++) {
             byte temp = arr[i];
             arr[i] = arr[arr.length - 1 - i];
             arr[arr.length - 1 - i] = temp;
         }
-
         return arr;
     }*/
 
