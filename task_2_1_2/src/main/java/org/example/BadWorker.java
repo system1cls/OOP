@@ -4,23 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 
-public class Worker implements Runnable{
-
-    protected String host;
-    protected int port;
-    protected final ILogger logger;
-    protected final int id;
-
-    Worker(String host, int port, ILogger logger, int id) {
-        this.host = host;
-        this.port = port;
-        this.logger = logger;
-        this.id = id;
-
+public class BadWorker extends Worker{
+    BadWorker(String host, int port, ILogger logger, int id) {
+        super(host, port, logger, id);
     }
+
 
     @Override
     public void run() {
@@ -60,8 +50,7 @@ public class Worker implements Runnable{
                     }
                 }
 
-                out.write(1);
-
+                return;
             }
 
         } catch (RuntimeException | IOException e) {
@@ -70,24 +59,5 @@ public class Worker implements Runnable{
         }
 
 
-    }
-
-
-    /*private byte[] reverseByteArray(byte []arr) {
-        for (int i = 0; i < arr.length/2; i++) {
-            byte temp = arr[i];
-            arr[i] = arr[arr.length - 1 - i];
-            arr[arr.length - 1 - i] = temp;
-        }
-
-        return arr;
-    }*/
-
-    protected boolean check(int num) {
-        for (int i = 2; i <= num/2; i++) {
-            if (num%i == 0) return true;
-        }
-        if (num < 2) return true;
-        else return false;
     }
 }

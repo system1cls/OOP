@@ -125,4 +125,39 @@ class ServerTest {
             assertEquals(server.answer, test.ans);
         }
     }
+
+
+    @Test
+    public void badWorker() {
+        for(int i = 0; i < 2; i++) {
+            Server server = new Server(5005, tests.tests.get(i).arr, 2, new Logger());
+            Thread serverT = new Thread(server);
+            serverT.start();
+
+            Worker worker = new Worker("localhost", 5005, new Logger(), 1);
+            Thread workerT = new Thread(worker);
+
+            BadWorker badWorker = new BadWorker("localhost", 5005, new Logger(), 2);
+            Thread badWorkerT = new Thread(badWorker);
+
+
+            badWorkerT.start();
+
+            try {
+                badWorkerT.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            workerT.start();
+
+            try {
+                serverT.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            assertEquals(server.answer, tests.tests.get(i).ans);
+        }
 }
