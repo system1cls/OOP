@@ -51,6 +51,7 @@ public class EnemySnake extends Task implements Snake {
     protected Object call() throws Exception {
 
         while (true) {
+
             logger.print("synch.infos[" + id +"]");
             synchronized (synch.infos[id]) {
 
@@ -134,8 +135,6 @@ public class EnemySnake extends Task implements Snake {
 
                 synchronized (field) {
                     field[headP.x][headP.y] = id;
-
-
                     gcWorker.print(headP, myColor);
                 }
             }
@@ -144,6 +143,7 @@ public class EnemySnake extends Task implements Snake {
 
             synchronized (synch.infos[id]) {
                 synch.infos[id].turn = 3;
+                synch.infos[id].head = this.getCurHead();
                 synch.infos[id].notify();
             }
         }
@@ -298,6 +298,6 @@ public class EnemySnake extends Task implements Snake {
             builder.append("(").append(p.x).append(", ").append(p.y).append(")-");
         }
 
-        logger.print(builder.toString());
+        System.out.println(id + ": " + builder.toString());
     }
 }

@@ -66,11 +66,17 @@ public class KillingCircle extends Task {
                 }
             }
 
-            if (curRad == 30) return null;
+            if (curRad <= 60) {
+                synchronized (synch.infos[0]) {
+                    synch.infos[0].turn = -1;
+                    synch.infos[0].notify();
+                }
+                return null;
+            }
 
 
             synchronized (this) {
-                curRad -= 1;
+                curRad -= 2;
             }
             circle.setRadius(curRad);
 

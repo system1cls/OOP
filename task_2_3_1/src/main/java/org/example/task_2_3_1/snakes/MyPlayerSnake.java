@@ -122,19 +122,24 @@ public class MyPlayerSnake implements Snake {
 
     public void updateMyHead() {
         synchronized (synch.infos[0]) {
-
             synch.infos[0].head = snake[head].getPair();
 
-            if (synch.infos[0].turn != 0) {
-                try {
-                    synch.infos[0].wait();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException("Game interrupted");
-                }
-            }
 
-            synch.infos[0].turn = 1;
-            synch.infos[0].notify();
+            if (synch.infos[0].turn != -1) {
+                System.out.println("playerSynch");
+
+                if (synch.infos[0].turn != 0) {
+                    System.out.println("playerSynch if wait");
+                    try {
+                        synch.infos[0].wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException("Game interrupted");
+                    }
+                }
+
+                synch.infos[0].turn = 1;
+                synch.infos[0].notify();
+            }
         }
     }
 

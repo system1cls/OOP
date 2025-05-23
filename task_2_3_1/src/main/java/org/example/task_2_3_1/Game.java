@@ -19,7 +19,7 @@ public class Game extends Task {
     int width;
     int height;
     int dest;
-    int delay = 200;
+    int delay = 120;
     int curPoints = 0;
     Text points;
     Text destText;

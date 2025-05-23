@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import org.example.test2.Logger.EmptyLogger;
+import org.example.test2.Logger.ILogger;
 import org.example.test2.Logger.SimpleLogger;
 import org.example.test2.levels.CustomLevel;
 import org.example.test2.levels.Level;
@@ -87,7 +89,7 @@ public class Main extends Application {
 
     @FXML protected void startLevel3() {
         MyPlayerSnake snake = new MyPlayerSnake(15, 15, stage.getScene());
-        SimpleLogger logger = new SimpleLogger();
+        ILogger logger = new EmptyLogger();
         Level level = new LevelPUBG(0, 0, snake, logger);
         Game game = new Game(stage, 30, 30, 10, level, logger);
         Thread thread = new Thread(game);

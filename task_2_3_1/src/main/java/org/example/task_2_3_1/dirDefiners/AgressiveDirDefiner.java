@@ -25,7 +25,7 @@ public class AgressiveDirDefiner implements IDirDefiner {
         double minDistance = 1000000.;
 
 
-        for (int i = 0; i < synch.infos.length; i++) {
+        for (int i = 0; i < 2; i++) {
             if (i == id) continue;
 
             synchronized (synch.infos[i]) {
@@ -41,7 +41,7 @@ public class AgressiveDirDefiner implements IDirDefiner {
         Pair<Integer> anotherHead;
         Dirs anotherDir;
 
-        System.out.println(id + " dist = " + minDistance + " id = " + minId);
+        System.out.println(id + ": dist = " + minDistance + " id = " + minId);
 
 
         synchronized (synch.infos[minId]) {
@@ -49,7 +49,7 @@ public class AgressiveDirDefiner implements IDirDefiner {
             anotherDir = synch.infos[minId].dir;
         }
 
-        System.out.println("EnemyHead = " + anotherHead);
+        System.out.println(id + ": EnemyHead = " + anotherHead);
         Pair<Integer> predicted = predictEnemyMoving(anotherHead, anotherDir, 2);
 
 
@@ -99,7 +99,7 @@ public class AgressiveDirDefiner implements IDirDefiner {
             }
         }
 
-        System.out.println("dir = " + dir);
+        System.out.println(id + ": dir = " + dir);
 
         return setPredictedOrClear(headP, dir, safeDir);
     }
@@ -114,13 +114,15 @@ public class AgressiveDirDefiner implements IDirDefiner {
             predicted = this.predictMoving(headP, dir);
             if (!checkStolk(predicted)) {
                 shouldCheck = false;
-                field[predicted.x][predicted.y] = PUBGEnum.WannaGo.id;
+                if (field[predicted.x][predicted.y] == PUBGEnum.Fruit.id) field[predicted.x][predicted.y] = PUBGEnum.WannaEat.id;
+                else field[predicted.x][predicted.y] = PUBGEnum.WannaGo.id;
             } else {
               predicted = predictMoving(headP, safeDir);
               if (!checkStolk(predicted)) {
                   shouldCheck = false;
                   endDir = safeDir;
-                  field[predicted.x][predicted.y] = PUBGEnum.WannaGo.id;
+                  if (field[predicted.x][predicted.y] == PUBGEnum.Fruit.id) field[predicted.x][predicted.y] = PUBGEnum.WannaEat.id;
+                  else field[predicted.x][predicted.y] = PUBGEnum.WannaGo.id;
               }
             }
 
